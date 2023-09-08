@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import Sidebar from "../nav/Sidebar";
 import { styled } from "styled-components";
 
 const StyledAppLayout = styled.div`

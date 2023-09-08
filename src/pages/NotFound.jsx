@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Heading from "../components/ui/Heading";
-import { Button } from "../components/ui/Buton";
+import { Button } from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 
 const Page = styled.div`
@@ -29,7 +29,7 @@ function NotFound() {
       <Content>
         <Heading>Uh Oh!</Heading>
         <P>It looks like you reached a dead end</P>
-        <Button $size="medium" onClick={() => naviagte(-1)}>
+        <Button $size="large" onClick={() => naviagte(-1)}>
           Go back
         </Button>
       </Content>

@@ -10,12 +10,12 @@ function ExpensesTable() {
 
   if (isLoading) return <Spinner />;
   if (error) {
-    toast.error(error.message);
+    toast.error("Could not get your expenses");
     return <NoData resource="expenses" />;
   }
 
   return (
-    <Table columns=".3fr 0.6fr 1fr 0.6fr 1fr 1fr">
+    <Table columns=".2fr 0.6fr 1fr 0.6fr 1fr 1fr .2fr">
       <Table.Header>
         <div></div>
         <div>Category</div>
@@ -23,6 +23,7 @@ function ExpensesTable() {
         <div>Amount</div>
         <div>Date</div>
         <div>Description</div>
+        <div></div>
       </Table.Header>
 
       <Table.Body

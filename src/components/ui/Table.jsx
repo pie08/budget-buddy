@@ -18,10 +18,6 @@ const CommonRow = styled.div`
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-gray-100);
   }
-
-  & div {
-    overflow: auto;
-  }
 `;
 
 const TableHeader = styled(CommonRow)`

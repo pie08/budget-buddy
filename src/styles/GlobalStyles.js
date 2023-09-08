@@ -33,6 +33,8 @@ const GlobalStyles = createGlobalStyle`
 
   --border-radius-sm: 4px;
   --border-radius-md: 6px;
+
+  --overlay-color: rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -52,6 +54,44 @@ body {
   line-height: 1.5;
   min-height: 100vh;
 }
+
+button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  
+  &:has(svg) {
+    line-height: 0;
+  }
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+*:disabled {
+    cursor: not-allowed;
+  }
+
+  select:disabled,
+  input:disabled {
+    background-color: var(--color-grey-200);
+    color: var(--color-grey-500);
+  }
+
+  input:focus,
+  button:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: -1px;
+  }
+
 `;
 
 export default GlobalStyles;

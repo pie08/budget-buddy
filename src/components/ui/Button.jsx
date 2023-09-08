@@ -2,23 +2,24 @@ import { css, styled } from "styled-components";
 
 const size = {
   small: css`
-    padding: 0.6rem 1.8rem;
+    padding: 0.6rem 1rem;
     font-size: 1.4rem;
   `,
   medium: css`
-    padding: 1.4rem 3.2rem;
+    padding: 1.2rem 1.6rem;
     font-size: 1.6rem;
   `,
   large: css`
-    padding: 1.4rem 3.2rem;
-    font-size: 2rem;
+    padding: 1.4rem 2rem;
+    font-size: 1.8rem;
   `,
 };
 
 const variation = {
   primary: css`
     background-color: var(--color-brand-500);
-    &:hover {
+    &:hover,
+    &:disabled {
       background-color: var(--color-brand-600);
     }
   `,
@@ -26,7 +27,8 @@ const variation = {
     background-color: transparent;
     border: 1px solid var(--color-gray-300);
     color: var(--color-gray-700);
-    &:hover {
+    &:hover,
+    &:disabled {
       background-color: var(--color-gray-50);
     }
   `,

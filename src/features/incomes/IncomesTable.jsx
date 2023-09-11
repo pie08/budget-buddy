@@ -1,17 +1,17 @@
 import { toast } from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
 import Table from "../../components/ui/Table";
-import { useExpenses } from "./useExpenses";
+import { useIncomes } from "./useIncome";
 import NoData from "../../components/ui/NoData";
-import ExpenseRow from "./ExpenseRow";
+import IncomeRow from "./IncomeRow";
 
-function ExpensesTable() {
-  const { expenses, isLoading, error } = useExpenses();
+function IncomesTable() {
+  const { incomes, isLoading, error } = useIncomes();
 
   if (isLoading) return <Spinner />;
   if (error) {
-    toast.error("Could not get your expenses");
-    return <NoData resource="expenses" />;
+    toast.error("Could not get your incomes");
+    return <NoData resource="incomes" />;
   }
 
   return (
@@ -26,11 +26,11 @@ function ExpensesTable() {
       </Table.Header>
 
       <Table.Body
-        data={expenses}
-        render={(expense) => <ExpenseRow expense={expense} key={expense.id} />}
+        data={incomes}
+        render={(income) => <IncomeRow income={income} key={income.id} />}
       />
     </Table>
   );
 }
 
-export default ExpensesTable;
+export default IncomesTable;

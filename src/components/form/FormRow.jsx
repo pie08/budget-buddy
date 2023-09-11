@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledFormRow = styled.div`
   display: grid;
-  grid-template-columns: 24rem 1fr 1fr;
+  grid-template-columns: 20rem 1fr 1fr;
   gap: 2.4rem;
   align-items: center;
   padding: 1.2rem 0;
@@ -19,10 +19,12 @@ const StyledFormRow = styled.div`
     border-bottom: 1px solid var(--color-gray-100);
   }
 
-  &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-  }
+  ${(props) =>
+    props.$type === "buttons" &&
+    css`
+      display: flex;
+      justify-content: flex-end;
+    `}
 `;
 
 const Label = styled.label`
@@ -34,9 +36,9 @@ const Error = styled.p`
   font-weight: 500;
 `;
 
-function FormRow({ children, label, error }) {
+function FormRow({ children, label, error, type }) {
   return (
-    <StyledFormRow>
+    <StyledFormRow $type={type}>
       {label && <Label htmlFor={children?.props?.id || null}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}

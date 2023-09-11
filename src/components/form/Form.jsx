@@ -14,6 +14,7 @@ const Form = styled.form`
     css`
       border: none;
       padding: 0;
+      width: clamp(30rem, 80rem, 85vw);
     `}
 `;
 

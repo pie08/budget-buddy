@@ -69,7 +69,8 @@ button {
 }
 
 input,
-textarea {
+textarea, 
+select {
   font: inherit;
   color: inherit;
 }

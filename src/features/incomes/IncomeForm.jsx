@@ -4,32 +4,46 @@ import FormRow from "../../components/form/FormRow";
 import Input from "../../components/form/Input";
 import Textarea from "../../components/form/Textarea";
 import { Button } from "../../components/ui/Button";
-import { useUpdateExpense } from "./useUpdateExpense";
+import Select from "../../components/form/Select";
+import { useUpdateIncome } from "./useUpdateIncome";
+import { useCreateIncome } from "./useCreateIncome";
 
-function UpdateExpense({ onCloseModal, expense }) {
+function IncomeForm({ onCloseModal, income }) {
+  const isUpdateSession = Boolean(income);
+
+  const { updateIncome, isUpdating } = useUpdateIncome();
+  const { createIncome, isCreating } = useCreateIncome();
+  const isLoading = isUpdating || isCreating;
+
   const { register, handleSubmit, formState, reset } = useForm({
-    defaultValues: expense,
+    defaultValues: isUpdateSession ? income : {},
   });
-  const { updateExpense, isUpdating } = useUpdateExpense();
-
   const { errors } = formState;
 
   function onSubmit(data) {
-    updateExpense(
-      { data, id: expense.id },
-      {
+    if (isUpdateSession) {
+      updateIncome(
+        { data, id: income.id },
+        {
+          onSuccess: () => {
+            onCloseModal();
+          },
+        }
+      );
+    } else {
+      createIncome(data, {
         onSuccess: () => {
           onCloseModal();
         },
-      }
-    );
+      });
+    }
   }
 
   return (
     <Form $type="modal" onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Title" error={errors.title?.message}>
         <Input
-          disabled={isUpdating}
+          disabled={isLoading}
           type="text"
           id="title"
           {...register("title", {
@@ -39,7 +53,7 @@ function UpdateExpense({ onCloseModal, expense }) {
       </FormRow>
       <FormRow label="Description" error={errors.description?.message}>
         <Textarea
-          disabled={isUpdating}
+          disabled={isLoading}
           type="text"
           id="description"
           {...register("description", {
@@ -49,7 +63,7 @@ function UpdateExpense({ onCloseModal, expense }) {
       </FormRow>
       <FormRow label="Amount" error={errors.amount?.message}>
         <Input
-          disabled={isUpdating}
+          disabled={isLoading}
           type="number"
           id="amount"
           {...register("amount", {
@@ -58,19 +72,23 @@ function UpdateExpense({ onCloseModal, expense }) {
         />
       </FormRow>
       <FormRow label="Category" error={errors.category?.message}>
-        <Input
-          disabled={isUpdating}
-          type="text"
+        <Select
+          disabled={isLoading}
           id="category"
           {...register("category", {
-            required: "This field is required",
+            required: true,
           })}
-        />
+        >
+          <option value="food">Salary</option>
+          <option value="transportation">Investments</option>
+          <option value="utilities">Business income</option>
+          <option value="other">Other</option>
+        </Select>
       </FormRow>
 
-      <FormRow>
+      <FormRow type="buttons">
         <Button
-          disabled={isUpdating}
+          disabled={isLoading}
           $variation="secondary"
           type="reset"
           onClick={() => {
@@ -80,10 +98,12 @@ function UpdateExpense({ onCloseModal, expense }) {
         >
           Reset
         </Button>
-        <Button disabled={isUpdating}>Update expense</Button>
+        <Button disabled={isLoading}>
+          {isUpdateSession ? "Update income" : "Add income"}
+        </Button>
       </FormRow>
     </Form>
   );
 }
 
-export default UpdateExpense;
+export default IncomeForm;

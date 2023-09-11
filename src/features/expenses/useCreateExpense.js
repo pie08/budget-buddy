@@ -8,8 +8,8 @@ export function useCreateExpense() {
   const { mutate: createExpense, isLoading: isCreating } = useMutation({
     mutationFn: createExpenseApi,
     onSuccess: (data) => {
-      toast.success("Expense created successfully");
       queryClient.invalidateQueries(["expenses"]);
+      toast.success("Expense created successfully");
     },
     onError: (err) => {
       toast.error("Could not create your expense");

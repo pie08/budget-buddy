@@ -2,18 +2,22 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Toaster } from "react-hot-toast";
+import { Suspense, lazy } from "react";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/ui/AppLayout";
-import Dashboard from "./pages/Dashboard";
-import Expenses from "./pages/Expenses";
-import Incomes from "./pages/Incomes";
-import Categories from "./pages/Categories";
-import Budget from "./pages/Budget";
-import Account from "./pages/Account";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import NotFound from "./pages/NotFound";
+import SpinnerFullPage from "./components/ui/SpinnerFullPage";
+
+// Pages
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Expenses = lazy(() => import("./pages/Expenses"));
+const Incomes = lazy(() => import("./pages/Incomes"));
+const Categories = lazy(() => import("./pages/Categories"));
+const Budget = lazy(() => import("./pages/Budget"));
+const Account = lazy(() => import("./pages/Account"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,22 +34,24 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
 
       <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<Navigate to="/dashboard" />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/expenses" element={<Expenses />} />
-            <Route path="/incomes" element={<Incomes />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/categories/:id" />
-            <Route path="/budget" element={<Budget />} />
-            <Route path="/budget/:id" />
-            <Route path="/account" element={<Account />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<SpinnerFullPage />}>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route index element={<Navigate to="/dashboard" />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/incomes" element={<Incomes />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/categories/:id" />
+              <Route path="/budget" element={<Budget />} />
+              <Route path="/budget/:id" />
+              <Route path="/account" element={<Account />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
 
       <Toaster

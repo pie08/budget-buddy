@@ -7,6 +7,7 @@ import { Button } from "../../components/ui/Button";
 import { useUpdateExpense } from "./useUpdateExpense";
 import Select from "../../components/form/Select";
 import { useCreateExpense } from "./useCreateExpense";
+import categoriesData from "../../data/expenseCategories.json";
 
 function ExpenseForm({ onCloseModal, expense }) {
   const isUpdateSession = Boolean(expense);
@@ -77,12 +78,19 @@ function ExpenseForm({ onCloseModal, expense }) {
           id="category"
           {...register("category", {
             required: true,
+            validate: (value) => {
+              return (
+                categoriesData.some((category) => category.name === value) ||
+                "Invalid category"
+              );
+            },
           })}
         >
-          <option value="food">Food</option>
-          <option value="transportation">Transportation</option>
-          <option value="utilities">Utilities</option>
-          <option value="other">Other</option>
+          {categoriesData.map((category, i) => (
+            <option key={i} value={category.name}>
+              {category.name[0].toUpperCase() + category.name.slice(1)}
+            </option>
+          ))}
         </Select>
       </FormRow>
 

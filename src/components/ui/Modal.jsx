@@ -6,7 +6,6 @@ import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 const Overlay = styled.div`
   background-color: var(--overlay-color);
-  /* backdrop-filter: blur(4px); */
   position: fixed;
   top: 0;
   bottom: 0;

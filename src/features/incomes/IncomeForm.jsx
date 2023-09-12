@@ -7,6 +7,7 @@ import { Button } from "../../components/ui/Button";
 import Select from "../../components/form/Select";
 import { useUpdateIncome } from "./useUpdateIncome";
 import { useCreateIncome } from "./useCreateIncome";
+import categoriesData from "../../data/incomeCategories.json";
 
 function IncomeForm({ onCloseModal, income }) {
   const isUpdateSession = Boolean(income);
@@ -77,12 +78,19 @@ function IncomeForm({ onCloseModal, income }) {
           id="category"
           {...register("category", {
             required: true,
+            validate: (value) => {
+              return (
+                categoriesData.some((category) => category.name === value) ||
+                "Invalid category"
+              );
+            },
           })}
         >
-          <option value="food">Salary</option>
-          <option value="transportation">Investments</option>
-          <option value="utilities">Business income</option>
-          <option value="other">Other</option>
+          {categoriesData.map((category, i) => (
+            <option key={i} value={category.name}>
+              {category.name[0].toUpperCase() + category.name.slice(1)}
+            </option>
+          ))}
         </Select>
       </FormRow>
 

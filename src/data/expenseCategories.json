@@ -1,0 +1,25 @@
+[
+  { "name": "food", "colors": { "light": "#dcfce7", "dark": "#15803d" } },
+  {
+    "name": "entertainment",
+    "colors": { "light": "#ecfccb", "dark": "#4d7c0f" }
+  },
+  { "name": "housing", "colors": { "light": "#ffedd5", "dark": "#c2410c" } },
+  {
+    "name": "transportation",
+    "colors": { "light": "#fee2e2", "dark": "#b91c1c" }
+  },
+  { "name": "healthcare", "colors": { "light": "#dcfce7", "dark": "#15803d" } },
+  { "name": "travel", "colors": { "light": "#ede9fe", "dark": "#6d28d9" } },
+  { "name": "education", "colors": { "light": "#d1fae5", "dark": "#047857" } },
+  { "name": "personal", "colors": { "light": "#ffe4e6", "dark": "#be123c" } },
+  { "name": "insurance", "colors": { "light": "#dbeafe", "dark": "#1d4ed8" } },
+  { "name": "savings", "colors": { "light": "#e0f2fe", "dark": "#0e7490" } },
+  {
+    "name": "investments",
+    "colors": { "light": "#dcfce7", "dark": "#15803d" }
+  },
+  { "name": "utilities", "colors": { "light": "#fee2e2", "dark": "#b91c1c" } },
+  { "name": "business", "colors": { "light": "#fef3c7", "dark": "#b45309" } },
+  { "name": "other", "colors": { "light": "#cffafe", "dark": "#0e7490" } }
+]

@@ -13,6 +13,10 @@ const Amount = styled.p`
   font-weight: 500;
 `;
 
+const Category = styled.p`
+  text-transform: capitalize;
+`;
+
 function ExpenseRow({ expense }) {
   const { deleteExpense, isDeleting } = useDeleteExpense();
   const { title, description, amount, category, created_at, id } = expense;
@@ -20,7 +24,7 @@ function ExpenseRow({ expense }) {
   return (
     <Menus>
       <Table.Row>
-        <p>{category}</p>
+        <Category>{category}</Category>
         <p>{title}</p>
         <Amount>{formatCurrency(amount)}</Amount>
         <p>{format(new Date(created_at), "PPP")}</p>

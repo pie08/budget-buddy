@@ -4,21 +4,42 @@ import { useExpenses } from "../expenses/useExpenses";
 import Spinner from "../../components/ui/Spinner";
 import categoriesData from "../../data/expenseCategories.json";
 import AddCategory from "./AddCategory";
+import { getLocalStorage } from "../../utils/getLocalStorage";
+import { useState } from "react";
+import Heading from "../../components/ui/Heading";
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 3.2rem;
   row-gap: 2.4rem;
+  max-height: 50vh;
+  overflow: auto;
 `;
 
 function CategoriesGrid() {
   // Get all user expenses and generate an object with each expense name and relevent data
   const { expenses, isLoading } = useExpenses();
+  const customCategories = getLocalStorage("customExpenseCategories").map(
+    (el) => {
+      return { name: el, colors: { light: "#f1f5f9", dark: "#334155" } };
+    }
+  );
+  const allCategories = categoriesData.concat(customCategories);
 
   if (isLoading) return <Spinner />;
 
-  const categories = categoriesData
+  // todo: Create a category for all expenses with an unknown category
+  expenses.forEach((expense) => {
+    if (
+      allCategories.filter((cur) => cur.name === expense.category).length === 0
+    ) {
+      // create category
+      console.log(expense);
+    }
+  });
+
+  const categories = allCategories
     .map((category) => {
       // Get expenses with the current category
       const filteredExpenses = expenses.filter(
@@ -34,7 +55,7 @@ function CategoriesGrid() {
         name: category.name,
         totalAmount,
         transactions: filteredExpenses.length,
-        colors: category.colors ?? { light: "#f1f5f9", dark: "#334155" },
+        colors: category.colors,
       };
     })
     .filter((category) => category.transactions > 0);

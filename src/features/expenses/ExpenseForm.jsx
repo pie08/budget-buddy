@@ -8,6 +8,7 @@ import { useUpdateExpense } from "./useUpdateExpense";
 import Select from "../../components/form/Select";
 import { useCreateExpense } from "./useCreateExpense";
 import categoriesData from "../../data/expenseCategories.json";
+import { getLocalStorage } from "../../utils/getLocalStorage";
 
 function ExpenseForm({ onCloseModal, expense }) {
   const isUpdateSession = Boolean(expense);
@@ -20,6 +21,12 @@ function ExpenseForm({ onCloseModal, expense }) {
     defaultValues: isUpdateSession ? expense : {},
   });
   const { errors } = formState;
+
+  const customCategories = getLocalStorage("customExpenseCategories");
+  const categoryNames = [
+    ...categoriesData.map((el) => el.name),
+    ...customCategories,
+  ];
 
   function onSubmit(data) {
     if (isUpdateSession) {
@@ -80,15 +87,15 @@ function ExpenseForm({ onCloseModal, expense }) {
             required: true,
             validate: (value) => {
               return (
-                categoriesData.some((category) => category.name === value) ||
+                categoryNames.some((name) => name === value) ||
                 "Invalid category"
               );
             },
           })}
         >
-          {categoriesData.map((category, i) => (
-            <option key={i} value={category.name}>
-              {category.name[0].toUpperCase() + category.name.slice(1)}
+          {categoryNames.map((name, i) => (
+            <option key={i} value={name}>
+              {name[0].toUpperCase() + name.slice(1)}
             </option>
           ))}
         </Select>

@@ -22,35 +22,33 @@ function ExpenseRow({ expense }) {
   const { title, description, amount, category, created_at, id } = expense;
 
   return (
-    <Menus>
-      <Table.Row>
-        <Category>{category}</Category>
-        <p>{title}</p>
-        <Amount>{formatCurrency(amount)}</Amount>
-        <p>{format(new Date(created_at), "PPP")}</p>
-        <p>{description}</p>
+    <Table.Row>
+      <Category>{category}</Category>
+      <p>{title}</p>
+      <Amount>{formatCurrency(amount)}</Amount>
+      <p>{format(new Date(created_at), "PPP")}</p>
+      <p>{description}</p>
 
-        <Menus.Menu>
-          <Menus.Open />
-          <Menus.List>
-            <Modal.Open id={`edit-expense-${id}`}>
-              <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
-            </Modal.Open>
-            <Menus.Item
-              icon={<HiTrash />}
-              onClick={() => deleteExpense(id)}
-              disabled={isDeleting}
-            >
-              Delete
-            </Menus.Item>
-          </Menus.List>
+      <Menus.Menu>
+        <Menus.Open id={`${expense.id}`} />
+        <Menus.List id={`${expense.id}`}>
+          <Modal.Open id={`edit-expense-${id}`}>
+            <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
+          </Modal.Open>
+          <Menus.Item
+            icon={<HiTrash />}
+            onClick={() => deleteExpense(id)}
+            disabled={isDeleting}
+          >
+            Delete
+          </Menus.Item>
+        </Menus.List>
 
-          <Modal.Window id={`edit-expense-${id}`}>
-            <ExpenseForm expense={expense} />
-          </Modal.Window>
-        </Menus.Menu>
-      </Table.Row>
-    </Menus>
+        <Modal.Window id={`edit-expense-${id}`}>
+          <ExpenseForm expense={expense} />
+        </Modal.Window>
+      </Menus.Menu>
+    </Table.Row>
   );
 }
 

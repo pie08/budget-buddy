@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
@@ -31,7 +31,7 @@ const StyledList = styled.ul`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-gray-0);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -68,9 +68,7 @@ function Menus({ children }) {
   const [openId, setOpenId] = useState("");
   const [position, setPosition] = useState(null);
 
-  function open(id) {
-    setOpenId(id);
-  }
+  const open = setOpenId;
 
   function close() {
     setOpenId("");
@@ -96,6 +94,7 @@ function Open({ id }) {
   const { open, close, openId, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
+    console.log("open");
     e.stopPropagation();
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
@@ -103,7 +102,7 @@ function Open({ id }) {
       y: rect.y + rect.height + 8,
     });
 
-    openId === id ? close() : open(id);
+    openId === "" || openId !== id ? open(id) : close();
   }
 
   return (
@@ -117,6 +116,22 @@ function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close, false);
 
+  useEffect(
+    function () {
+      function handleScroll() {
+        close();
+      }
+
+      document.addEventListener("wheel", handleScroll);
+
+      return function () {
+        document.removeEventListener("wheel", handleScroll);
+      };
+    },
+    [close]
+  );
+
+  console.log(openId, id);
   if (openId !== id) return null;
 
   return createPortal(

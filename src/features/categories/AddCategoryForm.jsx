@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { addLocalStorage } from "../../utils/addLocalStorage";
 
 const CardForm = styled.div`
   display: inline-block;
@@ -45,12 +46,14 @@ const Error = styled.p`
 function AddCategoryForm({ onClose }) {
   const [categoryName, setCategoryName] = useState("");
   const [error, setError] = useState("");
+
   const ref = useOutsideClick(onClose, false);
 
   useEffect(
     function () {
       if (categoryName.split(" ").length > 1)
         setError("Category name cannot include spaces");
+      else if (categoryName.length > 16) setError("Category name too long");
       else setError("");
     },
     [categoryName]
@@ -59,7 +62,9 @@ function AddCategoryForm({ onClose }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (error) return;
-    setCategoryName("");
+
+    addLocalStorage("customExpenseCategories", [], categoryName.toLowerCase());
+    toast.success("Category successfully created");
     onClose();
   }
 

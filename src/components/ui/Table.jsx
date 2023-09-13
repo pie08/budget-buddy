@@ -30,6 +30,11 @@ const TableRow = styled(CommonRow)`
   background-color: var(--color-gray-0);
 `;
 
+const TableFooter = styled.footer`
+  padding: 1.8rem 2.4rem;
+  background-color: var(--color-gray-50);
+`;
+
 const TableContext = createContext();
 
 function Table({ children, columns }) {
@@ -63,5 +68,6 @@ function Body({ data, render }) {
 Table.Header = Header;
 Table.Row = Row;
 Table.Body = Body;
+Table.Footer = TableFooter;
 
 export default Table;

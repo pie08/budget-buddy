@@ -94,7 +94,6 @@ function Open({ id }) {
   const { open, close, openId, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
-    console.log("open");
     e.stopPropagation();
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
@@ -131,7 +130,6 @@ function List({ id, children }) {
     [close]
   );
 
-  console.log(openId, id);
   if (openId !== id) return null;
 
   return createPortal(

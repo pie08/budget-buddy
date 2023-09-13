@@ -5,8 +5,6 @@ import Spinner from "../../components/ui/Spinner";
 import categoriesData from "../../data/expenseCategories.json";
 import AddCategory from "./AddCategory";
 import { getLocalStorage } from "../../utils/getLocalStorage";
-import { useState } from "react";
-import Heading from "../../components/ui/Heading";
 
 const Grid = styled.div`
   display: grid;
@@ -19,7 +17,9 @@ const Grid = styled.div`
 
 function CategoriesGrid() {
   // Get all user expenses and generate an object with each expense name and relevent data
-  const { expenses, isLoading } = useExpenses();
+  const { expenses, isLoading } = useExpenses({
+    paginate: false,
+  });
   const customCategories = getLocalStorage("customExpenseCategories").map(
     (el) => {
       return { name: el, colors: { light: "#f1f5f9", dark: "#334155" } };
@@ -28,16 +28,7 @@ function CategoriesGrid() {
   const allCategories = categoriesData.concat(customCategories);
 
   if (isLoading) return <Spinner />;
-
-  // todo: Create a category for all expenses with an unknown category
-  expenses.forEach((expense) => {
-    if (
-      allCategories.filter((cur) => cur.name === expense.category).length === 0
-    ) {
-      // create category
-      console.log(expense);
-    }
-  });
+  console.log(expenses);
 
   const categories = allCategories
     .map((category) => {

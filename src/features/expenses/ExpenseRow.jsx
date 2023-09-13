@@ -17,6 +17,10 @@ const Category = styled.p`
   text-transform: capitalize;
 `;
 
+const Description = styled.p`
+  overflow: auto;
+`;
+
 function ExpenseRow({ expense }) {
   const { deleteExpense, isDeleting } = useDeleteExpense();
   const { title, description, amount, category, created_at, id } = expense;
@@ -27,7 +31,11 @@ function ExpenseRow({ expense }) {
       <p>{title}</p>
       <Amount>{formatCurrency(amount)}</Amount>
       <p>{format(new Date(created_at), "PPP")}</p>
-      <p>{description}</p>
+      <Description>
+        {description.length > 25
+          ? description.slice(0, 25) + " ..."
+          : description}
+      </Description>
 
       <Menus.Menu>
         <Menus.Open id={`${expense.id}`} />

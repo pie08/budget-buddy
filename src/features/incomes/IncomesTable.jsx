@@ -4,9 +4,10 @@ import Table from "../../components/ui/Table";
 import { useIncomes } from "./useIncome";
 import NoData from "../../components/ui/NoData";
 import IncomeRow from "./IncomeRow";
+import Pagination from "../../components/ui/Pagination";
 
 function IncomesTable() {
-  const { incomes, isLoading, error } = useIncomes();
+  const { incomes, isLoading, error, count } = useIncomes();
 
   if (isLoading) return <Spinner />;
   if (error) {
@@ -29,6 +30,10 @@ function IncomesTable() {
         data={incomes}
         render={(income) => <IncomeRow income={income} key={income.id} />}
       />
+
+      <Table.Footer>
+        <Pagination count={count} />
+      </Table.Footer>
     </Table>
   );
 }

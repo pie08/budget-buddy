@@ -1,13 +1,24 @@
 import { supabase } from "./supabase";
+const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
-export async function getIncomes() {
-  const { data, error } = await supabase.from("incomes").select("*");
+export async function getIncomes({ page }) {
+  let query = supabase.from("incomes").select("*", { count: "exact" });
+
+  // pagination
+  if (page) {
+    const from = pageSize * page - pageSize;
+    const to = pageSize * page - 1;
+
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error);
     throw error;
   }
-  return data;
+  return { data, count };
 }
 
 export async function getIncomesById(id) {

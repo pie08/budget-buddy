@@ -13,6 +13,14 @@ const Amount = styled.p`
   font-weight: 500;
 `;
 
+const Category = styled.p`
+  text-transform: capitalize;
+`;
+
+const Description = styled.p`
+  overflow: auto;
+`;
+
 function IncomeRow({ income }) {
   const { deleteIncome, isDeleting } = useDeleteIncome();
   const { title, description, amount, category, created_at, id } = income;
@@ -20,11 +28,15 @@ function IncomeRow({ income }) {
   return (
     <Menus>
       <Table.Row>
-        <p>{category}</p>
-        <p>{title}</p>
+        <Category>{category}</Category>
+        <Category>{title}</Category>
         <Amount>{formatCurrency(amount)}</Amount>
-        <p>{format(new Date(created_at), "PPP")}</p>
-        <p>{description}</p>
+        <Category>{format(new Date(created_at), "PPP")}</Category>
+        <Description>
+          {description.length > 25
+            ? description.slice(0, 25) + " ..."
+            : description}
+        </Description>
 
         <Menus.Menu>
           <Menus.Open />

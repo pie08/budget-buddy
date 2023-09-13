@@ -73,6 +73,7 @@ function ExpenseForm({ onCloseModal, expense }) {
         <Input
           disabled={isLoading}
           type="number"
+          step={0.01}
           id="amount"
           {...register("amount", {
             required: "This field is required",

@@ -1,13 +1,58 @@
+import categoriesData from "../data/expenseCategories.json";
+import { addLocalStorage } from "../utils/addLocalStorage";
+import { getLocalStorage } from "../utils/getLocalStorage";
 import { supabase } from "./supabase";
+const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
-export async function getExpenses() {
-  const { data, error } = await supabase.from("expenses").select("*");
+export async function getExpenses({ page }) {
+  let query = supabase.from("expenses").select("*", { count: "exact" });
+
+  // pagination
+  if (page > 0) {
+    const from = pageSize * page - pageSize;
+    const to = pageSize * page - 1;
+
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error);
     throw error;
   }
-  return data;
+
+  const customCategories = getLocalStorage("customExpenseCategories").map(
+    (el) => {
+      return { name: el, colors: { light: "#f1f5f9", dark: "#334155" } };
+    }
+  );
+  const allCategories = categoriesData.concat(customCategories);
+
+  // create a category for all expenses with an unknown category
+  const expenses = data
+    .filter((expense) => {
+      const isNull = expense.category === null;
+      const isInvalidName = expense.category.split(" ").length < 1;
+      if (isNull || isInvalidName) deleteExpense(expense.id);
+      return !isNull && !isInvalidName;
+    })
+    .map((expense) => {
+      const isUnknown =
+        allCategories.filter((cur) => cur.name === expense.category).length ===
+        0;
+
+      if (isUnknown) {
+        addLocalStorage(
+          "customExpenseCategories",
+          [],
+          expense.category.toLowerCase()
+        );
+      }
+      return expense;
+    });
+
+  return { expenses, count };
 }
 
 export async function getExpensesById(id) {

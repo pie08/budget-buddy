@@ -1,15 +1,19 @@
 import { useQuery } from "react-query";
 import { getIncomes } from "../../services/apiIncomes";
+import { useSearchParams } from "react-router-dom";
 
 export function useIncomes() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+
   const {
-    data: incomes,
+    data: { data: incomes, count } = {},
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["incomes"],
-    queryFn: getIncomes,
+    queryKey: ["incomes", page],
+    queryFn: () => getIncomes({ page }),
   });
 
-  return { incomes, isLoading, error };
+  return { incomes, isLoading, error, count };
 }

@@ -10,6 +10,7 @@ import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 
 // todo: create a reusable filter buttons component
 // todo: implement filtering on expense and income tables
+// todo: Custom categories must be stored in user meta data
 
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));

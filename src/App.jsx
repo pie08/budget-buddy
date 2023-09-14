@@ -7,8 +7,9 @@ import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
+import CategoryDetails from "./features/categories/CategoryDetails";
 
-// todo:
+// todo: Users must be able to choose either expenses or incomes for categories on categories page
 // todo: Custom categories must be stored in user meta data
 
 // Pages
@@ -45,7 +46,10 @@ function App() {
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/incomes" element={<Incomes />} />
               <Route path="/categories" element={<Categories />} />
-              <Route path="/categories/:id" />
+              <Route
+                path="/categories/:category"
+                element={<CategoryDetails />}
+              />
               <Route path="/budget" element={<Budget />} />
               <Route path="/budget/:id" />
               <Route path="/account" element={<Account />} />

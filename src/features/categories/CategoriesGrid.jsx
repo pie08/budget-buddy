@@ -18,11 +18,11 @@ const Grid = styled.div`
   overflow: auto;
 `;
 
+// todo: Users must be able to choose either expenses or incomes for categories on categories page
+
 function CategoriesGrid() {
   // Get all user expenses and generate an object with each expense name and relevent data
-  const { expenses, isLoading } = useExpenses({
-    paginate: false,
-  });
+  const { expenses, isLoading } = useExpenses();
   const categories = getCategories(
     "customExpenseCategories",
     expenseCategories

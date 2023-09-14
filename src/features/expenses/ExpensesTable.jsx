@@ -1,13 +1,16 @@
 import { toast } from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
-import Table from "../../components/ui/Table";
 import { useExpenses } from "./useExpenses";
+import { useDeleteExpense } from "./useDeleteExpense";
 import NoData from "../../components/ui/NoData";
-import ExpenseRow from "./ExpenseRow";
-import Pagination from "../../components/ui/Pagination";
+import TransactionTable from "../../components/transactionTable/TransactionTable";
+import ExpenseForm from "./ExpenseForm";
 
 function ExpensesTable() {
-  const { expenses, isLoading, error, count } = useExpenses();
+  const { expenses, isLoading, error, count } = useExpenses({
+    paginate: true,
+  });
+  const { deleteExpense, isDeleting } = useDeleteExpense();
 
   if (isLoading) return <Spinner />;
   if (error) {
@@ -19,25 +22,12 @@ function ExpensesTable() {
   }
 
   return (
-    <Table columns="0.8fr 1fr 0.6fr 1fr 1fr .2fr">
-      <Table.Header>
-        <div>Category</div>
-        <div>Title</div>
-        <div>Amount</div>
-        <div>Date</div>
-        <div>Description</div>
-        <div></div>
-      </Table.Header>
-
-      <Table.Body
-        data={expenses}
-        render={(expense) => <ExpenseRow expense={expense} key={expense.id} />}
-      />
-
-      <Table.Footer>
-        <Pagination count={count} />
-      </Table.Footer>
-    </Table>
+    <TransactionTable
+      transactions={expenses}
+      count={count}
+      formRender={(expense) => <ExpenseForm expense={expense} />}
+      onDelete={deleteExpense}
+    />
   );
 }
 

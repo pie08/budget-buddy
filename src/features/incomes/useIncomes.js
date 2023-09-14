@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { getIncomes } from "../../services/apiIncomes";
 import { useSearchParams } from "react-router-dom";
 
-export function useIncomes({ paginate = true } = {}) {
+export function useIncomes({ paginate = false } = {}) {
   const [searchParams] = useSearchParams();
 
   // pagination

@@ -4,12 +4,10 @@ import { formatCurrency } from "../../utils/Helpers";
 import { HiPencil, HiTrash } from "react-icons/hi2";
 import { styled } from "styled-components";
 import Menus from "../../components/ui/Menus";
-import { useDeleteIncome } from "./useDeleteIncome";
 import Modal from "../../components/ui/Modal";
-import IncomeForm from "./IncomeForm";
 
 const Amount = styled.p`
-  color: var(--color-brand-500);
+  color: var(--color-red-700);
   font-weight: 500;
 `;
 
@@ -21,9 +19,8 @@ const Description = styled.p`
   overflow: auto;
 `;
 
-function IncomeRow({ income }) {
-  const { deleteIncome, isDeleting } = useDeleteIncome();
-  const { title, description, amount, category, created_at, id } = income;
+function TransactionRow({ transaction, formRender, onDelete }) {
+  const { title, description, amount, category, created_at, id } = transaction;
 
   return (
     <Table.Row>
@@ -38,26 +35,22 @@ function IncomeRow({ income }) {
       </Description>
 
       <Menus.Menu>
-        <Menus.Open id={`${income.id}`} />
-        <Menus.List id={`${income.id}`}>
-          <Modal.Open id={`edit-income-${id}`}>
+        <Menus.Open id={`${id}`} />
+        <Menus.List id={`${id}`}>
+          <Modal.Open id={`edit-transaction-${id}`}>
             <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
           </Modal.Open>
-          <Menus.Item
-            icon={<HiTrash />}
-            onClick={() => deleteIncome(id)}
-            disabled={isDeleting}
-          >
+          <Menus.Item icon={<HiTrash />} onClick={() => onDelete(id)}>
             Delete
           </Menus.Item>
         </Menus.List>
 
-        <Modal.Window id={`edit-income-${id}`}>
-          <IncomeForm income={income} />
+        <Modal.Window id={`edit-transaction-${id}`}>
+          {formRender(transaction)}
         </Modal.Window>
       </Menus.Menu>
     </Table.Row>
   );
 }
 
-export default IncomeRow;
+export default TransactionRow;

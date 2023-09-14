@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/Helpers";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
   display: inline-block;
@@ -7,6 +8,7 @@ const Card = styled.div`
   border: 1px solid ${(props) => props.$borderColor};
   border-radius: var(--border-radius-sm);
   padding: 1.2rem 1.6rem;
+  cursor: pointer;
 `;
 
 const Heading = styled.h3`
@@ -29,8 +31,14 @@ const Amount = styled.span`
 `;
 
 function CategoryCard({ name, amount, numTransactions, colors }) {
+  const navigate = useNavigate();
+
   return (
-    <Card $backgroundColor={colors.light} $borderColor={colors.dark}>
+    <Card
+      $backgroundColor={colors.light}
+      $borderColor={colors.dark}
+      onClick={() => navigate(`${name}`)}
+    >
       <Heading>
         {name} <Amount>{formatCurrency(Number(amount))}</Amount>
       </Heading>

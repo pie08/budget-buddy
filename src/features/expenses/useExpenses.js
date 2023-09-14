@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { getExpenses } from "../../services/apiExpenses";
 import { useSearchParams } from "react-router-dom";
 
-export function useExpenses({ paginate = true } = {}) {
+export function useExpenses({ paginate = false } = {}) {
   const [searchParams] = useSearchParams();
 
   // pagination

@@ -1,13 +1,16 @@
 import { toast } from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
-import Table from "../../components/ui/Table";
 import { useIncomes } from "./useIncomes";
+import { useDeleteIncome } from "./useDeleteIncome";
 import NoData from "../../components/ui/NoData";
-import IncomeRow from "./IncomeRow";
-import Pagination from "../../components/ui/Pagination";
+import IncomeForm from "./IncomeForm";
+import TransactionTable from "../../components/transactionTable/TransactionTable";
 
 function IncomesTable() {
-  const { incomes, isLoading, error, count } = useIncomes();
+  const { incomes, isLoading, error, count } = useIncomes({
+    paginate: true,
+  });
+  const { deleteIncome, isDeleting } = useDeleteIncome();
 
   if (isLoading) return <Spinner />;
   if (error) {
@@ -19,25 +22,12 @@ function IncomesTable() {
   }
 
   return (
-    <Table columns="0.8fr 1fr 0.6fr 1fr 1fr .2fr">
-      <Table.Header>
-        <div>Category</div>
-        <div>Title</div>
-        <div>Amount</div>
-        <div>Date</div>
-        <div>Description</div>
-        <div></div>
-      </Table.Header>
-
-      <Table.Body
-        data={incomes}
-        render={(income) => <IncomeRow income={income} key={income.id} />}
-      />
-
-      <Table.Footer>
-        <Pagination count={count} />
-      </Table.Footer>
-    </Table>
+    <TransactionTable
+      transactions={incomes}
+      count={count}
+      formRender={(income) => <IncomeForm income={income} />}
+      onDelete={deleteIncome}
+    />
   );
 }
 

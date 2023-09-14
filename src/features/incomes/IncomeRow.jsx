@@ -9,7 +9,7 @@ import Modal from "../../components/ui/Modal";
 import IncomeForm from "./IncomeForm";
 
 const Amount = styled.p`
-  color: var(--color-brand-600);
+  color: var(--color-brand-500);
   font-weight: 500;
 `;
 
@@ -26,39 +26,37 @@ function IncomeRow({ income }) {
   const { title, description, amount, category, created_at, id } = income;
 
   return (
-    <Menus>
-      <Table.Row>
-        <Category>{category}</Category>
-        <Category>{title}</Category>
-        <Amount>{formatCurrency(amount)}</Amount>
-        <Category>{format(new Date(created_at), "PPP")}</Category>
-        <Description>
-          {description.length > 25
-            ? description.slice(0, 25) + " ..."
-            : description}
-        </Description>
+    <Table.Row>
+      <Category>{category}</Category>
+      <p>{title}</p>
+      <Amount>{formatCurrency(amount)}</Amount>
+      <p>{format(new Date(created_at), "PPP")}</p>
+      <Description>
+        {description.length > 25
+          ? description.slice(0, 25) + " ..."
+          : description}
+      </Description>
 
-        <Menus.Menu>
-          <Menus.Open />
-          <Menus.List>
-            <Modal.Open id={`edit-income-${id}`}>
-              <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
-            </Modal.Open>
-            <Menus.Item
-              icon={<HiTrash />}
-              onClick={() => deleteIncome(id)}
-              disabled={isDeleting}
-            >
-              Delete
-            </Menus.Item>
-          </Menus.List>
+      <Menus.Menu>
+        <Menus.Open id={`${income.id}`} />
+        <Menus.List id={`${income.id}`}>
+          <Modal.Open id={`edit-income-${id}`}>
+            <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
+          </Modal.Open>
+          <Menus.Item
+            icon={<HiTrash />}
+            onClick={() => deleteIncome(id)}
+            disabled={isDeleting}
+          >
+            Delete
+          </Menus.Item>
+        </Menus.List>
 
-          <Modal.Window id={`edit-income-${id}`}>
-            <IncomeForm income={income} />
-          </Modal.Window>
-        </Menus.Menu>
-      </Table.Row>
-    </Menus>
+        <Modal.Window id={`edit-income-${id}`}>
+          <IncomeForm income={income} />
+        </Modal.Window>
+      </Menus.Menu>
+    </Table.Row>
   );
 }
 

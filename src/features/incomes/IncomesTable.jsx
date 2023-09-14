@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
 import Table from "../../components/ui/Table";
-import { useIncomes } from "./useIncome";
+import { useIncomes } from "./useIncomes";
 import NoData from "../../components/ui/NoData";
 import IncomeRow from "./IncomeRow";
 import Pagination from "../../components/ui/Pagination";
@@ -15,7 +15,7 @@ function IncomesTable() {
     return <NoData resource="incomes" />;
   }
   if (count === 0) {
-    return <NoData resource="expenses" />;
+    return <NoData resource="incomes" />;
   }
 
   return (

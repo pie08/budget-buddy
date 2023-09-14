@@ -1,7 +1,7 @@
-import categoriesData from "../data/expenseCategories.json";
 import { addLocalStorage } from "../utils/addLocalStorage";
-import { getLocalStorage } from "../utils/getLocalStorage";
 import { supabase } from "./supabase";
+import expenseCategories from "../data/expenseCategories.json";
+import { getCategories } from "../features/categories/getCategories";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 export async function getExpenses({ page, filter, sortBy } = {}) {
@@ -30,12 +30,10 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
     throw error;
   }
 
-  const customCategories = getLocalStorage("customExpenseCategories").map(
-    (el) => {
-      return { name: el, colors: { light: "#f1f5f9", dark: "#334155" } };
-    }
+  const categories = getCategories(
+    "customExpenseCategories",
+    expenseCategories
   );
-  const allCategories = categoriesData.concat(customCategories);
 
   // create a category for all expenses with an unknown category
   const expenses = data
@@ -47,8 +45,7 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
     })
     .map((expense) => {
       const isUnknown =
-        allCategories.filter((cur) => cur.name === expense.category).length ===
-        0;
+        categories.filter((cur) => cur.name === expense.category).length === 0;
 
       if (isUnknown) {
         addLocalStorage(

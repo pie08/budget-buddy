@@ -3,7 +3,7 @@ import CategoryCard from "./CategoryCard";
 import { useExpenses } from "../expenses/useExpenses";
 import Spinner from "../../components/ui/Spinner";
 import AddCategory from "./AddCategory";
-import { useCategories } from "../../hooks/useCategories";
+import { useCategories } from "./getCategories";
 
 const Grid = styled.div`
   display: grid;

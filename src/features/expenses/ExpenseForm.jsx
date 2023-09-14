@@ -7,7 +7,8 @@ import { Button } from "../../components/ui/Button";
 import { useUpdateExpense } from "./useUpdateExpense";
 import Select from "../../components/form/Select";
 import { useCreateExpense } from "./useCreateExpense";
-import { useCategories } from "../../hooks/useCategories";
+import { getCategories } from "../categories/getCategories";
+import expenseCategories from "../../data/expenseCategories.json";
 
 function ExpenseForm({ onCloseModal, expense }) {
   const isUpdateSession = Boolean(expense);
@@ -21,7 +22,10 @@ function ExpenseForm({ onCloseModal, expense }) {
   });
   const { errors } = formState;
 
-  const categories = useCategories();
+  const categories = getCategories(
+    "customExpenseCategories",
+    expenseCategories
+  );
 
   function onSubmit(data) {
     if (isUpdateSession) {

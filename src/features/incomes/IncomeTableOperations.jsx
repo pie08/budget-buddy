@@ -1,18 +1,15 @@
 import styled from "styled-components";
 import ParamSelect from "../../components/ui/ParamSelect";
 import { getCategories } from "../categories/getCategories";
-import expenseCategories from "../../data/expenseCategories.json";
+import incomeCategories from "../../data/incomeCategories.json";
 
 const Operations = styled.div`
   display: flex;
   gap: 2.4rem;
 `;
 
-function ExpenseTableOperations() {
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategories
-  );
+function IncomeTableOperations() {
+  const categories = getCategories("customIncomeCategories", incomeCategories);
 
   const optionCategories = categories.map((category) => {
     return {
@@ -44,4 +41,4 @@ function ExpenseTableOperations() {
   );
 }
 
-export default ExpenseTableOperations;
+export default IncomeTableOperations;

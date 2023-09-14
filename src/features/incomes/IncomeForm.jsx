@@ -4,10 +4,11 @@ import FormRow from "../../components/form/FormRow";
 import Input from "../../components/form/Input";
 import Textarea from "../../components/form/Textarea";
 import { Button } from "../../components/ui/Button";
-import Select from "../../components/form/Select";
 import { useUpdateIncome } from "./useUpdateIncome";
+import Select from "../../components/form/Select";
 import { useCreateIncome } from "./useCreateIncome";
-import categoriesData from "../../data/incomeCategories.json";
+import { getCategories } from "../categories/getCategories";
+import incomeCategories from "../../data/incomeCategories.json";
 
 function IncomeForm({ onCloseModal, income }) {
   const isUpdateSession = Boolean(income);
@@ -20,6 +21,8 @@ function IncomeForm({ onCloseModal, income }) {
     defaultValues: isUpdateSession ? income : {},
   });
   const { errors } = formState;
+
+  const categories = getCategories("customIncomeCategories", incomeCategories);
 
   function onSubmit(data) {
     if (isUpdateSession) {
@@ -66,6 +69,7 @@ function IncomeForm({ onCloseModal, income }) {
         <Input
           disabled={isLoading}
           type="number"
+          step={0.01}
           id="amount"
           {...register("amount", {
             required: "This field is required",
@@ -80,13 +84,13 @@ function IncomeForm({ onCloseModal, income }) {
             required: true,
             validate: (value) => {
               return (
-                categoriesData.some((category) => category.name === value) ||
+                categories.some((category) => category.name === value) ||
                 "Invalid category"
               );
             },
           })}
         >
-          {categoriesData.map((category, i) => (
+          {categories.map((category, i) => (
             <option key={i} value={category.name}>
               {category.name[0].toUpperCase() + category.name.slice(1)}
             </option>

@@ -4,8 +4,13 @@ import { getLocalStorage } from "../utils/getLocalStorage";
 import { supabase } from "./supabase";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
-export async function getExpenses({ page }) {
+export async function getExpenses({ page, filter, sortBy } = {}) {
   let query = supabase.from("expenses").select("*", { count: "exact" });
+
+  // filter
+  if (filter) {
+    query = query.eq(filter.field, filter.value);
+  }
 
   // pagination
   if (page > 0) {
@@ -14,6 +19,9 @@ export async function getExpenses({ page }) {
 
     query = query.range(from, to);
   }
+
+  // sort
+  query = query.order(sortBy.field, { ascending: sortBy.isAscending });
 
   const { data, error, count } = await query;
 

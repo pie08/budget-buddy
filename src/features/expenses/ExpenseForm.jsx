@@ -7,8 +7,7 @@ import { Button } from "../../components/ui/Button";
 import { useUpdateExpense } from "./useUpdateExpense";
 import Select from "../../components/form/Select";
 import { useCreateExpense } from "./useCreateExpense";
-import categoriesData from "../../data/expenseCategories.json";
-import { getLocalStorage } from "../../utils/getLocalStorage";
+import { useCategories } from "../../hooks/useCategories";
 
 function ExpenseForm({ onCloseModal, expense }) {
   const isUpdateSession = Boolean(expense);
@@ -22,11 +21,7 @@ function ExpenseForm({ onCloseModal, expense }) {
   });
   const { errors } = formState;
 
-  const customCategories = getLocalStorage("customExpenseCategories");
-  const categoryNames = [
-    ...categoriesData.map((el) => el.name),
-    ...customCategories,
-  ];
+  const categories = useCategories();
 
   function onSubmit(data) {
     if (isUpdateSession) {
@@ -88,15 +83,15 @@ function ExpenseForm({ onCloseModal, expense }) {
             required: true,
             validate: (value) => {
               return (
-                categoryNames.some((name) => name === value) ||
+                categories.some((category) => category.name === value) ||
                 "Invalid category"
               );
             },
           })}
         >
-          {categoryNames.map((name, i) => (
-            <option key={i} value={name}>
-              {name[0].toUpperCase() + name.slice(1)}
+          {categories.map((category, i) => (
+            <option key={i} value={category.name}>
+              {category.name[0].toUpperCase() + category.name.slice(1)}
             </option>
           ))}
         </Select>

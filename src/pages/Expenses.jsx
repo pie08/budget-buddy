@@ -1,15 +1,21 @@
 import { Button } from "../components/ui/Button";
+import { Row } from "../components/ui/Row";
 import Heading from "../components/ui/Heading";
 import Menus from "../components/ui/Menus";
 import Modal from "../components/ui/Modal";
 import ExpenseForm from "../features/expenses/ExpenseForm";
 import ExpensesTable from "../features/expenses/ExpensesTable";
+import ExpenseTableOperations from "../features/expenses/ExpenseTableOperations";
 
 function Expenses() {
   return (
     <Modal>
       <Menus>
-        <Heading>Expenses</Heading>
+        <Row>
+          <Heading>Expenses</Heading>
+
+          <ExpenseTableOperations />
+        </Row>
 
         <ExpensesTable />
 

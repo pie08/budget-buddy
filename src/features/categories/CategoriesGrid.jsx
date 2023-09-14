@@ -2,9 +2,8 @@ import styled from "styled-components";
 import CategoryCard from "./CategoryCard";
 import { useExpenses } from "../expenses/useExpenses";
 import Spinner from "../../components/ui/Spinner";
-import categoriesData from "../../data/expenseCategories.json";
 import AddCategory from "./AddCategory";
-import { getLocalStorage } from "../../utils/getLocalStorage";
+import { useCategories } from "../../hooks/useCategories";
 
 const Grid = styled.div`
   display: grid;
@@ -20,17 +19,11 @@ function CategoriesGrid() {
   const { expenses, isLoading } = useExpenses({
     paginate: false,
   });
-  const customCategories = getLocalStorage("customExpenseCategories").map(
-    (el) => {
-      return { name: el, colors: { light: "#f1f5f9", dark: "#334155" } };
-    }
-  );
-  const allCategories = categoriesData.concat(customCategories);
+  const categories = useCategories();
 
   if (isLoading) return <Spinner />;
-  console.log(expenses);
 
-  const categories = allCategories
+  const finalCategories = categories
     .map((category) => {
       // Get expenses with the current category
       const filteredExpenses = expenses.filter(
@@ -53,7 +46,7 @@ function CategoriesGrid() {
 
   return (
     <Grid>
-      {categories.map(({ name, totalAmount, transactions, colors }, i) => (
+      {finalCategories.map(({ name, totalAmount, transactions, colors }, i) => (
         <CategoryCard
           key={i}
           name={name}

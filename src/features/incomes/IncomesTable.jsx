@@ -14,6 +14,9 @@ function IncomesTable() {
     toast.error("Could not get your incomes");
     return <NoData resource="incomes" />;
   }
+  if (count === 0) {
+    return <NoData resource="expenses" />;
+  }
 
   return (
     <Table columns="0.8fr 1fr 0.6fr 1fr 1fr .2fr">

@@ -1,9 +1,13 @@
+import { useExpenses } from "../expenses/useExpenses";
+import { useIncomes } from "../incomes/useIncomes";
+import { getCategories } from "./getCategories";
 import styled from "styled-components";
 import CategoryCard from "./CategoryCard";
-import { useExpenses } from "../expenses/useExpenses";
 import Spinner from "../../components/ui/Spinner";
 import AddCategory from "./AddCategory";
-import { useCategories } from "./getCategories";
+
+import expenseCategories from "../../data/expenseCategories.json";
+import incomeCategories from "../../data/incomeCategories.json";
 
 const Grid = styled.div`
   display: grid;
@@ -19,7 +23,10 @@ function CategoriesGrid() {
   const { expenses, isLoading } = useExpenses({
     paginate: false,
   });
-  const categories = useCategories();
+  const categories = getCategories(
+    "customExpenseCategories",
+    expenseCategories
+  );
 
   if (isLoading) return <Spinner />;
 

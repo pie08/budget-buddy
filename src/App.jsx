@@ -8,8 +8,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 
-// todo: create a reusable filter buttons component
-// todo: implement filtering on expense and income tables
+// todo:
 // todo: Custom categories must be stored in user meta data
 
 // Pages

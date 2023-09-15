@@ -23,7 +23,7 @@ export function useIncomes({ paginate = false } = {}) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["incomes", page, filter, sortBy],
+    queryKey: ["incomes", page, paginate, filter, sortBy],
     queryFn: () => getIncomes({ page: paginate ? page : 0, filter, sortBy }),
   });
 

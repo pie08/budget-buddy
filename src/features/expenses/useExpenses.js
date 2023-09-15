@@ -23,7 +23,7 @@ export function useExpenses({ paginate = false } = {}) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["expenses", page, filter, sortBy],
+    queryKey: ["expenses", page, paginate, filter, sortBy],
     queryFn: () => getExpenses({ page: paginate ? page : 0, filter, sortBy }),
   });
 

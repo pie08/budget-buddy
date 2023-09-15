@@ -20,6 +20,7 @@ const Description = styled.p`
 `;
 
 function TransactionRow({ transaction, formRender, onDelete }) {
+  console.log(transaction);
   const { title, description, amount, category, created_at, id } = transaction;
 
   return (
@@ -37,17 +38,21 @@ function TransactionRow({ transaction, formRender, onDelete }) {
       <Menus.Menu>
         <Menus.Open id={`${id}`} />
         <Menus.List id={`${id}`}>
-          <Modal.Open id={`edit-transaction-${id}`}>
-            <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
-          </Modal.Open>
+          {formRender && (
+            <Modal.Open id={`edit-transaction-${id}`}>
+              <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
+            </Modal.Open>
+          )}
           <Menus.Item icon={<HiTrash />} onClick={() => onDelete(id)}>
             Delete
           </Menus.Item>
         </Menus.List>
 
-        <Modal.Window id={`edit-transaction-${id}`}>
-          {formRender(transaction)}
-        </Modal.Window>
+        {formRender && (
+          <Modal.Window id={`edit-transaction-${id}`}>
+            {formRender(transaction)}
+          </Modal.Window>
+        )}
       </Menus.Menu>
     </Table.Row>
   );

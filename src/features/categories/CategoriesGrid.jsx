@@ -1,13 +1,8 @@
-import { useExpenses } from "../expenses/useExpenses";
-import { useIncomes } from "../incomes/useIncomes";
-import { getCategories } from "./getCategories";
 import styled from "styled-components";
 import CategoryCard from "./CategoryCard";
 import Spinner from "../../components/ui/Spinner";
 import AddCategory from "./AddCategory";
-
-import expenseCategories from "../../data/expenseCategories.json";
-import incomeCategories from "../../data/incomeCategories.json";
+import { useCategory } from "../../context/CategoryContext";
 
 const Grid = styled.div`
   display: grid;
@@ -21,23 +16,18 @@ const Grid = styled.div`
 // todo: Users must be able to choose either expenses or incomes for categories on categories page
 
 function CategoriesGrid() {
-  // Get all user expenses and generate an object with each expense name and relevent data
-  const { expenses, isLoading } = useExpenses();
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategories
-  );
+  const { data, categories, isLoading } = useCategory();
 
   if (isLoading) return <Spinner />;
 
   const finalCategories = categories
     .map((category) => {
       // Get expenses with the current category
-      const filteredExpenses = expenses.filter(
-        (expense) => expense.category === category.name
+      const filteredData = data.filter(
+        (transaction) => transaction.category === category.name
       );
 
-      const totalAmount = filteredExpenses.reduce(
+      const totalAmount = filteredData.reduce(
         (acc, cur) => acc + cur.amount,
         0
       );
@@ -45,7 +35,7 @@ function CategoriesGrid() {
       return {
         name: category.name,
         totalAmount,
-        transactions: filteredExpenses.length,
+        transactions: filteredData.length,
         colors: category.colors,
       };
     })

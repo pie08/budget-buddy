@@ -1,10 +1,17 @@
 import Heading from "../components/ui/Heading";
+import { Row } from "../components/ui/Row";
+import { CategoryProvider } from "../context/CategoryContext";
 import CategoriesGrid from "../features/categories/CategoriesGrid";
+import CategoryOperations from "../features/categories/CategoryOperations";
 
 function Categories() {
   return (
     <>
-      <Heading>Categories</Heading>
+      <Row>
+        <Heading>Categories</Heading>
+
+        <CategoryOperations />
+      </Row>
 
       <CategoriesGrid />
     </>

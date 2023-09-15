@@ -1,8 +1,11 @@
 [
   {
     "name": "salary",
-    "color": { "light": "#fee2e2", "dark": "#b91c1c" }
+    "colors": { "light": "#fee2e2", "dark": "#b91c1c" }
   },
-  { "name": "investments", "color": { "light": "#fee2e2", "dark": "#b91c1c" } },
-  { "name": "other", "color": { "light": "#fee2e2", "dark": "#b91c1c" } }
+  {
+    "name": "investments",
+    "colors": { "light": "#fee2e2", "dark": "#b91c1c" }
+  },
+  { "name": "other", "colors": { "light": "#fee2e2", "dark": "#b91c1c" } }
 ]

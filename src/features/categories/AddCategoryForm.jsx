@@ -3,6 +3,7 @@ import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { addLocalStorage } from "../../utils/addLocalStorage";
+import { useCategory } from "../../context/CategoryContext";
 
 const CardForm = styled.div`
   display: inline-block;
@@ -44,6 +45,7 @@ const Error = styled.p`
 `;
 
 function AddCategoryForm({ onClose }) {
+  const { localStorageKey } = useCategory();
   const [categoryName, setCategoryName] = useState("");
   const [error, setError] = useState("");
 
@@ -63,7 +65,7 @@ function AddCategoryForm({ onClose }) {
     e.preventDefault();
     if (error) return;
 
-    addLocalStorage("customExpenseCategories", [], categoryName.toLowerCase());
+    addLocalStorage(localStorageKey, [], categoryName.toLowerCase());
     toast.success("Category successfully created");
     onClose();
   }

@@ -13,10 +13,8 @@ const Grid = styled.div`
   overflow: auto;
 `;
 
-// todo: Users must be able to choose either expenses or incomes for categories on categories page
-
 function CategoriesGrid() {
-  const { data, categories, isLoading } = useCategory();
+  const { data, categories, isLoading, transactionType } = useCategory();
 
   if (isLoading) return <Spinner />;
 
@@ -50,6 +48,7 @@ function CategoriesGrid() {
           amount={totalAmount}
           numTransactions={transactions}
           colors={colors}
+          transactionType={transactionType}
         />
       ))}
       <AddCategory />

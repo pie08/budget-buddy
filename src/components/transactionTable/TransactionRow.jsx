@@ -7,7 +7,7 @@ import Menus from "../../components/ui/Menus";
 import Modal from "../../components/ui/Modal";
 
 const Amount = styled.p`
-  color: var(--color-red-700);
+  color: ${(props) => props.$color};
   font-weight: 500;
 `;
 
@@ -19,15 +19,14 @@ const Description = styled.p`
   overflow: auto;
 `;
 
-function TransactionRow({ transaction, formRender, onDelete }) {
-  console.log(transaction);
+function TransactionRow({ transaction, formRender, onDelete, amountColor }) {
   const { title, description, amount, category, created_at, id } = transaction;
 
   return (
     <Table.Row>
       <Category>{category}</Category>
       <p>{title}</p>
-      <Amount>{formatCurrency(amount)}</Amount>
+      <Amount $color={amountColor}>{formatCurrency(amount)}</Amount>
       <p>{format(new Date(created_at), "PPP")}</p>
       <Description>
         {description.length > 25
@@ -43,9 +42,11 @@ function TransactionRow({ transaction, formRender, onDelete }) {
               <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
             </Modal.Open>
           )}
-          <Menus.Item icon={<HiTrash />} onClick={() => onDelete(id)}>
-            Delete
-          </Menus.Item>
+          {onDelete && (
+            <Menus.Item icon={<HiTrash />} onClick={() => onDelete(id)}>
+              Delete
+            </Menus.Item>
+          )}
         </Menus.List>
 
         {formRender && (

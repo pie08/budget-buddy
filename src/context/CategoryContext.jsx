@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import { useExpenses } from "../features/expenses/useExpenses";
 import { useIncomes } from "../features/incomes/useIncomes";
 import expenseCategoriesBase from "../data/expenseCategories.json";
@@ -6,10 +6,13 @@ import incomeCategoriesBase from "../data/incomeCategories.json";
 import { getCategories } from "../features/categories/getCategories";
 import { useDeleteExpense } from "../features/expenses/useDeleteExpense";
 import { useDeleteIncome } from "../features/incomes/useDeleteIncome";
+import { useSearchParams } from "react-router-dom";
 
 const CategoryContext = createContext();
 
 export function CategoryProvider({ children }) {
+  const [searchParams] = useSearchParams();
+
   const {
     expenses,
     isLoading: isLoadingExpenses,
@@ -24,28 +27,27 @@ export function CategoryProvider({ children }) {
   const { deleteIncome } = useDeleteIncome();
   const isLoading = isLoadingExpenses || isLoadingIncomes;
 
-  const [selectedData, setSelectedData] = useState("expenses");
+  const transactionType = searchParams.get("transactionType") || "expenses";
   const categories =
-    selectedData === "expenses"
+    transactionType === "expenses"
       ? getCategories("customExpenseCategories", expenseCategoriesBase)
       : getCategories("customIncomeCategories", incomeCategoriesBase);
-  const data = selectedData === "expenses" ? expenses : incomes;
-  const count = selectedData === "expenses" ? countExpense : countIncome;
+  const data = transactionType === "expenses" ? expenses : incomes;
+  const count = transactionType === "expenses" ? countExpense : countIncome;
   const localStorageKey =
-    selectedData === "expenses"
+    transactionType === "expenses"
       ? "customExpenseCategories"
       : "customIncomeCategories";
   const deleteTransaction =
-    selectedData === "expenses" ? deleteExpense : deleteIncome;
+    transactionType === "expenses" ? deleteExpense : deleteIncome;
 
   return (
     <CategoryContext.Provider
       value={{
         data,
         categories,
-        selectedData,
-        setSelectedData,
         isLoading,
+        transactionType,
         deleteTransaction,
         count,
         localStorageKey,

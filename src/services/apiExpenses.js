@@ -60,14 +60,31 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
   return { expenses, count };
 }
 
-export async function getExpensesById(id) {
-  const { data, error } = await supabase.from("expenses").eq("id", id).select();
+export async function getExpensesByCategory({ category, page, sortBy }) {
+  let query = supabase
+    .from("expenses")
+    .select("*", { count: "exact" })
+    .eq("category", category);
+
+  // pagination
+  if (page > 0) {
+    const from = pageSize * page - pageSize;
+    const to = pageSize * page - 1;
+
+    query = query.range(from, to);
+  }
+
+  // sort
+  query = query.order(sortBy.field, { ascending: sortBy.isAscending });
+
+  const { data, count, error } = await query;
 
   if (error) {
     console.error(error);
     throw error;
   }
-  return data;
+
+  return { data, count };
 }
 
 export async function createExpense(newExpense) {

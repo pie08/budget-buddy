@@ -30,14 +30,20 @@ const Amount = styled.span`
   font-weight: 400;
 `;
 
-function CategoryCard({ name, amount, numTransactions, colors }) {
+function CategoryCard({
+  name,
+  amount,
+  numTransactions,
+  colors,
+  transactionType,
+}) {
   const navigate = useNavigate();
 
   return (
     <Card
       $backgroundColor={colors.light}
       $borderColor={colors.dark}
-      onClick={() => navigate(`${name}`)}
+      onClick={() => navigate(`/${transactionType}?category=${name}`)}
     >
       <Heading>
         {name} <Amount>{formatCurrency(Number(amount))}</Amount>

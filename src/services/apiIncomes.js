@@ -57,14 +57,31 @@ export async function getIncomes({ page, filter, sortBy } = {}) {
   return { incomes, count };
 }
 
-export async function getIncomesById(id) {
-  const { data, error } = await supabase.from("incomes").eq("id", id).select();
+export async function getIncomesByCategory({ category, page, sortBy }) {
+  let query = supabase
+    .from("incomes")
+    .select("*", { count: "exact" })
+    .eq("category", category);
+
+  // pagination
+  if (page > 0) {
+    const from = pageSize * page - pageSize;
+    const to = pageSize * page - 1;
+
+    query = query.range(from, to);
+  }
+
+  // sort
+  query = query.order(sortBy.field, { ascending: sortBy.isAscending });
+
+  const { data, count, error } = await query;
 
   if (error) {
     console.error(error);
     throw error;
   }
-  return data;
+
+  return { data, count };
 }
 
 export async function createIncome(newIncome) {

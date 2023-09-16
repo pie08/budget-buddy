@@ -4,7 +4,7 @@ import Heading from "../components/ui/Heading";
 import Menus from "../components/ui/Menus";
 import Modal from "../components/ui/Modal";
 import ExpenseForm from "../features/expenses/ExpenseForm";
-import ExpensesTable from "../features/expenses/ExpensesTable";
+import ExpensesLayout from "../features/expenses/ExpensesLayout";
 import ExpenseTableOperations from "../features/expenses/ExpenseTableOperations";
 
 function Expenses() {
@@ -17,7 +17,7 @@ function Expenses() {
           <ExpenseTableOperations />
         </Row>
 
-        <ExpensesTable />
+        <ExpensesLayout />
 
         <span>
           <Modal.Open id="new-expense">

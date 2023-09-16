@@ -1,15 +1,19 @@
+import { useSearchParams } from "react-router-dom";
 import Select from "../../components/form/Select";
-import { useCategory } from "../../context/CategoryContext";
 
 function CategoryOperations() {
-  const { setSelectedData, selectedData } = useCategory();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   function handleChange(e) {
-    setSelectedData(e.target.value);
+    searchParams.set("transactionType", e.target.value);
+    setSearchParams(searchParams);
   }
 
   return (
-    <Select value={selectedData} onChange={handleChange}>
+    <Select
+      defaultValue={searchParams.get("transactionType") || "expenses"}
+      onChange={handleChange}
+    >
       <option value="expenses">Filter by expenses</option>
       <option value="incomes">Filter by incomes</option>
     </Select>

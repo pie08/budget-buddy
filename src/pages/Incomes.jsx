@@ -4,7 +4,7 @@ import Heading from "../components/ui/Heading";
 import Menus from "../components/ui/Menus";
 import Modal from "../components/ui/Modal";
 import IncomeForm from "../features/incomes/IncomeForm";
-import IncomesTable from "../features/incomes/IncomesTable";
+import IncomesLayout from "../features/incomes/IncomesLayout";
 import IncomeTableOperations from "../features/incomes/IncomeTableOperations";
 
 function Incomes() {
@@ -17,7 +17,7 @@ function Incomes() {
           <IncomeTableOperations />
         </Row>
 
-        <IncomesTable />
+        <IncomesLayout />
 
         <span>
           <Modal.Open id="new-income">

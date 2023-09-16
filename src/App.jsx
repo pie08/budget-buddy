@@ -9,17 +9,14 @@ import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import { CategoryProvider } from "./context/CategoryContext";
 
-// todo: Users must be able to choose either expenses or incomes for categories on categories page
-// todo: Custom categories must be stored in user meta data
+// todo: add authentication and authorization
+// todo: user transaction data will need a uid
 
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Expenses = lazy(() => import("./pages/Expenses"));
 const Incomes = lazy(() => import("./pages/Incomes"));
 const Categories = lazy(() => import("./pages/Categories"));
-const CategoryDetails = lazy(() =>
-  import("./features/categories/CategoryDetails")
-);
 const Budget = lazy(() => import("./pages/Budget"));
 const Account = lazy(() => import("./pages/Account"));
 const Login = lazy(() => import("./pages/Login"));
@@ -50,10 +47,6 @@ function App() {
                 <Route path="/expenses" element={<Expenses />} />
                 <Route path="/incomes" element={<Incomes />} />
                 <Route path="/categories" element={<Categories />} />
-                <Route
-                  path="/categories/:category"
-                  element={<CategoryDetails />}
-                />
                 <Route path="/budget" element={<Budget />} />
                 <Route path="/budget/:id" />
                 <Route path="/account" element={<Account />} />

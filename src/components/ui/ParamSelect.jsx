@@ -2,16 +2,16 @@ import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Select = styled.select`
-  padding: 0.6rem 1rem;
+  padding: 0.8rem 1.2rem;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-gray-0);
   border: 1px solid var(--color-gray-200);
   font-size: 1.4rem;
 `;
 
-function ParamSelect({ options, fieldName }) {
+function ParamSelect({ options, fieldName, defaultValue }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get(fieldName) || "all";
+  const query = searchParams.get(fieldName) || defaultValue;
 
   function handleChange(e) {
     searchParams.set(fieldName, e.target.value);

@@ -29,6 +29,7 @@ function ExpenseTableOperations() {
           ...optionCategories,
         ]}
         fieldName="category"
+        defaultValue="all"
       />
 
       <ParamSelect
@@ -39,6 +40,7 @@ function ExpenseTableOperations() {
           { value: "amount-desc", label: "Sort by amount (descending)" },
         ]}
         fieldName="sortBy"
+        defaultValue="created_at-asc"
       />
     </Operations>
   );

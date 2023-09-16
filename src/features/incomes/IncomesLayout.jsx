@@ -7,6 +7,8 @@ import { useSearchParams } from "react-router-dom";
 import TransactionChart from "../../components/transactionTable/TransactionChart";
 import { useIncomes } from "./useIncomes";
 import { useDeleteIncome } from "./useDeleteIncome";
+import { Row } from "../../components/ui/Row";
+import TransactionChartOperations from "../../components/transactionTable/TransactionChartOperations";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 function IncomesLayout() {
@@ -38,6 +40,11 @@ function IncomesLayout() {
         onDelete={deleteIncome}
         amountColor="var(--color-brand-500)"
       />
+
+      <Row>
+        <div></div>
+        <TransactionChartOperations />
+      </Row>
 
       <TransactionChart data={incomes} numDays={7} />
     </>

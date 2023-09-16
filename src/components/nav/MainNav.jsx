@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 import {
   HiOutlineArchiveBox,
@@ -16,7 +16,7 @@ const NavList = styled.ul`
   list-style: none;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: var(--color-gray-700);
   font-weight: 500;
@@ -35,11 +35,13 @@ const StyledLink = styled(Link)`
     color: var(--color-gray-400);
   }
 
-  &:hover {
+  &:hover,
+  &.active {
     background-color: var(--color-gray-50);
   }
 
-  &:hover svg {
+  &:hover svg,
+  &.active svg {
     color: var(--color-brand-600);
   }
 `;

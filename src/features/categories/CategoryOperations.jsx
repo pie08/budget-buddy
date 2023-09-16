@@ -1,22 +1,19 @@
 import { useSearchParams } from "react-router-dom";
-import Select from "../../components/form/Select";
+import ParamSelect from "../../components/ui/ParamSelect";
 
 function CategoryOperations() {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  function handleChange(e) {
-    searchParams.set("transactionType", e.target.value);
-    setSearchParams(searchParams);
-  }
+  const defaultValue = searchParams.get("transactionType") || "expenses";
 
   return (
-    <Select
-      defaultValue={searchParams.get("transactionType") || "expenses"}
-      onChange={handleChange}
-    >
-      <option value="expenses">Filter by expenses</option>
-      <option value="incomes">Filter by incomes</option>
-    </Select>
+    <ParamSelect
+      fieldName="transactionType"
+      defaultValue={defaultValue}
+      options={[
+        { value: "expenses", label: "Filter by expenses" },
+        { value: "incomes", label: "Filter by incomes" },
+      ]}
+    />
   );
 }
 

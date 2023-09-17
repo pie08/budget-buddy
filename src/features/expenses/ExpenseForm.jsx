@@ -55,6 +55,10 @@ function ExpenseForm({ onCloseModal, expense }) {
           id="title"
           {...register("title", {
             required: "This field is required",
+            maxLength: {
+              value: 20,
+              message: "Too long!",
+            },
           })}
         />
       </FormRow>
@@ -64,7 +68,10 @@ function ExpenseForm({ onCloseModal, expense }) {
           type="text"
           id="description"
           {...register("description", {
-            required: "This field is required",
+            maxLength: {
+              value: 200,
+              message: "Too long!",
+            },
           })}
         />
       </FormRow>

@@ -52,6 +52,10 @@ function IncomeForm({ onCloseModal, income }) {
           id="title"
           {...register("title", {
             required: "This field is required",
+            maxLength: {
+              value: 20,
+              message: "Too long!",
+            },
           })}
         />
       </FormRow>
@@ -61,7 +65,10 @@ function IncomeForm({ onCloseModal, income }) {
           type="text"
           id="description"
           {...register("description", {
-            required: "This field is required",
+            maxLength: {
+              value: 200,
+              message: "Too long!",
+            },
           })}
         />
       </FormRow>

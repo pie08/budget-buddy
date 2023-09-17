@@ -21,7 +21,8 @@ export async function getIncomes({ page, filter, sortBy } = {}) {
   }
 
   // sort
-  query = query.order(sortBy.field, { ascending: sortBy.isAscending });
+  if (sortBy)
+    query = query.order(sortBy.field, { ascending: sortBy.isAscending });
 
   const { data, error, count } = await query;
 

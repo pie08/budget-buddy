@@ -14,6 +14,7 @@ const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 function IncomesLayout() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const numDays = searchParams.get("last") || 7;
 
   const { incomes, isLoading, error, count } = useIncomes();
   const { deleteIncome, isDeleting } = useDeleteIncome();
@@ -46,7 +47,7 @@ function IncomesLayout() {
         <TransactionChartOperations />
       </Row>
 
-      <TransactionChart data={incomes} numDays={7} />
+      <TransactionChart data={incomes} numDays={numDays} />
     </>
   );
 }

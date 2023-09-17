@@ -9,13 +9,12 @@ import { useSearchParams } from "react-router-dom";
 import TransactionChart from "../../components/transactionTable/TransactionChart";
 import TransactionChartOperations from "../../components/transactionTable/TransactionChartOperations";
 import { Row } from "../../components/ui/Row";
-import { intervalToDuration, isAfter } from "date-fns";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 function ExpensesLayout() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
-  let numDays = searchParams.get("last") || 7;
+  const numDays = searchParams.get("last") || 7;
 
   const { expenses, isLoading, error, count } = useExpenses();
   const { deleteExpense, isDeleting } = useDeleteExpense();

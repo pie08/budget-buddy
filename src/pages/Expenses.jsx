@@ -23,10 +23,10 @@ function Expenses() {
           <Modal.Open id="new-expense">
             <Button>Add expense</Button>
           </Modal.Open>
-          <Modal.Window id="new-expense">
-            <ExpenseForm />
-          </Modal.Window>
         </span>
+        <Modal.Window id="new-expense">
+          <ExpenseForm />
+        </Modal.Window>
       </Menus>
     </Modal>
   );

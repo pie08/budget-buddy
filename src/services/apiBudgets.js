@@ -30,3 +30,14 @@ export async function getBudgets({ page, filter, sortBy } = {}) {
 
   return { data, count };
 }
+
+export async function createBudget(newBudget) {
+  const { data, error } = await supabase.from("budgets").insert(newBudget);
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return data;
+}

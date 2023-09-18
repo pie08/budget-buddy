@@ -16,7 +16,6 @@ function BudgetsTable() {
   if (count === 0) {
     return <NoData resource="budgets" />;
   }
-  console.log(budgets);
 
   return (
     <Table columns=".8fr .6fr 1fr 1fr 1fr .2fr">
@@ -25,7 +24,7 @@ function BudgetsTable() {
         <div>Spending Limit</div>
         <div>Start date</div>
         <div>End date</div>
-        <div>Description</div>
+        <div>Status</div>
         <div></div>
       </Table.Header>
 

@@ -11,6 +11,7 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 999;
 `;
 
 const StyledWindow = styled.div`
@@ -21,6 +22,7 @@ const StyledWindow = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 9999;
 `;
 
 const WindowClose = styled.button`

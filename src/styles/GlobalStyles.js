@@ -31,6 +31,12 @@ const GlobalStyles = createGlobalStyle`
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
 
+  --color-blue-100: #cffafe;
+  --color-blue-600: #0891b2;
+
+  --color-yellow-100: #fef9c3;
+  --color-yellow-700: #b45309;
+
   --border-radius-sm: 4px;
   --border-radius-md: 6px;
 
@@ -66,6 +72,10 @@ button {
   &:has(svg) {
     line-height: 0;
   }
+}
+
+select {
+  cursor: pointer;
 }
 
 input,

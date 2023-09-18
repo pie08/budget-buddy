@@ -82,21 +82,7 @@ function AddBudgetForm({ onCloseModal }) {
   );
 
   function onSubmit(data) {
-    // ! refactor this validation
-    // using state variable didnt work due to batching
-
-    let error = "";
-    setCategoryBudgetsError(error);
-    categoryBudgets.forEach((el, i) => {
-      // delete ones whos category does not exists (Select...)
-      if (+el.amount <= 0) error = "Amount must be above 0";
-      if (
-        categories.filter((category) => category.name === el.category)
-          .length === 0
-      )
-        error = "Must select a category";
-    });
-    if (error !== "") return setCategoryBudgetsError(error);
+    if (categoryBudgetsError) return;
 
     // create budget data
     const newBudget = {
@@ -123,6 +109,22 @@ function AddBudgetForm({ onCloseModal }) {
   function handleDeleteCategoryBudget(index) {
     dispatch({ type: "deleteCategoryBudget", payload: index });
   }
+
+  useEffect(
+    function () {
+      setCategoryBudgetsError("");
+      categoryBudgets.forEach((el, i) => {
+        // delete ones whos category does not exists (Select...)
+        if (+el.amount <= 0) setCategoryBudgetsError("Amount must be above 0");
+        if (
+          categories.filter((category) => category.name === el.category)
+            .length === 0
+        )
+          setCategoryBudgetsError("Must select a category");
+      });
+    },
+    [categoryBudgets, categories]
+  );
 
   return (
     <Form $type="modal" onSubmit={handleSubmit(onSubmit)}>

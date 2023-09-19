@@ -7,7 +7,6 @@ import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
-import { CategoryProvider } from "./context/CategoryContext";
 
 // todo: add authentication and authorization
 // todo: user transaction data will need a uid
@@ -38,25 +37,23 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
 
       <BrowserRouter>
-        <CategoryProvider>
-          <Suspense fallback={<SpinnerFullPage />}>
-            <Routes>
-              <Route element={<AppLayout />}>
-                <Route index element={<Navigate to="/dashboard" />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/expenses" element={<Expenses />} />
-                <Route path="/incomes" element={<Incomes />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/budget" element={<Budget />} />
-                <Route path="/budget/:id" />
-                <Route path="/account" element={<Account />} />
-              </Route>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </CategoryProvider>
+        <Suspense fallback={<SpinnerFullPage />}>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route index element={<Navigate to="/dashboard" />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/incomes" element={<Incomes />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/budget" element={<Budget />} />
+              <Route path="/budget/:id" />
+              <Route path="/account" element={<Account />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
 
       <Toaster

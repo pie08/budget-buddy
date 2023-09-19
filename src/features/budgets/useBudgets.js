@@ -8,6 +8,11 @@ export function useBudgets({ paginate = false } = {}) {
   // paginate
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
+  // sorting
+  const sortByRaw = searchParams.get("sortBy") || "startDate-asc";
+  const [sortByField, sortByDirection] = sortByRaw.split("-");
+  const sortBy = { field: sortByField, isAscending: sortByDirection === "asc" };
+
   // filtering
   const filterValue = searchParams.get("status") || "all";
   let filter;
@@ -46,8 +51,8 @@ export function useBudgets({ paginate = false } = {}) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["budgets", page, filter],
-    queryFn: () => getBudgets({ page: paginate ? page : 0, filter }),
+    queryKey: ["budgets", page, filter, sortBy],
+    queryFn: () => getBudgets({ page: paginate ? page : 0, filter, sortBy }),
   });
 
   return { budgets, count, isLoading, error };

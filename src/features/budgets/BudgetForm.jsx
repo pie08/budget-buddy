@@ -11,6 +11,8 @@ import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
 import { isAfter, isBefore } from "date-fns";
 import { useCreateBudget } from "./useCreateBudget";
+import { useUpdateBudget } from "./useUpdateBudget";
+import toast from "react-hot-toast";
 
 const AddCategories = styled.ul`
   display: flex;
@@ -67,13 +69,30 @@ function reducer(state, action) {
   }
 }
 
-function AddBudgetForm({ onCloseModal }) {
+function BudgetForm({ onCloseModal, budget }) {
+  const isUpdateSession = Boolean(budget);
+
+  const { updateBudget, isUpdating } = useUpdateBudget();
   const { createBudget, isCreating } = useCreateBudget();
+  const isLoading = isCreating || isUpdating;
 
   const [categoryBudgets, dispatch] = useReducer(reducer, []);
   const [categoryBudgetsError, setCategoryBudgetsError] = useState("");
 
-  const { register, handleSubmit, formState, reset, getValues } = useForm();
+  const { register, handleSubmit, formState, reset, getValues } = useForm({
+    defaultValues: isUpdateSession
+      ? Object.assign(
+          {},
+          budget,
+          {
+            startDate: (budget.startDate = budget.startDate.split("T")[0]),
+          },
+          {
+            endDate: (budget.endDate = budget.endDate.split("T")[0]),
+          }
+        )
+      : {},
+  });
   const { errors } = formState;
 
   const categories = getCategories(
@@ -89,11 +108,22 @@ function AddBudgetForm({ onCloseModal }) {
       ...data,
       categories: categoryBudgets,
     };
-    createBudget(newBudget, {
-      onSuccess: () => {
-        onCloseModal();
-      },
-    });
+    if (isUpdateSession) {
+      updateBudget(
+        { data: newBudget, id: budget.id },
+        {
+          onSuccess: () => {
+            onCloseModal();
+          },
+        }
+      );
+    } else {
+      createBudget(newBudget, {
+        onSuccess: () => {
+          onCloseModal();
+        },
+      });
+    }
   }
 
   function handleUpdateCategoryBudget(index, newValue) {
@@ -130,6 +160,7 @@ function AddBudgetForm({ onCloseModal }) {
     <Form $type="modal" onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Title" error={errors.title?.message}>
         <Input
+          disabled={isLoading}
           type="text"
           id="title"
           {...register("title", {
@@ -144,7 +175,7 @@ function AddBudgetForm({ onCloseModal }) {
 
       <FormRow label="Description" error={errors.description?.message}>
         <Input
-          disabled={isCreating}
+          disabled={isLoading}
           type="text"
           id="description"
           {...register("description", {
@@ -158,7 +189,7 @@ function AddBudgetForm({ onCloseModal }) {
 
       <FormRow label="Start date" error={errors.startDate?.message}>
         <Input
-          disabled={isCreating}
+          disabled={isLoading}
           type="date"
           id="startDate"
           {...register("startDate", {
@@ -169,7 +200,7 @@ function AddBudgetForm({ onCloseModal }) {
 
       <FormRow label="End date" error={errors.endDate?.message}>
         <Input
-          disabled={isCreating}
+          disabled={isLoading}
           type="date"
           id="endDate"
           {...register("endDate", {
@@ -187,7 +218,7 @@ function AddBudgetForm({ onCloseModal }) {
 
       <FormRow label="Spending limit" error={errors.spendingLimit?.message}>
         <Input
-          disabled={isCreating}
+          disabled={isLoading}
           type="number"
           id="spendingLimit"
           {...register("spendingLimit", {
@@ -269,4 +300,4 @@ function AddBudgetForm({ onCloseModal }) {
   );
 }
 
-export default AddBudgetForm;
+export default BudgetForm;

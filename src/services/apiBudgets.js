@@ -6,11 +6,18 @@ export async function getBudgets({ page, filter, sortBy } = {}) {
 
   // filter
   if (filter) {
-    query = query.eq(filter.field, filter.value);
+    console.log(Array.isArray(filter));
+    if (Array.isArray(filter)) {
+      filter.forEach(
+        ({ method, field, value }) => (query = query[method](field, value))
+      );
+    } else {
+      query = query[filter.method](filter.field, filter.value);
+    }
   }
 
   // pagination
-  if (page > 0) {
+  if (page) {
     const from = pageSize * page - pageSize;
     const to = pageSize * page - 1;
 
@@ -40,4 +47,29 @@ export async function createBudget(newBudget) {
   }
 
   return data;
+}
+
+export async function deleteBudget(id) {
+  const { error } = await supabase.from("budgets").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+  return;
+}
+
+export async function updateBudget({ data, id }) {
+  const { data: budget, error } = await supabase
+    .from("budgets")
+    .update(data)
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return budget;
 }

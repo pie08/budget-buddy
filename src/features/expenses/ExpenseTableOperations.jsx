@@ -24,23 +24,21 @@ function ExpenseTableOperations() {
   return (
     <Operations>
       <ParamSelect
+        fieldName="category"
         options={[
           { value: "all", label: "All categories" },
           ...optionCategories,
         ]}
-        fieldName="category"
-        defaultValue="all"
       />
 
       <ParamSelect
+        fieldName="sortBy"
         options={[
           { value: "created_at-asc", label: "Sort by date (ascending)" },
           { value: "created_at-desc", label: "Sort by date (descending)" },
           { value: "amount-asc", label: "Sort by amount (ascending)" },
           { value: "amount-desc", label: "Sort by amount (descending)" },
         ]}
-        fieldName="sortBy"
-        defaultValue="created_at-asc"
       />
     </Operations>
   );

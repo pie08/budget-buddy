@@ -18,6 +18,8 @@ const StyledWindow = styled.div`
   background-color: var(--color-gray-0);
   border-radius: var(--border-radius-sm);
   padding: 3.2rem 4.8rem;
+  max-height: 95vh;
+  overflow: auto;
   position: fixed;
   top: 50%;
   left: 50%;

@@ -2,10 +2,13 @@ import { format, isFuture, isPast, isToday } from "date-fns";
 import Table from "../../components/ui/Table";
 import { formatCurrency } from "../../utils/Helpers";
 import Menus from "../../components/ui/Menus";
-import { HiOutlineEye } from "react-icons/hi2";
+import { HiOutlineEye, HiPencil, HiTrash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Tag from "../../components/ui/Tag";
+import { useDeleteBudget } from "./useDeleteBudget";
+import Modal from "../../components/ui/Modal";
+import BudgetForm from "./BudgetForm";
 
 const SpendingLimit = styled.p`
   font-weight: 500;
@@ -15,6 +18,7 @@ const SpendingLimit = styled.p`
 function BudgetsTableRow({ budget }) {
   const { title, startDate, endDate, spendingLimit, id } = budget;
   const navigate = useNavigate();
+  const { deleteBudget, isDeleting } = useDeleteBudget();
 
   // calculate status
   let status = "active";
@@ -56,8 +60,22 @@ function BudgetsTableRow({ budget }) {
           <Menus.Item icon={<HiOutlineEye />} onClick={() => navigate(`${id}`)}>
             See more
           </Menus.Item>
+          <Modal.Open id={`update-budget-${id}`}>
+            <Menus.Item icon={<HiPencil />}>Edit</Menus.Item>
+          </Modal.Open>
+          <Menus.Item
+            icon={<HiTrash />}
+            onClick={() => deleteBudget(id)}
+            disabled={isDeleting}
+          >
+            Delete
+          </Menus.Item>
         </Menus.List>
       </Menus.Menu>
+
+      <Modal.Window id={`update-budget-${id}`}>
+        <BudgetForm budget={budget} />
+      </Modal.Window>
     </Table.Row>
   );
 }

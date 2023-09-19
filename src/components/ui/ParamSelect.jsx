@@ -9,9 +9,9 @@ const Select = styled.select`
   font-size: 1.4rem;
 `;
 
-function ParamSelect({ options, fieldName, defaultValue }) {
+function ParamSelect({ options, fieldName }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get(fieldName) || defaultValue;
+  const query = searchParams.get(fieldName) || "";
 
   function handleChange(e) {
     searchParams.set(fieldName, e.target.value);

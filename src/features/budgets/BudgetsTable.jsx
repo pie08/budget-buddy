@@ -4,9 +4,10 @@ import { useBudgets } from "./useBudgets";
 import NoData from "../../components/ui/NoData";
 import Table from "../../components/ui/Table";
 import BudgetsTableRow from "./BudgetsTableRow";
+import Pagination from "../../components/ui/Pagination";
 
 function BudgetsTable() {
-  const { budgets, count, isLoading, error } = useBudgets();
+  const { budgets, count, isLoading, error } = useBudgets({ paginate: true });
 
   if (isLoading) return <Spinner />;
   if (error) {
@@ -32,6 +33,10 @@ function BudgetsTable() {
         data={budgets}
         render={(budget) => <BudgetsTableRow budget={budget} key={budget.id} />}
       />
+
+      <Table.Footer>
+        <Pagination count={count} />
+      </Table.Footer>
     </Table>
   );
 }

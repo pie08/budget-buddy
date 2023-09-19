@@ -2,9 +2,10 @@ import { Button } from "../components/ui/Button";
 import Heading from "../components/ui/Heading";
 import Menus from "../components/ui/Menus";
 import { Row } from "../components/ui/Row";
-import AddBudgetForm from "../features/budgets/AddBudgetForm";
+import BudgetForm from "../features/budgets/BudgetForm";
 import BudgetsTable from "../features/budgets/BudgetsTable";
 import Modal from "../components/ui/Modal";
+import BudgetsTableOperations from "../features/budgets/BudgetsTableOperations";
 
 function Budget() {
   return (
@@ -12,7 +13,7 @@ function Budget() {
       <Menus>
         <Row>
           <Heading>Budgets</Heading>
-          <p>operations</p>
+          <BudgetsTableOperations />
         </Row>
 
         <BudgetsTable />
@@ -23,7 +24,7 @@ function Budget() {
           </Modal.Open>
         </span>
         <Modal.Window id="new-budget">
-          <AddBudgetForm />
+          <BudgetForm />
         </Modal.Window>
       </Menus>
     </Modal>

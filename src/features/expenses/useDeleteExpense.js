@@ -12,7 +12,6 @@ export function useDeleteExpense() {
       toast.success("Expense deleted successfully");
     },
     onError: (err) => {
-      console.error(err);
       toast.error("Could not delete your expense");
     },
   });

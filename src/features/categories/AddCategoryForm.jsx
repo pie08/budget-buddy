@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { addLocalStorage } from "../../utils/addLocalStorage";
+import { addCustomCategory } from "./addCustomCategory";
 import { useCategory } from "../../context/CategoryContext";
 
 const CardForm = styled.div`
@@ -55,17 +55,18 @@ function AddCategoryForm({ onClose }) {
     function () {
       if (categoryName.split(" ").length > 1)
         setError("Category name cannot include spaces");
-      else if (categoryName.length > 16) setError("Category name too long");
+      else if (categoryName.length > 20) setError("Category name too long");
       else setError("");
     },
     [categoryName]
   );
 
+  // todo: prevent dupilcate categories
   function handleSubmit(e) {
     e.preventDefault();
     if (error) return;
 
-    addLocalStorage(localStorageKey, [], categoryName.toLowerCase());
+    addCustomCategory(localStorageKey, categoryName.toLowerCase());
     toast.success("Category successfully created");
     onClose();
   }

@@ -7,6 +7,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
+import BudgetsDetail from "./features/budgets/detail/BudgetsDetail";
 
 // todo: add authentication and authorization
 // todo: user transaction data will need a uid
@@ -46,7 +47,7 @@ function App() {
               <Route path="/incomes" element={<Incomes />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/budget" element={<Budget />} />
-              <Route path="/budget/:id" />
+              <Route path="/budget/:id" element={<BudgetsDetail />} />
               <Route path="/account" element={<Account />} />
             </Route>
             <Route path="/login" element={<Login />} />

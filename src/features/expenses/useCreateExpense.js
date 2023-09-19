@@ -12,7 +12,6 @@ export function useCreateExpense() {
       toast.success("Expense created successfully");
     },
     onError: (err) => {
-      console.error(err);
       toast.error("Could not create your expense");
     },
   });

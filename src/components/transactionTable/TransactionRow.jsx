@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import Table from "../../components/ui/Table";
-import { formatCurrency } from "../../utils/Helpers";
+import { formatCurrency } from "../../utils/helpers";
 import { HiPencil, HiTrash } from "react-icons/hi2";
 import { styled } from "styled-components";
 import Menus from "../../components/ui/Menus";

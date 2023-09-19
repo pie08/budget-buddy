@@ -19,7 +19,7 @@ function BudgetsTable() {
   }
 
   return (
-    <Table columns=".8fr .6fr 1fr 1fr 1fr .2fr">
+    <Table columns=".8fr .8fr 1fr 1fr .5fr .2fr">
       <Table.Header>
         <div>Title</div>
         <div>Spending Limit</div>

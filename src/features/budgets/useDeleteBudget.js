@@ -12,7 +12,6 @@ export function useDeleteBudget() {
       toast.success("Budget successfully deleted");
     },
     onError: (err) => {
-      console.error(err);
       toast.error("Could not delete your budget");
     },
   });

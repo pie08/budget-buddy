@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 const AddCategories = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
+  gap: 1.2rem;
 `;
 
 const Category = styled.li`
@@ -26,8 +26,13 @@ const Category = styled.li`
   align-items: center;
 
   & input {
-    flex-basis: 100%;
+    flex-grow: 1;
   }
+`;
+
+const Amount = styled.p`
+  color: var(--color-gray-400);
+  font-weight: 500;
 `;
 
 const DeleteButton = styled.button`
@@ -55,9 +60,12 @@ function reducer(state, action) {
     }
 
     case "updateCategoryBudget": {
-      return state.map((budget, i) =>
-        i === action.payload.index ? action.payload.newValue : budget
+      const filteredState = state.filter(
+        (cur) =>
+          cur.category !== "Select..." &&
+          cur.category !== action.payload.category
       );
+      return [...filteredState, action.payload];
     }
 
     case "deleteCategoryBudget": {
@@ -79,21 +87,27 @@ function BudgetForm({ onCloseModal, budget }) {
   const [categoryBudgets, dispatch] = useReducer(reducer, []);
   const [categoryBudgetsError, setCategoryBudgetsError] = useState("");
 
-  const { register, handleSubmit, formState, reset, getValues } = useForm({
-    defaultValues: isUpdateSession
-      ? Object.assign(
-          {},
-          budget,
-          {
-            startDate: (budget.startDate = budget.startDate.split("T")[0]),
-          },
-          {
-            endDate: (budget.endDate = budget.endDate.split("T")[0]),
-          }
-        )
-      : {},
-  });
+  const { register, handleSubmit, formState, reset, getValues, watch } =
+    useForm({
+      defaultValues: isUpdateSession
+        ? Object.assign(
+            {},
+            budget,
+            {
+              startDate: (budget.startDate = budget.startDate.split("T")[0]),
+            },
+            {
+              endDate: (budget.endDate = budget.endDate.split("T")[0]),
+            }
+          )
+        : {},
+    });
   const { errors } = formState;
+  const spendingLimit = Number(getValues("spendingLimit"));
+  const totalCategoryBudgetAmounts = categoryBudgets.reduce(
+    (acc, cur) => acc + +cur.amount,
+    0
+  );
 
   const categories = getCategories(
     "customExpenseCategories",
@@ -126,14 +140,12 @@ function BudgetForm({ onCloseModal, budget }) {
     }
   }
 
-  function handleUpdateCategoryBudget(index, newValue) {
-    dispatch({
-      type: "updateCategoryBudget",
-      payload: {
-        index,
-        newValue,
-      },
-    });
+  function handleUpdateCategoryBudget(index, payload) {
+    dispatch({ type: "updateCategoryBudget", payload });
+  }
+
+  function handleAddCategoryBudget(payload) {
+    dispatch({ type: "addCategoryBudget", payload });
   }
 
   function handleDeleteCategoryBudget(index) {
@@ -143,17 +155,23 @@ function BudgetForm({ onCloseModal, budget }) {
   useEffect(
     function () {
       setCategoryBudgetsError("");
+
       categoryBudgets.forEach((el, i) => {
-        // delete ones whos category does not exists (Select...)
         if (+el.amount <= 0) setCategoryBudgetsError("Amount must be above 0");
+
         if (
           categories.filter((category) => category.name === el.category)
             .length === 0
         )
           setCategoryBudgetsError("Must select a category");
       });
+
+      if (totalCategoryBudgetAmounts > spendingLimit)
+        setCategoryBudgetsError(
+          "Category budgets exceeds total spending limit"
+        );
     },
-    [categoryBudgets, categories]
+    [categoryBudgets, categories, spendingLimit]
   );
 
   return (
@@ -235,10 +253,7 @@ function BudgetForm({ onCloseModal, budget }) {
             $variation="secondary"
             onClick={(e) => {
               e.preventDefault();
-              dispatch({
-                type: "addCategoryBudget",
-                payload: { category: "Select...", amount: 0 },
-              });
+              handleAddCategoryBudget({ category: "Select...", amount: 0 });
             }}
           >
             Add category
@@ -287,6 +302,10 @@ function BudgetForm({ onCloseModal, budget }) {
               />
             </Category>
           ))}
+
+          <Amount>
+            {totalCategoryBudgetAmounts} / {spendingLimit}
+          </Amount>
         </AddCategories>
       </FormRow>
 

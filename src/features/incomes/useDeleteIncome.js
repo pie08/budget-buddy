@@ -12,7 +12,6 @@ export function useDeleteIncome() {
       toast.success("Income deleted successfully");
     },
     onError: (err) => {
-      console.error(err);
       toast.error("Could not delete your income");
     },
   });

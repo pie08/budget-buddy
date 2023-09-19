@@ -12,7 +12,6 @@ export function useUpdateBudget() {
       toast.success("budgets");
     },
     onError: (err) => {
-      console.error(err);
       toast.error("Could not update your budget");
     },
   });

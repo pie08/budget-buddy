@@ -38,6 +38,21 @@ export async function getBudgets({ page, filter, sortBy } = {}) {
   return { data, count };
 }
 
+export async function getBudgetById(id) {
+  const { data, error } = await supabase
+    .from("budgets")
+    .select()
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return data;
+}
+
 export async function createBudget(newBudget) {
   const { data, error } = await supabase.from("budgets").insert(newBudget);
 

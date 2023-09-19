@@ -9,10 +9,9 @@ import { useEffect, useReducer, useState } from "react";
 import Select from "../../components/form/Select";
 import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
-import { isAfter, isBefore } from "date-fns";
+import { isAfter } from "date-fns";
 import { useCreateBudget } from "./useCreateBudget";
 import { useUpdateBudget } from "./useUpdateBudget";
-import toast from "react-hot-toast";
 
 const AddCategories = styled.ul`
   display: flex;
@@ -60,12 +59,9 @@ function reducer(state, action) {
     }
 
     case "updateCategoryBudget": {
-      const filteredState = state.filter(
-        (cur) =>
-          cur.category !== "Select..." &&
-          cur.category !== action.payload.category
-      );
-      return [...filteredState, action.payload];
+      return state
+        .filter((budget) => budget.category !== action.payload.category)
+        .map((budget, i) => (i !== action.index ? budget : action.payload));
     }
 
     case "deleteCategoryBudget": {
@@ -86,28 +82,27 @@ function BudgetForm({ onCloseModal, budget }) {
 
   const [categoryBudgets, dispatch] = useReducer(reducer, []);
   const [categoryBudgetsError, setCategoryBudgetsError] = useState("");
-
-  const { register, handleSubmit, formState, reset, getValues, watch } =
-    useForm({
-      defaultValues: isUpdateSession
-        ? Object.assign(
-            {},
-            budget,
-            {
-              startDate: (budget.startDate = budget.startDate.split("T")[0]),
-            },
-            {
-              endDate: (budget.endDate = budget.endDate.split("T")[0]),
-            }
-          )
-        : {},
-    });
-  const { errors } = formState;
-  const spendingLimit = Number(getValues("spendingLimit"));
-  const totalCategoryBudgetAmounts = categoryBudgets.reduce(
+  const totalCategoryBudgetAmount = categoryBudgets.reduce(
     (acc, cur) => acc + +cur.amount,
     0
   );
+
+  const { register, handleSubmit, formState, reset, getValues } = useForm({
+    defaultValues: isUpdateSession
+      ? Object.assign(
+          {},
+          budget,
+          {
+            startDate: (budget.startDate = budget.startDate.split("T")[0]),
+          },
+          {
+            endDate: (budget.endDate = budget.endDate.split("T")[0]),
+          }
+        )
+      : {},
+  });
+  const { errors } = formState;
+  const spendingLimit = Number(getValues("spendingLimit"));
 
   const categories = getCategories(
     "customExpenseCategories",
@@ -141,7 +136,7 @@ function BudgetForm({ onCloseModal, budget }) {
   }
 
   function handleUpdateCategoryBudget(index, payload) {
-    dispatch({ type: "updateCategoryBudget", payload });
+    dispatch({ type: "updateCategoryBudget", payload, index });
   }
 
   function handleAddCategoryBudget(payload) {
@@ -152,6 +147,7 @@ function BudgetForm({ onCloseModal, budget }) {
     dispatch({ type: "deleteCategoryBudget", payload: index });
   }
 
+  // validation
   useEffect(
     function () {
       setCategoryBudgetsError("");
@@ -166,12 +162,12 @@ function BudgetForm({ onCloseModal, budget }) {
           setCategoryBudgetsError("Must select a category");
       });
 
-      if (totalCategoryBudgetAmounts > spendingLimit)
+      if (totalCategoryBudgetAmount > spendingLimit)
         setCategoryBudgetsError(
           "Category budgets exceeds total spending limit"
         );
     },
-    [categoryBudgets, categories, spendingLimit]
+    [categoryBudgets, categories, spendingLimit, totalCategoryBudgetAmount]
   );
 
   return (
@@ -303,9 +299,11 @@ function BudgetForm({ onCloseModal, budget }) {
             </Category>
           ))}
 
-          <Amount>
-            {totalCategoryBudgetAmounts} / {spendingLimit}
-          </Amount>
+          {categoryBudgets.length > 0 && (
+            <Amount>
+              {totalCategoryBudgetAmount} / {spendingLimit}
+            </Amount>
+          )}
         </AddCategories>
       </FormRow>
 

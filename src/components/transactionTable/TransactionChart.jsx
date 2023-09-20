@@ -15,7 +15,7 @@ import {
   isSameDay,
   subDays,
 } from "date-fns";
-import { formatCurrency } from "../../utils/Helpers";
+import { formatCurrency } from "../../utils/helpers";
 
 function TransactionChart({
   data: dataRaw,

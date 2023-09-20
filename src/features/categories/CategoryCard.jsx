@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { formatCurrency } from "../../utils/Helpers";
+import { formatCurrency } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`

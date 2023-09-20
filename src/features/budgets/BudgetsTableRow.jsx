@@ -1,6 +1,6 @@
 import { format, isFuture, isPast, isToday } from "date-fns";
 import Table from "../../components/ui/Table";
-import { formatCurrency } from "../../utils/Helpers";
+import { formatCurrency } from "../../utils/helpers";
 import Menus from "../../components/ui/Menus";
 import { HiOutlineEye, HiPencil, HiTrash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";

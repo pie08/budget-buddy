@@ -52,20 +52,28 @@ const DeleteButton = styled.button`
 function reducer(state, action) {
   switch (action.type) {
     case "addCategoryBudget": {
-      const filteredState = state.filter(
-        (cur) => cur.category !== action.payload.category
-      );
-      return [...filteredState, action.payload];
+      if (state[action.payload.category]) return state;
+      return { ...state, ...action.payload };
     }
 
-    case "updateCategoryBudget": {
-      return state
-        .filter((budget) => budget.category !== action.payload.category)
-        .map((budget, i) => (i !== action.index ? budget : action.payload));
+    case "updateBudgetCategory": {
+      const newState = { ...state };
+      const value = newState[action.payload.key];
+      delete newState[action.payload.key];
+      newState[action.payload.newKey] = value;
+      return newState;
+    }
+
+    case "updateBudgetAmount": {
+      const newState = { ...state };
+      newState[action.payload.key] = action.payload.value;
+      return newState;
     }
 
     case "deleteCategoryBudget": {
-      return state.toSpliced(action.payload, 1);
+      const newState = { ...state };
+      delete newState[action.payload];
+      return newState;
     }
 
     default:
@@ -80,29 +88,33 @@ function BudgetForm({ onCloseModal, budget }) {
   const { createBudget, isCreating } = useCreateBudget();
   const isLoading = isCreating || isUpdating;
 
-  const [categoryBudgets, dispatch] = useReducer(reducer, []);
+  const [categoryBudgets, dispatch] = useReducer(
+    reducer,
+    isUpdateSession ? budget.categories : {}
+  );
   const [categoryBudgetsError, setCategoryBudgetsError] = useState("");
-  const totalCategoryBudgetAmount = categoryBudgets.reduce(
-    (acc, cur) => acc + +cur.amount,
+  const totalCategoryBudgetAmount = Object.entries(categoryBudgets).reduce(
+    (acc, [_, value]) => acc + Number(value),
     0
   );
 
-  const { register, handleSubmit, formState, reset, getValues } = useForm({
-    defaultValues: isUpdateSession
-      ? Object.assign(
-          {},
-          budget,
-          {
-            startDate: (budget.startDate = budget.startDate.split("T")[0]),
-          },
-          {
-            endDate: (budget.endDate = budget.endDate.split("T")[0]),
-          }
-        )
-      : {},
-  });
+  const { register, handleSubmit, formState, reset, getValues, watch } =
+    useForm({
+      defaultValues: isUpdateSession
+        ? Object.assign(
+            {},
+            budget,
+            {
+              startDate: (budget.startDate = budget.startDate.split("T")[0]),
+            },
+            {
+              endDate: (budget.endDate = budget.endDate.split("T")[0]),
+            }
+          )
+        : {},
+    });
   const { errors } = formState;
-  const spendingLimit = Number(getValues("spendingLimit"));
+  const spendingLimit = Number(watch("spendingLimit"));
 
   const categories = getCategories(
     "customExpenseCategories",
@@ -135,16 +147,20 @@ function BudgetForm({ onCloseModal, budget }) {
     }
   }
 
-  function handleUpdateCategoryBudget(index, payload) {
-    dispatch({ type: "updateCategoryBudget", payload, index });
+  function handleUpdateBudgetCategory(key, newKey) {
+    dispatch({ type: "updateBudgetCategory", payload: { key, newKey } });
   }
 
   function handleAddCategoryBudget(payload) {
     dispatch({ type: "addCategoryBudget", payload });
   }
 
-  function handleDeleteCategoryBudget(index) {
-    dispatch({ type: "deleteCategoryBudget", payload: index });
+  function handleUpdateBudgetAmount(key, value) {
+    dispatch({ type: "updateBudgetAmount", payload: { key, value } });
+  }
+
+  function handleDeleteCategoryBudget(key) {
+    dispatch({ type: "deleteCategoryBudget", payload: key });
   }
 
   // validation
@@ -152,13 +168,10 @@ function BudgetForm({ onCloseModal, budget }) {
     function () {
       setCategoryBudgetsError("");
 
-      categoryBudgets.forEach((el, i) => {
-        if (+el.amount <= 0) setCategoryBudgetsError("Amount must be above 0");
+      Object.entries(categoryBudgets).forEach(([category, amount]) => {
+        if (+amount <= 0) setCategoryBudgetsError("Amount must be above 0");
 
-        if (
-          categories.filter((category) => category.name === el.category)
-            .length === 0
-        )
+        if (categories.filter((el) => el.name === category).length === 0)
           setCategoryBudgetsError("Must select a category");
       });
 
@@ -249,31 +262,28 @@ function BudgetForm({ onCloseModal, budget }) {
             $variation="secondary"
             onClick={(e) => {
               e.preventDefault();
-              handleAddCategoryBudget({ category: "Select...", amount: 0 });
+              handleAddCategoryBudget({ Select: 0 });
             }}
           >
             Add category
           </Button>
 
-          {categoryBudgets.map((budget, i) => (
+          {Object.entries(categoryBudgets).map(([category, amount], i) => (
             <Category key={i}>
               <DeleteButton
                 onClick={(e) => {
                   e.preventDefault();
-                  handleDeleteCategoryBudget(i);
+                  handleDeleteCategoryBudget(category);
                 }}
               >
                 <HiXMark />
               </DeleteButton>
 
               <Select
-                value={budget.category}
+                value={category}
                 onChange={(e) => {
                   e.preventDefault();
-                  handleUpdateCategoryBudget(i, {
-                    category: e.target.value,
-                    amount: budget.amount,
-                  });
+                  handleUpdateBudgetCategory(category, e.target.value);
                 }}
               >
                 <option value="">Select...</option>
@@ -287,19 +297,16 @@ function BudgetForm({ onCloseModal, budget }) {
               <Input
                 type="number"
                 placeholder="Enter amount"
-                value={budget.amount}
+                value={amount}
                 onChange={(e) => {
                   e.preventDefault();
-                  handleUpdateCategoryBudget(i, {
-                    category: budget.category,
-                    amount: e.target.value,
-                  });
+                  handleUpdateBudgetAmount(category, e.target.value);
                 }}
               />
             </Category>
           ))}
 
-          {categoryBudgets.length > 0 && (
+          {Object.keys(categoryBudgets).length > 0 && (
             <Amount>
               {totalCategoryBudgetAmount} / {spendingLimit}
             </Amount>

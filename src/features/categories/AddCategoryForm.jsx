@@ -61,7 +61,6 @@ function AddCategoryForm({ onClose }) {
     [categoryName]
   );
 
-  // todo: prevent dupilcate categories
   function handleSubmit(e) {
     e.preventDefault();
     if (error) return;

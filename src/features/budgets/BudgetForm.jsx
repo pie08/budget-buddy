@@ -76,6 +76,9 @@ function reducer(state, action) {
       return newState;
     }
 
+    case "reset":
+      return {};
+
     default:
       return state;
   }
@@ -315,10 +318,17 @@ function BudgetForm({ onCloseModal, budget }) {
       </FormRow>
 
       <FormRow type="buttons">
-        <Button $variation="secondary" type="reset" onClick={reset}>
+        <Button
+          $variation="secondary"
+          type="reset"
+          onClick={() => {
+            reset();
+            dispatch({ type: "reset" });
+          }}
+        >
           Reset
         </Button>
-        <Button>Add budget</Button>
+        <Button>{isUpdateSession ? "Update budget" : "Add budget"}</Button>
       </FormRow>
     </Form>
   );

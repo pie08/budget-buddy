@@ -9,6 +9,7 @@ import Tag from "../../components/ui/Tag";
 import { useDeleteBudget } from "./useDeleteBudget";
 import Modal from "../../components/ui/Modal";
 import BudgetForm from "./BudgetForm";
+import { getStatus } from "./getStatus";
 
 const SpendingLimit = styled.p`
   font-weight: 500;
@@ -20,16 +21,7 @@ function BudgetsTableRow({ budget }) {
   const navigate = useNavigate();
   const { deleteBudget, isDeleting } = useDeleteBudget();
 
-  // calculate status
-  let status = "active";
-
-  // if cur date is before start date
-  if (isFuture(new Date(startDate)) && !isToday(new Date(startDate)))
-    status = "waiting";
-
-  // if cur dat is after end date
-  if (isPast(new Date(endDate)) && !isToday(new Date(endDate)))
-    status = "completed";
+  const status = getStatus(budget);
 
   const statusToColor = {
     active: {

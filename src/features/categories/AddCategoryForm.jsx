@@ -12,7 +12,7 @@ const CardForm = styled.div`
   border-radius: var(--border-radius-sm);
   padding: 1.2rem 1.6rem;
 
-  grid-column: span 2;
+  /* grid-column: span 2; */
   display: flex;
   align-items: center;
   gap: 2.4rem;

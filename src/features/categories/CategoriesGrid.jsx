@@ -6,11 +6,9 @@ import { useCategory } from "../../context/CategoryContext";
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 3.2rem;
   row-gap: 2.4rem;
-  max-height: 50vh;
-  overflow: auto;
 `;
 
 function CategoriesGrid() {

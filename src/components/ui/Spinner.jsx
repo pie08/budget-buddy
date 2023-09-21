@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 const StyledSpinner = styled.div`
-  display: inline-block;
+  display: block;
   position: relative;
   width: 80px;
   height: 80px;

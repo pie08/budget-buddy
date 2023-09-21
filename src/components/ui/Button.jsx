@@ -32,6 +32,17 @@ const variation = {
       background-color: var(--color-gray-50);
     }
   `,
+  link: css`
+    color: var(--color-brand-600);
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    padding: 0 0.2rem;
+    border-radius: 0;
+    &:hover {
+      color: var(--color-brand-500);
+      border-bottom: 1px solid var(--color-brand-500);
+    }
+  `,
 };
 
 export const Button = styled.button`

@@ -6,7 +6,7 @@ import { Row } from "../../../components/ui/Row";
 import BackButton from "../../../components/ui/BackButton";
 import styled, { css } from "styled-components";
 import Tag from "../../../components/ui/Tag";
-import { format } from "date-fns";
+import { format, isAfter, isBefore, isFuture, isSameDay } from "date-fns";
 import { formatCurrency } from "../../../utils/helpers";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useExpenses } from "../../expenses/useExpenses";
@@ -69,11 +69,22 @@ function BudgetsDetail() {
     startDate,
     endDate,
   } = budget;
-  const spent = expenses.reduce((acc, cur) => acc + cur.amount, 0);
-  const isOverBudget = spent > spendingLimit;
 
   // get all expenses between start and end dates
-  const expensesDuringBudget = expenses.filter((expense) => {});
+  const expensesDuringBudget = expenses.filter((expense) => {
+    const createdAt = new Date(expense.created_at);
+
+    if (
+      (isAfter(createdAt, new Date(startDate)) ||
+        isSameDay(createdAt, new Date(startDate))) &&
+      (isBefore(createdAt, new Date(endDate)) ||
+        isSameDay(createdAt, new Date(endDate)))
+    )
+      return expense;
+  });
+
+  const spent = expensesDuringBudget.reduce((acc, cur) => acc + cur.amount, 0);
+  const isOverBudget = spent > spendingLimit;
 
   const status = getStatus(budget);
   const statusToColor = {
@@ -126,7 +137,7 @@ function BudgetsDetail() {
 
       <BudgetDetailCategories
         categoryBudgets={categoryBudgets}
-        expenses={expenses}
+        expenses={expensesDuringBudget}
       />
     </div>
   );

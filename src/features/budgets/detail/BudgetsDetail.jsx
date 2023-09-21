@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Heading from "../../../components/ui/Heading";
 import { useBudget } from "../useBudget";
 import Spinner from "../../../components/ui/Spinner";
@@ -11,8 +10,7 @@ import { format } from "date-fns";
 import { formatCurrency } from "../../../utils/helpers";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useExpenses } from "../../expenses/useExpenses";
-import { getCategories } from "../../categories/getCategories";
-import BudgetDetailGrid from "./BudgetDetailGrid";
+import BudgetDetailCategories from "./BudgetDetailCategories";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -55,6 +53,8 @@ const ProgressLabel = styled.p`
 `;
 
 function BudgetsDetail() {
+  // todo: only get expenses in between start and end dates
+
   const { budget, isLoading: isLoadingBudgets } = useBudget();
   const { expenses, isLoading: isLoadingExpenses } = useExpenses();
   const isLoading = isLoadingBudgets || isLoadingExpenses;
@@ -71,6 +71,9 @@ function BudgetsDetail() {
   } = budget;
   const spent = expenses.reduce((acc, cur) => acc + cur.amount, 0);
   const isOverBudget = spent > spendingLimit;
+
+  // get all expenses between start and end dates
+  const expensesDuringBudget = expenses.filter((expense) => {});
 
   const status = getStatus(budget);
   const statusToColor = {
@@ -121,7 +124,10 @@ function BudgetsDetail() {
         {formatCurrency(spent)} / {formatCurrency(spendingLimit)}
       </ProgressLabel>
 
-      <BudgetDetailGrid categoryBudgets={categoryBudgets} />
+      <BudgetDetailCategories
+        categoryBudgets={categoryBudgets}
+        expenses={expenses}
+      />
     </div>
   );
 }

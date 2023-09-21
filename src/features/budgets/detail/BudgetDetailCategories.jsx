@@ -1,9 +1,20 @@
-import { useExpenses } from "../../expenses/useExpenses";
-import Spinner from "../../../components/ui/Spinner";
 import styled from "styled-components";
 import BudgetDetailCard from "./BudgetDetailCard";
 import { getCategories } from "../../categories/getCategories";
 import expenseCategoriesJson from "../../../data/expenseCategories.json";
+import Heading from "../../../components/ui/Heading";
+
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+`;
+
+const Group = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+`;
 
 const Grid = styled.div`
   display: grid;
@@ -12,13 +23,7 @@ const Grid = styled.div`
   row-gap: 2.4rem;
 `;
 
-function BudgetDetailGrid({ categoryBudgets }) {
-  // todo: only get expenses in between start and end dates
-  // todo: refactor data into parent component
-  const { expenses, isLoading } = useExpenses();
-
-  if (isLoading) return <Spinner />;
-
+function BudgetDetailCategories({ categoryBudgets, expenses }) {
   const categories = getCategories(
     "customExpenseCategories",
     expenseCategoriesJson
@@ -48,15 +53,26 @@ function BudgetDetailGrid({ categoryBudgets }) {
   const expenseCategories = budgetData.filter((budget) => budget.budget === 0);
 
   return (
-    <Grid>
-      {budgetCategories.map((budget, i) => (
-        <BudgetDetailCard key={i} {...budget} />
-      ))}
-      {expenseCategories.map((budget, i) => (
-        <BudgetDetailCard key={i} {...budget} />
-      ))}
-    </Grid>
+    <Layout>
+      <Group>
+        <Heading as="h2">Tracked categories</Heading>
+        <Grid>
+          {budgetCategories.map((budget, i) => (
+            <BudgetDetailCard key={i} {...budget} />
+          ))}
+        </Grid>
+      </Group>
+
+      <Group>
+        <Heading as="h2">Untracked categories</Heading>
+        <Grid>
+          {expenseCategories.map((budget, i) => (
+            <BudgetDetailCard key={i} {...budget} />
+          ))}
+        </Grid>
+      </Group>
+    </Layout>
   );
 }
 
-export default BudgetDetailGrid;
+export default BudgetDetailCategories;

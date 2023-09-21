@@ -53,9 +53,7 @@ function AddCategoryForm({ onClose }) {
 
   useEffect(
     function () {
-      if (categoryName.split(" ").length > 1)
-        setError("Category name cannot include spaces");
-      else if (categoryName.length > 20) setError("Category name too long");
+      if (categoryName.length > 20) setError("Category name too long");
       else setError("");
     },
     [categoryName]

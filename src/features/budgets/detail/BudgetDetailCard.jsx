@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../../utils/helpers";
+import { HiOutlineExclamationCircle } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
   display: inline-block;
@@ -7,6 +9,7 @@ const Card = styled.div`
   border: 1px solid ${(props) => props.$borderColor};
   border-radius: var(--border-radius-sm);
   padding: 1.2rem 1.6rem;
+  cursor: pointer;
 `;
 
 const Heading = styled.h3`
@@ -26,16 +29,38 @@ const Transactions = styled.p`
 const Amount = styled.span`
   font-size: 1.4rem;
   font-weight: 400;
+
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  & svg {
+    width: 2rem;
+    height: 2rem;
+    color: var(--color-red-700);
+  }
 `;
 
-function BudgetDatilCard({ name, spent, budget, numTransactions, colors }) {
-  const isOverBudget = spent > budget && budget !== 0;
+function BudgetDatilCard({
+  category,
+  spent,
+  budget,
+  numTransactions,
+  colors,
+  overBudget,
+}) {
+  const navigate = useNavigate();
 
   return (
-    <Card $backgroundColor={colors.light} $borderColor={colors.dark}>
+    <Card
+      $backgroundColor={colors.light}
+      $borderColor={colors.dark}
+      onClick={() => navigate(`/expenses?category=${category}`)}
+    >
       <Heading>
-        {name}{" "}
+        {category}
         <Amount>
+          {overBudget && <HiOutlineExclamationCircle />}
           {budget
             ? `${formatCurrency(Number(spent))} / ${formatCurrency(
                 Number(budget)

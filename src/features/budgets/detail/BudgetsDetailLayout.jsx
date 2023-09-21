@@ -6,11 +6,12 @@ import { Row } from "../../../components/ui/Row";
 import BackButton from "../../../components/ui/BackButton";
 import styled, { css } from "styled-components";
 import Tag from "../../../components/ui/Tag";
-import { format, isAfter, isBefore, isFuture, isSameDay } from "date-fns";
+import { format, isAfter, isBefore, isSameDay } from "date-fns";
 import { formatCurrency } from "../../../utils/helpers";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useExpenses } from "../../expenses/useExpenses";
 import BudgetDetailCategories from "./BudgetDetailCategories";
+import { HiOutlineExclamationCircle } from "react-icons/hi2";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -18,8 +19,12 @@ const HeadingGroup = styled.div`
   gap: 3.2rem;
 `;
 
-const StyledRow = styled(Row)`
+const HeadingRow = styled(Row)`
   margin-bottom: 1.2rem;
+`;
+
+const DatesRow = styled(Row)`
+  margin-bottom: 2.4rem;
 `;
 
 const Description = styled.p`
@@ -42,7 +47,20 @@ const SpendingLimit = styled.h2`
 const Dates = styled.div`
   font-size: 1.4rem;
   color: var(--color-gray-500);
-  margin-bottom: 2.4rem;
+`;
+
+const OverBudgetLabel = styled.p`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.4rem;
+  color: var(--color-red-700);
+  font-weight: 500;
+
+  & svg {
+    width: 2rem;
+    height: 2rem;
+  }
 `;
 
 const ProgressLabel = styled.p`
@@ -53,8 +71,6 @@ const ProgressLabel = styled.p`
 `;
 
 function BudgetsDetail() {
-  // todo: only get expenses in between start and end dates
-
   const { budget, isLoading: isLoadingBudgets } = useBudget();
   const { expenses, isLoading: isLoadingExpenses } = useExpenses();
   const isLoading = isLoadingBudgets || isLoadingExpenses;
@@ -104,23 +120,30 @@ function BudgetsDetail() {
 
   return (
     <div>
-      <StyledRow>
+      <HeadingRow>
         <HeadingGroup>
           <Heading>{title}</Heading>
 
           <Tag {...statusToColor[status]}>{status}</Tag>
         </HeadingGroup>
         <BackButton />
-      </StyledRow>
+      </HeadingRow>
       <Description>{description}</Description>
 
       <SpendingLimit $overbudget={isOverBudget}>
         {formatCurrency(spendingLimit)}
       </SpendingLimit>
-      <Dates>
-        {format(new Date(startDate), "PPP")} &mdash;{" "}
-        {format(new Date(endDate), "PPP")}
-      </Dates>
+      <DatesRow>
+        <Dates>
+          {format(new Date(startDate), "PPP")} &mdash;{" "}
+          {format(new Date(endDate), "PPP")}
+        </Dates>
+        {isOverBudget && (
+          <OverBudgetLabel>
+            <HiOutlineExclamationCircle /> You have gone over budget
+          </OverBudgetLabel>
+        )}
+      </DatesRow>
 
       <ProgressBar
         completed={spent}

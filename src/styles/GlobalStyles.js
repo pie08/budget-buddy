@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
   --color-brand-950: #0C1C17;
 
   --color-red-100: #fee2e2;
+  --color-red-600: #dc2626;
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
 
@@ -76,6 +77,7 @@ button {
 
 select {
   cursor: pointer;
+  max-height: 5rem;
 }
 
 input,

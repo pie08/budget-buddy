@@ -38,12 +38,14 @@ function BudgetDetailCategories({ categoryBudgets, expenses }) {
 
       const spent = filteredExpenses.reduce((acc, cur) => acc + cur.amount, 0);
       const budget = Number(categoryBudgets[category.name]) || 0;
+      const overBudget = spent > budget;
 
       return {
-        name: category.name,
+        category: category.name,
         spent,
         budget,
-        transactions: filteredExpenses.length,
+        overBudget,
+        numTransactions: filteredExpenses.length,
         colors: category.colors,
       };
     })
@@ -54,23 +56,27 @@ function BudgetDetailCategories({ categoryBudgets, expenses }) {
 
   return (
     <Layout>
-      <Group>
-        <Heading as="h2">Tracked categories</Heading>
-        <Grid>
-          {budgetCategories.map((budget, i) => (
-            <BudgetDetailCard key={i} {...budget} />
-          ))}
-        </Grid>
-      </Group>
+      {budgetCategories.length > 0 && (
+        <Group>
+          <Heading as="h2">Tracked categories</Heading>
+          <Grid>
+            {budgetCategories.map((budget, i) => (
+              <BudgetDetailCard key={i} {...budget} />
+            ))}
+          </Grid>
+        </Group>
+      )}
 
-      <Group>
-        <Heading as="h2">Untracked categories</Heading>
-        <Grid>
-          {expenseCategories.map((budget, i) => (
-            <BudgetDetailCard key={i} {...budget} />
-          ))}
-        </Grid>
-      </Group>
+      {expenseCategories.length > 0 && (
+        <Group>
+          <Heading as="h2">Untracked categories</Heading>
+          <Grid>
+            {expenseCategories.map((budget, i) => (
+              <BudgetDetailCard key={i} {...budget} overBudget={false} />
+            ))}
+          </Grid>
+        </Group>
+      )}
     </Layout>
   );
 }

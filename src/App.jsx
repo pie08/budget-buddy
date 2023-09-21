@@ -7,7 +7,6 @@ import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
-import BudgetsDetail from "./features/budgets/detail/BudgetsDetail";
 
 // todo: add authentication and authorization
 // todo: user transaction data will need a uid
@@ -17,6 +16,7 @@ const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Expenses = lazy(() => import("./pages/Expenses"));
 const Incomes = lazy(() => import("./pages/Incomes"));
 const Categories = lazy(() => import("./pages/Categories"));
+const Budgets = lazy(() => import("./pages/Budgets"));
 const Budget = lazy(() => import("./pages/Budget"));
 const Account = lazy(() => import("./pages/Account"));
 const Login = lazy(() => import("./pages/Login"));
@@ -46,8 +46,8 @@ function App() {
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/incomes" element={<Incomes />} />
               <Route path="/categories" element={<Categories />} />
-              <Route path="/budget" element={<Budget />} />
-              <Route path="/budget/:id" element={<BudgetsDetail />} />
+              <Route path="/budgets" element={<Budgets />} />
+              <Route path="/budgets/:id" element={<Budget />} />
               <Route path="/account" element={<Account />} />
             </Route>
             <Route path="/login" element={<Login />} />

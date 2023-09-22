@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useUser } from "./useUser";
 import styled from "styled-components";
 
@@ -13,9 +13,8 @@ const Layout = styled.div`
 
 function AuthLayout({ children }) {
   const { isAuthenticated } = useUser();
-  const navigate = useNavigate();
 
-  if (isAuthenticated) return navigate("/dashboard");
+  if (isAuthenticated) return <Navigate to="/dashboard" />;
 
   return <Layout>{children}</Layout>;
 }

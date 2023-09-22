@@ -10,8 +10,6 @@ import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 
-// todo: user transaction data will need a uid
-
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Expenses = lazy(() => import("./pages/Expenses"));

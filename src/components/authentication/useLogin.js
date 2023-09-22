@@ -10,7 +10,7 @@ export function useLogin() {
     mutationFn: loginApi,
     onSuccess: () => {
       toast.success("Successfully logged in");
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
     },
     onError: () => {
       toast.error("The provided credentials were incorrect");

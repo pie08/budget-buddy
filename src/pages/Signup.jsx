@@ -2,15 +2,7 @@ import styled from "styled-components";
 import Heading from "../components/ui/Heading";
 import SignUpForm from "../components/authentication/SignUpForm";
 import { Link } from "react-router-dom";
-
-const Layout = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3.2rem;
-`;
+import AuthLayout from "../components/authentication/AuthLayout";
 
 const Login = styled(Link)`
   font-size: 1.4rem;
@@ -27,11 +19,11 @@ const Login = styled(Link)`
 
 function Signup() {
   return (
-    <Layout>
+    <AuthLayout>
       <Heading as="h1">Create an account</Heading>
       <SignUpForm />
-      <Login>Already have an account?</Login>
-    </Layout>
+      <Login to="/login">Already have an account?</Login>
+    </AuthLayout>
   );
 }
 

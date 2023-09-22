@@ -12,8 +12,8 @@ export function useSignUp() {
       toast.success("Successfully created account");
       naviagte("/", { replace: true });
     },
-    onError: () => {
-      toast.error("Could not create your account");
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
 

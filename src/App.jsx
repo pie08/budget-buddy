@@ -7,7 +7,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
-import ProtectedRoute from "./components/authentication/ProtectedRoute";
+import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 
 // todo: user transaction data will need a uid

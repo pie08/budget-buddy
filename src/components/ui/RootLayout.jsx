@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useUser } from "../authentication/useUser";
+import { useUser } from "../../features/authentication/useUser";
 import SpinnerFullPage from "./SpinnerFullPage";
 
 function RootLayout() {

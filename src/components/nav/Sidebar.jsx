@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import MainNav from "./MainNav";
-import AccountOperations from "../authentication/AccountOperations";
+import AccountOperations from "../../features/authentication/AccountOperations";
 
 const StyledSidebar = styled.aside`
   display: flex;

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Form from "../form/Form";
-import FormRowVertical from "../form/FormRowVertical";
-import Input from "../form/Input";
-import { Button } from "../ui/Button";
+import Form from "../../components/form/Form";
+import FormRowVertical from "../../components/form/FormRowVertical";
+import Input from "../../components/form/Input";
+import { Button } from "../../components/ui/Button";
 import { useLogin } from "./useLogin";
 
 function LoginForm() {

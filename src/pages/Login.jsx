@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import LoginForm from "../components/authentication/LoginForm";
+import LoginForm from "../features/authentication/LoginForm";
 import Heading from "../components/ui/Heading";
 import { Link } from "react-router-dom";
-import AuthLayout from "../components/authentication/AuthLayout";
+import AuthLayout from "../features/authentication/AuthLayout";
 
 const Signup = styled(Link)`
   font-size: 1.4rem;

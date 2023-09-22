@@ -13,16 +13,33 @@ function SignUpForm() {
   function onSubmit(data, e) {
     e.preventDefault();
 
-    signUp(
-      { email: data.email, password: data.password },
-      {
-        onError: reset,
-      }
-    );
+    signUp(data, {
+      onError: reset,
+    });
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormRowVertical label="First name" error={errors.email?.firstName}>
+        <Input
+          type="text"
+          id="firstName"
+          disabled={isLoading}
+          {...register("firstName", {
+            required: "This field is required",
+          })}
+        />
+      </FormRowVertical>
+      <FormRowVertical label="Last name" error={errors.email?.lastName}>
+        <Input
+          type="text"
+          id="lastName"
+          disabled={isLoading}
+          {...register("lastName", {
+            required: "This field is required",
+          })}
+        />
+      </FormRowVertical>
       <FormRowVertical label="Email" error={errors.email?.message}>
         <Input
           type="email"

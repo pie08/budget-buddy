@@ -10,6 +10,8 @@ import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 
+// todo: Add ability to change account picture, password, and name
+
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Expenses = lazy(() => import("./pages/Expenses"));

@@ -7,8 +7,9 @@ import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
+import ProtectedRoute from "./components/authentication/ProtectedRoute";
+import RootLayout from "./components/ui/RootLayout";
 
-// todo: add authentication and authorization
 // todo: user transaction data will need a uid
 
 // Pages
@@ -35,24 +36,32 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyles />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
 
       <BrowserRouter>
         <Suspense fallback={<SpinnerFullPage />}>
           <Routes>
-            <Route element={<AppLayout />}>
-              <Route index element={<Navigate to="/dashboard" />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/expenses" element={<Expenses />} />
-              <Route path="/incomes" element={<Incomes />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/budgets" element={<Budgets />} />
-              <Route path="/budgets/:id" element={<Budget />} />
-              <Route path="/account" element={<Account />} />
+            <Route element={<RootLayout />}>
+              <Route
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<Navigate to="/dashboard" />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/expenses" element={<Expenses />} />
+                <Route path="/incomes" element={<Incomes />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/budgets" element={<Budgets />} />
+                <Route path="/budgets/:id" element={<Budget />} />
+                <Route path="/account" element={<Account />} />
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

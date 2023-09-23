@@ -2,7 +2,11 @@ import { useQuery } from "react-query";
 import { getUser } from "../../services/apiAuth";
 
 export function useUser() {
-  const { data: user, isLoading } = useQuery({
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["user"],
     queryFn: getUser,
   });
@@ -11,5 +15,6 @@ export function useUser() {
     user,
     isLoading,
     isAuthenticated: user?.role === "authenticated",
+    error,
   };
 }

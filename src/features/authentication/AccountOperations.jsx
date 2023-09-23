@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import Logout from "./Logout";
+import ButtonIcon from "../../components/ui/ButtonIcon";
+import { HiOutlineUser } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 const Row = styled.ul`
   display: grid;
@@ -11,8 +14,15 @@ const Row = styled.ul`
 `;
 
 function AccountOperations() {
+  const navigate = useNavigate();
+
   return (
     <Row>
+      <li>
+        <ButtonIcon onClick={() => navigate("/account")}>
+          <HiOutlineUser />
+        </ButtonIcon>
+      </li>
       <li>
         <Logout />
       </li>

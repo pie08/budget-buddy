@@ -93,8 +93,8 @@ select {
 
   select:disabled,
   input:disabled {
-    background-color: var(--color-grey-200);
-    color: var(--color-grey-500);
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-500);
   }
 
   input:focus,

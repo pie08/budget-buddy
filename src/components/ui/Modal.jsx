@@ -19,7 +19,7 @@ const StyledWindow = styled.div`
   border-radius: var(--border-radius-sm);
   padding: 3.2rem 4.8rem;
   max-height: 95vh;
-  overflow: auto;
+  overflow-y: auto;
   position: fixed;
   top: 50%;
   left: 50%;

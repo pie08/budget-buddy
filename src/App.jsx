@@ -20,8 +20,10 @@ const Categories = lazy(() => import("./pages/Categories"));
 const Budgets = lazy(() => import("./pages/Budgets"));
 const Budget = lazy(() => import("./pages/Budget"));
 const Account = lazy(() => import("./pages/Account"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
+const Recovery = lazy(() => import("./pages/Recovery"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -57,9 +59,11 @@ function App() {
                 <Route path="/budgets" element={<Budgets />} />
                 <Route path="/budgets/:id" element={<Budget />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/account/reset" element={<ResetPassword />} />
               </Route>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/recovery" element={<Recovery />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

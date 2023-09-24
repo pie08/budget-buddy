@@ -20,7 +20,7 @@ function SignUpForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRowVertical label="First name" error={errors.email?.firstName}>
+      <FormRowVertical label="First name" error={errors.firstName?.message}>
         <Input
           type="text"
           id="firstName"
@@ -30,7 +30,7 @@ function SignUpForm() {
           })}
         />
       </FormRowVertical>
-      <FormRowVertical label="Last name" error={errors.email?.lastName}>
+      <FormRowVertical label="Last name" error={errors.lastName?.message}>
         <Input
           type="text"
           id="lastName"

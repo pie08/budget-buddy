@@ -6,13 +6,30 @@ import BudgetForm from "../features/budgets/BudgetForm";
 import BudgetsTable from "../features/budgets/BudgetsTable";
 import Modal from "../components/ui/Modal";
 import BudgetsTableOperations from "../features/budgets/BudgetsTableOperations";
+import ToolTip from "../components/ui/ToolTip";
+import InfoIcon from "../components/ui/InfoIcon";
 
 function Budgets() {
   return (
     <Modal>
       <Menus>
         <Row>
-          <Heading>Budgets</Heading>
+          <Row $gap={1.2}>
+            <Heading>Budgets</Heading>
+            <ToolTip>
+              <ToolTip.Open id="income">
+                <InfoIcon />
+              </ToolTip.Open>
+              <ToolTip.Window id="income">
+                <p>
+                  A budget will track you spending in total, and also within
+                  each category. <br />
+                  Add one using the button below.
+                </p>
+              </ToolTip.Window>
+            </ToolTip>
+          </Row>
+
           <BudgetsTableOperations />
         </Row>
 

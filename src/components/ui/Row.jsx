@@ -12,4 +12,8 @@ export const Row = styled.div`
       gap: 1.2rem;
       align-items: stretch;
     `}
+
+  ${(props) => css`
+    gap: ${props.$gap}rem;
+  `}
 `;

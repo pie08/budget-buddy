@@ -25,7 +25,6 @@ export async function signup({ email, password, firstName, lastName }) {
       },
     },
   });
-  console.log(data);
 
   if (error) {
     console.error(error);
@@ -59,12 +58,13 @@ export async function logout() {
   }
 }
 
-export async function updateUser({ firstName, lastName, avatar }) {
+export async function updateUser({ password, firstName, lastName, avatar }) {
   let updateData;
   if (firstName)
     updateData = { ...updateData, data: { ...updateData?.data, firstName } };
   if (lastName)
     updateData = { ...updateData, data: { ...updateData?.data, lastName } };
+  if (password) updateData = { ...updateData, password };
 
   const { data, error } = await supabase.auth.updateUser(updateData);
 
@@ -99,4 +99,15 @@ export async function updateUser({ firstName, lastName, avatar }) {
   }
 
   return updatedUser;
+}
+
+export async function sendPasswordReset(email) {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return data;
 }

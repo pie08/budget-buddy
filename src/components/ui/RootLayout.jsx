@@ -1,15 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { useUser } from "../../features/authentication/useUser";
 import SpinnerFullPage from "./SpinnerFullPage";
-import { useLogout } from "../../features/authentication/useLogout";
 
 function RootLayout() {
-  const { isLoading, error } = useUser();
-  const { logout } = useLogout();
+  const { isLoading } = useUser();
 
   if (isLoading) return <SpinnerFullPage />;
-
-  if (error) logout();
 
   return <Outlet />;
 }

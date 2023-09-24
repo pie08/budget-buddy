@@ -44,6 +44,7 @@ function UpdateUserDataForm() {
           type="text"
           id="firstName"
           value={firstName}
+          disabled={isUpdating}
           onChange={(e) => setFirstName(e.target.value)}
         />
       </FormRow>
@@ -52,18 +53,28 @@ function UpdateUserDataForm() {
           type="text"
           id="lastName"
           value={lastName}
+          disabled={isUpdating}
           onChange={(e) => setLastName(e.target.value)}
         />
       </FormRow>
       <FormRow label="Avatar">
-        <FileInput id="avatar" onChange={(e) => setAvatar(e.target.files[0])} />
+        <FileInput
+          id="avatar"
+          disabled={isUpdating}
+          onChange={(e) => setAvatar(e.target.files[0])}
+        />
       </FormRow>
 
       <FormRow type="buttons">
-        <Button $variation="secondary" type="reset" onClick={handleCancel}>
+        <Button
+          disabled={isUpdating}
+          $variation="secondary"
+          type="reset"
+          onClick={handleCancel}
+        >
           Cancel
         </Button>
-        <Button>Update info</Button>
+        <Button disabled={isUpdating}>Update info</Button>
       </FormRow>
     </Form>
   );

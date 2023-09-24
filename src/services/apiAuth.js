@@ -76,10 +76,10 @@ export async function updateUser({ password, firstName, lastName, avatar }) {
   if (!avatar) return data;
 
   // add user avatar to storage bucket
-  const fileName = `user-avatar-${data.user.id}`;
+  const fileName = `user-avatar-${data.user.id}-${Math.random()}`;
   const { error: storageError } = await supabase.storage
     .from("avatars")
-    .upload(fileName, avatar, { upsert: true });
+    .upload(fileName, avatar);
 
   if (storageError) {
     console.error(storageError);
@@ -89,7 +89,7 @@ export async function updateUser({ password, firstName, lastName, avatar }) {
   // add avatar url to user meta data
   const { updatedUser, updatedError } = await supabase.auth.updateUser({
     data: {
-      avatar: `${supabaseUrl}/storage/v1/object/sign/avatars/${fileName}`,
+      avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
     },
   });
 

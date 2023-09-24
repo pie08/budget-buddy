@@ -10,7 +10,7 @@ import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 
-// todo: Add ability to change account picture, password, and name
+// todo: create dashboard
 
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -24,6 +24,9 @@ const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
 const Recovery = lazy(() => import("./pages/Recovery"));
+const EmailConfirmation = lazy(() =>
+  import("./components/ui/EmailConfirmation")
+);
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -38,7 +41,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyles />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
 
       <BrowserRouter>
         <Suspense fallback={<SpinnerFullPage />}>
@@ -64,6 +67,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/recovery" element={<Recovery />} />
+              <Route
+                path="/recovery/confirmation"
+                element={<EmailConfirmation />}
+              />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

@@ -4,15 +4,18 @@ import Input from "../../components/form/Input";
 import { useState } from "react";
 import { usePasswordReset } from "./usePasswordReset";
 import { Button } from "../../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 function RecoveryForm() {
   const [email, setEmail] = useState("");
   const { sendPasswordReset, isLoading } = usePasswordReset();
+  const naviagte = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
 
     sendPasswordReset(email);
+    naviagte("confirmation");
   }
 
   return (

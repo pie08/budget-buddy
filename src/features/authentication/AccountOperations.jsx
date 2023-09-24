@@ -3,6 +3,7 @@ import Logout from "./Logout";
 import ButtonIcon from "../../components/ui/ButtonIcon";
 import { HiOutlineUser } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import UserAvatar from "./UserAvatar";
 
 const Row = styled.ul`
   display: grid;
@@ -18,6 +19,9 @@ function AccountOperations() {
 
   return (
     <Row>
+      <li>
+        <UserAvatar />
+      </li>
       <li>
         <ButtonIcon onClick={() => navigate("/account")}>
           <HiOutlineUser />

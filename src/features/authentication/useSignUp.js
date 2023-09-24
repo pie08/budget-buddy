@@ -10,7 +10,7 @@ export function useSignUp() {
     mutationFn: signup,
     onSuccess: () => {
       toast.success("Successfully created account");
-      naviagte("/", { replace: true });
+      naviagte("/dashboard", { replace: true });
     },
     onError: (err) => {
       toast.error(err.message);

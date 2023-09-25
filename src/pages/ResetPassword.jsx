@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Heading from "../components/ui/Heading";
-import UpdateUserPasswordForm from "../features/authentication/UpdateUSerPasswordForm";
+import UpdateUserPasswordForm from "../features/authentication/UpdateUserPasswordForm";
 
 function ResetPassword() {
   const navigate = useNavigate();

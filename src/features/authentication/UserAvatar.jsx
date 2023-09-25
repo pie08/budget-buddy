@@ -13,7 +13,6 @@ const Image = styled.img`
 function UserAvatar() {
   const { user } = useUser();
   const avatar = user.user_metadata.avatar;
-  console.log(user);
 
   return <Image src={avatar || "default-user.jpg"} />;
 }

@@ -34,9 +34,13 @@ const GlobalStyles = createGlobalStyle`
 
   --color-blue-100: #cffafe;
   --color-blue-600: #0891b2;
+  --color-blue-700: #0e7490;
 
   --color-yellow-100: #fef9c3;
   --color-yellow-700: #b45309;
+
+  --color-purple-100: #f3e8ff;
+  --color-purple-700: #7e22ce;
 
   --border-radius-sm: 4px;
   --border-radius-md: 6px;

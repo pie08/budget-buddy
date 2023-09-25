@@ -14,7 +14,6 @@ const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 function ExpensesLayout() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
-  const numDays = searchParams.get("last") || 7;
 
   const { expenses, isLoading, error, count } = useExpenses();
   const { deleteExpense, isDeleting } = useDeleteExpense();
@@ -49,7 +48,6 @@ function ExpensesLayout() {
 
       <TransactionChart
         data={expenses}
-        numDays={numDays}
         fill="var(--color-red-100)"
         stroke="var(--color-red-700)"
       />

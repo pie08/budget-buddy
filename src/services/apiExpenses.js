@@ -61,6 +61,21 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
   return { expenses, count };
 }
 
+export async function getExpensesAfterDate(date) {
+  let query = supabase.from("expenses").select();
+
+  if (date) query = query.gte("created_at", date);
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return data;
+}
+
 export async function getExpensesByCategory({ category, page, sortBy }) {
   let query = supabase
     .from("expenses")

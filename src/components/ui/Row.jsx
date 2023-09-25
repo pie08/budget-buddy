@@ -16,4 +16,10 @@ export const Row = styled.div`
   ${(props) => css`
     gap: ${props.$gap}rem;
   `}
+
+  ${(props) =>
+    props.$alignStart &&
+    css`
+      align-items: start;
+    `}
 `;

@@ -1,16 +1,25 @@
 import { styled } from "styled-components";
+import Heading from "./Heading";
 
 const StyledNoData = styled.div`
-  margin: 0 auto;
-  padding: 1.2rem 2.4rem;
-  background-color: var(--color-gray-200);
-  border-radius: var(--border-radius-md);
-  font-size: 1.8rem;
-  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  align-items: center;
+  padding: 0 2.4rem;
+`;
+
+const Image = styled.img`
+  max-width: 25rem;
 `;
 
 function NoData({ resource }) {
-  return <StyledNoData>No {resource} were found</StyledNoData>;
+  return (
+    <StyledNoData>
+      <Image src="no-data.svg" />
+      <Heading as="h3">No {resource} found</Heading>
+    </StyledNoData>
+  );
 }
 
 export default NoData;

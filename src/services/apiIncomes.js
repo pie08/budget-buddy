@@ -58,6 +58,21 @@ export async function getIncomes({ page, filter, sortBy } = {}) {
   return { incomes, count };
 }
 
+export async function getIncomesAfterDate(date) {
+  let query = supabase.from("incomes").select();
+
+  if (date) query = query.gte("created_at", date);
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return data;
+}
+
 export async function getIncomesByCategory({ category, page, sortBy }) {
   let query = supabase
     .from("incomes")

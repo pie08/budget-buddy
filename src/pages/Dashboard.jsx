@@ -1,5 +1,13 @@
+import DashboardHeading from "../features/dashboard/DashboardHeading";
+import DashboardLayout from "../features/dashboard/DashboardLayout";
+
 function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <>
+      <DashboardHeading />
+      <DashboardLayout />
+    </>
+  );
 }
 
 export default Dashboard;

@@ -12,6 +12,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { useExpenses } from "../../expenses/useExpenses";
 import BudgetDetailCategories from "./BudgetDetailCategories";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
+import SpinnerFullPage from "../../../components/ui/SpinnerFullPage";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -75,7 +76,7 @@ function BudgetsDetail() {
   const { expenses, isLoading: isLoadingExpenses } = useExpenses();
   const isLoading = isLoadingBudgets || isLoadingExpenses;
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <SpinnerFullPage />;
 
   const {
     title,

@@ -10,8 +10,6 @@ import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 
-// todo: move client side filtering to server side
-
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Expenses = lazy(() => import("./pages/Expenses"));

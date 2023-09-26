@@ -29,7 +29,6 @@ function DashboardChart({ expenses, incomes }) {
       incomeAmount,
     };
   });
-  console.log(data);
 
   const colors = {
     expenses: { stroke: "var(--color-red-600)", fill: "var(--color-red-100)" },

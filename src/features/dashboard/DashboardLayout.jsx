@@ -5,6 +5,7 @@ import CategoriesChart from "./CategoriesChart";
 import ActiveBudgets from "./ActiveBudgets";
 import { useExpensesAfterDate } from "./useExpensesAfterDate";
 import { useIncomesAfterDate } from "./useIncomesAfterDate";
+import DashboardChart from "./DashboardChart";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -25,6 +26,7 @@ function DashboardLayout() {
 
       <CategoriesChart expenses={expenses} incomes={incomes} />
       <ActiveBudgets />
+      <DashboardChart expenses={expenses} incomes={incomes} />
     </StyledDashboardLayout>
   );
 }

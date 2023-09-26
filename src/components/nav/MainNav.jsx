@@ -72,7 +72,7 @@ function MainNav() {
         </li>
         <li>
           <StyledLink to="/budgets">
-            <HiOutlineWallet /> Budget
+            <HiOutlineWallet /> Budgets
           </StyledLink>
         </li>
       </NavList>

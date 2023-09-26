@@ -10,7 +10,6 @@ import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 
-// todo: create dashboard
 // todo: move client side filtering to server side
 
 // Pages

@@ -15,7 +15,7 @@ function Stats({ expenses, incomes }) {
   const totalExpenses = expenseDates.reduce((acc, cur) => acc + cur.amount, 0);
   const totalIncomes = incomeDates.reduce((acc, cur) => acc + cur.amount, 0);
   const savings = totalIncomes - totalExpenses;
-  const flow = Math.round((totalExpenses / totalIncomes) * 100);
+  const flow = Math.round((totalExpenses / totalIncomes) * 100) || 0;
 
   return (
     <ToolTip>

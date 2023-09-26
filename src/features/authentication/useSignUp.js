@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function useSignUp() {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const { mutate: signUp, isLoading } = useMutation({
     mutationFn: signup,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (!data.session) {
+        toast.success("Check your email for a confirmation");
+        navigate("/login");
+        return;
+      }
       toast.success("Successfully created account");
-      naviagte("/dashboard", { replace: true });
+      navigate("/login");
     },
     onError: (err) => {
       toast.error(err.message);

@@ -28,6 +28,11 @@ const TableHeader = styled(CommonRow)`
 const TableRow = styled(CommonRow)`
   font-size: 1.4rem;
   background-color: var(--color-gray-0);
+
+  /* scroll on long text excluding buttons */
+  & > *:no-button {
+    overflow: auto;
+  }
 `;
 
 const TableFooter = styled.footer`

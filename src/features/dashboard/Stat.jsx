@@ -11,6 +11,8 @@ const StyledStat = styled.div`
   border-radius: var(--border-radius-sm);
   background-color: var(--color-gray-0);
   border: 1px solid var(--color-gray-200);
+  width: 100%;
+  overflow: auto;
 
   position: relative;
 `;

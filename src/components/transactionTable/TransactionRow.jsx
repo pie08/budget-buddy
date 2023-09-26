@@ -15,10 +15,6 @@ const Category = styled.p`
   text-transform: capitalize;
 `;
 
-const Description = styled.p`
-  overflow: auto;
-`;
-
 function TransactionRow({ transaction, formRender, onDelete, amountColor }) {
   const { title, description, amount, category, created_at, id } = transaction;
 
@@ -28,11 +24,11 @@ function TransactionRow({ transaction, formRender, onDelete, amountColor }) {
       <p>{title}</p>
       <Amount $color={amountColor}>{formatCurrency(amount)}</Amount>
       <p>{format(new Date(created_at), "PPP")}</p>
-      <Description>
+      <p>
         {description.length > 25
           ? description.slice(0, 25) + " ..."
           : description}
-      </Description>
+      </p>
 
       <Menus.Menu>
         <Menus.Open id={`${id}`} />

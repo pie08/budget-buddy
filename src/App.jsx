@@ -9,6 +9,8 @@ import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./components/ui/ErrorFallback";
 
 // todo: change some loder locations
 

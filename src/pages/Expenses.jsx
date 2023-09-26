@@ -23,7 +23,7 @@ function Expenses() {
               <ToolTip.Window id="expense">
                 <p>
                   An expense is money you spend. <br />
-                  Add one using the button below to get started.
+                  Add an expense using the button below to get started.
                 </p>
               </ToolTip.Window>
             </ToolTip>

@@ -12,8 +12,8 @@ export function useLogin() {
       toast.success("Successfully logged in");
       navigate("/dashboard", { replace: true });
     },
-    onError: () => {
-      toast.error("The provided credentials were incorrect");
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
 

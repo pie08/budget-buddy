@@ -26,7 +26,6 @@ const toolContext = createContext();
 function ToolTip({ children }) {
   const [openId, setOpenId] = useState("");
   const [position, setPosition] = useState({});
-  console.log(position);
 
   function close() {
     setOpenId("");

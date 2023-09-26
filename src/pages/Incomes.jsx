@@ -23,7 +23,7 @@ function Incomes() {
               <ToolTip.Window id="income">
                 <p>
                   An income is money you recieve. <br />
-                  Add one using the button below to get started.
+                  Add an income using the button below to get started.
                 </p>
               </ToolTip.Window>
             </ToolTip>

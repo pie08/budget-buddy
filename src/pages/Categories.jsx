@@ -18,8 +18,9 @@ function Categories() {
             </ToolTip.Open>
             <ToolTip.Window id="income">
               <p>
-                Here you can see all the categories that you have made
+                Here you can see all of the categories that you have made
                 transactions in with a breif overview for each. <br />
+                You can also add custom categories <br />
                 Add an expense or income to see one.
               </p>
             </ToolTip.Window>

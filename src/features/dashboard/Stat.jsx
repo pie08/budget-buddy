@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import ToolTip from "../../components/ui/ToolTip";
+import InfoIcon from "../../components/ui/InfoIcon";
 
 const StyledStat = styled.div`
   display: grid;
@@ -9,6 +11,8 @@ const StyledStat = styled.div`
   border-radius: var(--border-radius-sm);
   background-color: var(--color-gray-0);
   border: 1px solid var(--color-gray-200);
+
+  position: relative;
 `;
 
 const Icon = styled.div`
@@ -41,12 +45,32 @@ const Amount = styled.p`
   align-self: start;
 `;
 
-function Stat({ title, amount, icon, color }) {
+const StyledToolTip = styled.div`
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+`;
+
+function Stat({ title, amount, icon, color, toolTip = false }) {
   return (
     <StyledStat>
       <Icon $color={color}>{icon}</Icon>
       <Title>{title}</Title>
       <Amount>{amount}</Amount>
+
+      {toolTip && (
+        <>
+          <StyledToolTip>
+            <ToolTip.Open id={title}>
+              <InfoIcon />
+            </ToolTip.Open>
+          </StyledToolTip>
+
+          <ToolTip.Window id={title}>
+            <p>{toolTip}</p>
+          </ToolTip.Window>
+        </>
+      )}
     </StyledStat>
   );
 }

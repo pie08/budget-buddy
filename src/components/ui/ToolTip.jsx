@@ -1,6 +1,7 @@
 import { cloneElement, createContext, useContext, useState } from "react";
 import styled from "styled-components";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { createPortal } from "react-dom";
 
 const StyledWindow = styled.div`
   padding: 0.8rem 1.2rem;
@@ -25,6 +26,7 @@ const toolContext = createContext();
 function ToolTip({ children }) {
   const [openId, setOpenId] = useState("");
   const [position, setPosition] = useState({});
+  console.log(position);
 
   function close() {
     setOpenId("");
@@ -69,10 +71,11 @@ function Window({ id, children }) {
 
   if (openId !== id) return null;
 
-  return (
+  return createPortal(
     <StyledWindow $position={position} ref={ref}>
       {children}
-    </StyledWindow>
+    </StyledWindow>,
+    document.body
   );
 }
 

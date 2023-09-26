@@ -33,6 +33,7 @@ const CardBtn = styled.div`
 
 const Rotate = styled.span`
   transform: rotate(45deg);
+  line-height: 0;
 `;
 
 function AddCategory() {

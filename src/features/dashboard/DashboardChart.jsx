@@ -10,6 +10,7 @@ import {
 import { useDatesOfTransactions } from "../../hooks/useDatesOfTransactions";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
+import TableContainer from "../../components/ui/TableContainer";
 
 const ResponsiveWrapper = styled.div`
   grid-column: 1 / -1;
@@ -41,37 +42,39 @@ function DashboardChart({ expenses, incomes }) {
 
   return (
     <ResponsiveWrapper>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
-          <Line
-            type="monotone"
-            dataKey="expenseAmount"
-            activeDot={true}
-            {...colors.expenses}
-            name="Expense"
-          />
-          <Line
-            type="monotone"
-            dataKey="incomeAmount"
-            activeDot={true}
-            {...colors.incomes}
-            name="Income"
-          />
-          <CartesianGrid stroke="#ccc" strokeDasharray="4" />
-          <XAxis
-            dataKey="date"
-            tick={{ fill: colors.text }}
-            tickLine={{ stroke: colors.text }}
-          />
-          <YAxis
-            unit="$"
-            tick={{ fill: colors.text }}
-            tickLine={{ stroke: colors.text }}
-            width={80}
-          />
-          <Tooltip formatter={(val, name) => [formatCurrency(val), name]} />
-        </LineChart>
-      </ResponsiveContainer>
+      <TableContainer>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={data}>
+            <Line
+              type="monotone"
+              dataKey="expenseAmount"
+              activeDot={true}
+              {...colors.expenses}
+              name="Expense"
+            />
+            <Line
+              type="monotone"
+              dataKey="incomeAmount"
+              activeDot={true}
+              {...colors.incomes}
+              name="Income"
+            />
+            <CartesianGrid stroke="#ccc" strokeDasharray="4" />
+            <XAxis
+              dataKey="date"
+              tick={{ fill: colors.text }}
+              tickLine={{ stroke: colors.text }}
+            />
+            <YAxis
+              unit="$"
+              tick={{ fill: colors.text }}
+              tickLine={{ stroke: colors.text }}
+              width={80}
+            />
+            <Tooltip formatter={(val, name) => [formatCurrency(val), name]} />
+          </LineChart>
+        </ResponsiveContainer>
+      </TableContainer>
     </ResponsiveWrapper>
   );
 }

@@ -1,3 +1,4 @@
+import ToolTip from "../../components/ui/ToolTip";
 import { useDatesOfTransactions } from "../../hooks/useDatesOfTransactions";
 import { formatCurrency } from "../../utils/helpers";
 import Stat from "./Stat";
@@ -17,7 +18,7 @@ function Stats({ expenses, incomes }) {
   const flow = Math.round((totalExpenses / totalIncomes) * 100);
 
   return (
-    <>
+    <ToolTip>
       <Stat
         title="expenses"
         amount={formatCurrency(totalExpenses)}
@@ -35,14 +36,16 @@ function Stats({ expenses, incomes }) {
         amount={formatCurrency(savings)}
         icon={<HiOutlineBuildingLibrary />}
         color="yellow"
+        toolTip="Savings are how much money you have left of your income after all expenses are deducted."
       />
       <Stat
         title="Flow"
         amount={`${flow === Infinity || flow > 1000 ? ">1000" : flow}%`}
         icon={<HiOutlineArrowsRightLeft />}
         color="purple"
+        toolTip="Flow is the percentage of your income that you spend."
       />
-    </>
+    </ToolTip>
   );
 }
 

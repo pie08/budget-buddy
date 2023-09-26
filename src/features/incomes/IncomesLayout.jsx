@@ -9,6 +9,7 @@ import { useIncomes } from "./useIncomes";
 import { useDeleteIncome } from "./useDeleteIncome";
 import { Row } from "../../components/ui/Row";
 import TransactionChartOperations from "../../components/transactionTable/TransactionChartOperations";
+import TableContainer from "../../components/ui/TableContainer";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 function IncomesLayout() {
@@ -46,7 +47,9 @@ function IncomesLayout() {
         <TransactionChartOperations />
       </Row>
 
-      <TransactionChart data={incomes} />
+      <TableContainer>
+        <TransactionChart data={incomes} />
+      </TableContainer>
     </>
   );
 }

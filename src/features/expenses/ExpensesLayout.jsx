@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import TransactionChart from "../../components/transactionTable/TransactionChart";
 import TransactionChartOperations from "../../components/transactionTable/TransactionChartOperations";
 import { Row } from "../../components/ui/Row";
+import TableContainer from "../../components/ui/TableContainer";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 function ExpensesLayout() {
@@ -46,11 +47,13 @@ function ExpensesLayout() {
         <TransactionChartOperations />
       </Row>
 
-      <TransactionChart
-        data={expenses}
-        fill="var(--color-red-100)"
-        stroke="var(--color-red-700)"
-      />
+      <TableContainer>
+        <TransactionChart
+          data={expenses}
+          fill="var(--color-red-100)"
+          stroke="var(--color-red-700)"
+        />
+      </TableContainer>
     </>
   );
 }

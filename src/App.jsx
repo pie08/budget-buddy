@@ -9,10 +9,7 @@ import AppLayout from "./components/ui/AppLayout";
 import SpinnerFullPage from "./components/ui/SpinnerFullPage";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallback from "./components/ui/ErrorFallback";
-
-// todo: change some loder locations
+import { Analytics } from "@vercel/analytics/react";
 
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -43,7 +40,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyles />
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <Analytics />
+      <ReactQueryDevtools initialIsOpen={false} />
 
       <BrowserRouter>
         <Suspense fallback={<SpinnerFullPage />}>

@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {Array} categories array of category objects
+ * @param {Array} data transaction data from server
+ * @returns
+ */
 export function getCategoriesOfTransactions(categories, data) {
   const finalCategories = categories
     .map((category) => {

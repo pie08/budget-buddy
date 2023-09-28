@@ -13,6 +13,8 @@ import { isAfter } from "date-fns";
 import { useCreateBudget } from "./useCreateBudget";
 import { useUpdateBudget } from "./useUpdateBudget";
 
+// todo: refactor this file
+
 const AddCategories = styled.ul`
   display: flex;
   flex-direction: column;
@@ -85,17 +87,21 @@ function reducer(state, action) {
 }
 
 function BudgetForm({ onCloseModal, budget }) {
+  // if we are currently editing a budget
   const isUpdateSession = Boolean(budget);
 
   const { updateBudget, isUpdating } = useUpdateBudget();
   const { createBudget, isCreating } = useCreateBudget();
   const isLoading = isCreating || isUpdating;
 
+  // Object state, stores categories as keys, amounts as values
   const [categoryBudgets, dispatch] = useReducer(
     reducer,
     isUpdateSession ? budget.categories : {}
   );
   const [categoryBudgetsError, setCategoryBudgetsError] = useState("");
+
+  // calculate total budget for categories
   const totalCategoryBudgetAmount = Object.entries(categoryBudgets).reduce(
     (acc, [_, value]) => acc + Number(value),
     0
@@ -119,6 +125,7 @@ function BudgetForm({ onCloseModal, budget }) {
   const { errors } = formState;
   const spendingLimit = Number(watch("spendingLimit"));
 
+  // get all expense categories
   const categories = getCategories(
     "customExpenseCategories",
     expenseCategories
@@ -150,6 +157,7 @@ function BudgetForm({ onCloseModal, budget }) {
     }
   }
 
+  // dispatcher functions
   function handleUpdateBudgetCategory(key, newKey) {
     dispatch({ type: "updateBudgetCategory", payload: { key, newKey } });
   }
@@ -257,7 +265,7 @@ function BudgetForm({ onCloseModal, budget }) {
         />
       </FormRow>
 
-      {/* These are not controlled by react hook form */}
+      {/* NOT controlled by react hook form */}
       <FormRow label="Add categories" error={categoryBudgetsError}>
         <AddCategories>
           <Button

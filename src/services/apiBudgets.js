@@ -6,7 +6,6 @@ export async function getBudgets({ page, filter, sortBy } = {}) {
 
   // filter
   if (filter) {
-    console.log(Array.isArray(filter));
     if (Array.isArray(filter)) {
       filter.forEach(
         ({ method, field, value }) => (query = query[method](field, value))

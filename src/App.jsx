@@ -11,6 +11,9 @@ import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 import { Analytics } from "@vercel/analytics/react";
 
+// todo: add google login
+// todo: add lots of comments
+
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Expenses = lazy(() => import("./pages/Expenses"));

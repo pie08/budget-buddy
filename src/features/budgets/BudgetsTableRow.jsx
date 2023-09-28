@@ -1,4 +1,4 @@
-import { format, isFuture, isPast, isToday } from "date-fns";
+import { format } from "date-fns";
 import Table from "../../components/ui/Table";
 import { formatCurrency } from "../../utils/helpers";
 import Menus from "../../components/ui/Menus";
@@ -21,6 +21,7 @@ function BudgetsTableRow({ budget }) {
   const navigate = useNavigate();
   const { deleteBudget, isDeleting } = useDeleteBudget();
 
+  // get the status of the current budget
   const status = getStatus(budget);
 
   const statusToColor = {

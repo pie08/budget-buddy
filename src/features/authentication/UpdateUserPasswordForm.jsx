@@ -21,7 +21,7 @@ function UpdateUserPasswordForm({ handleSuccess }) {
       {
         onSuccess: () => {
           reset();
-          handleSubmit?.();
+          handleSuccess?.();
         },
       }
     );

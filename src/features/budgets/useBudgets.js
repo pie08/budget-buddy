@@ -15,6 +15,8 @@ export function useBudgets({ paginate = false } = {}) {
 
   // filtering
   const filterValue = searchParams.get("status") || "all";
+
+  // filter can be and array of objects or and object itself, filter will be used in getBudgets to filter budgets
   let filter;
   if (filterValue === "all") filter = null;
   if (filterValue === "active") {

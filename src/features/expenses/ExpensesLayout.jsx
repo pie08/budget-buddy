@@ -13,7 +13,7 @@ import TableContainer from "../../components/ui/TableContainer";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 function ExpensesLayout() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
   const { expenses, isLoading, error, count } = useExpenses();

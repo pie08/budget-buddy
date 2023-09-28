@@ -39,6 +39,7 @@ export async function getUser() {
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return null;
 
+  // get user from server
   const { data: user, error } = await supabase.auth.getUser();
   console.log(user);
 
@@ -63,6 +64,7 @@ export async function logout() {
 }
 
 export async function updateUser({ password, firstName, lastName, avatar }) {
+  // configure the update data
   let updateData;
   if (firstName)
     updateData = { ...updateData, data: { ...updateData?.data, firstName } };

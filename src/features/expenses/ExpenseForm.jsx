@@ -11,6 +11,7 @@ import { getCategories } from "../categories/getCategories";
 import expenseCategories from "../../data/expenseCategories.json";
 
 function ExpenseForm({ onCloseModal, expense }) {
+  // if we are currently updating an expense
   const isUpdateSession = Boolean(expense);
 
   const { updateExpense, isUpdating } = useUpdateExpense();
@@ -22,6 +23,7 @@ function ExpenseForm({ onCloseModal, expense }) {
   });
   const { errors } = formState;
 
+  // get all categories for expenses
   const categories = getCategories(
     "customExpenseCategories",
     expenseCategories

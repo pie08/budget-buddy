@@ -9,11 +9,13 @@ const Operations = styled.div`
 `;
 
 function ExpenseTableOperations() {
+  // get all expense categories
   const categories = getCategories(
     "customExpenseCategories",
     expenseCategories
   );
 
+  // format category names
   const optionCategories = categories.map((category) => {
     return {
       value: category.name,

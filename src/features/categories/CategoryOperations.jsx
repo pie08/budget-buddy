@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import ParamSelect from "../../components/ui/ParamSelect";
 
 function CategoryOperations() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const defaultValue = searchParams.get("transactionType") || "expenses";
 
   return (

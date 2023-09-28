@@ -51,6 +51,7 @@ function AddCategoryForm({ onClose }) {
 
   const ref = useOutsideClick(onClose, false);
 
+  // if categoryName too long set error
   useEffect(
     function () {
       if (categoryName.length > 20) setError("Category name too long");

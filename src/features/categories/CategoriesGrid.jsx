@@ -17,6 +17,7 @@ function CategoriesGrid() {
 
   if (isLoading) return <Spinner />;
 
+  // get all categories for all tranactions
   const finalCategories = getCategoriesOfTransactions(categories, data);
 
   return (

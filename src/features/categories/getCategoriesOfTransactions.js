@@ -1,7 +1,7 @@
 export function getCategoriesOfTransactions(categories, data) {
   const finalCategories = categories
     .map((category) => {
-      // Get expenses with the current category
+      // Get transactions with the current category
       const filteredData = data.filter(
         (transaction) => transaction.category === category.name
       );

@@ -28,6 +28,7 @@ function ExpensesLayout() {
     return <NoData resource="expenses" />;
   }
 
+  // client side pagination because TransactionChart needs all expenses
   const pageStart = pageSize * page - pageSize;
   const pageEnd = pageSize * page;
   const expensesPaginated = expenses.slice(pageStart, pageEnd);

@@ -11,6 +11,7 @@ import { getCategories } from "../categories/getCategories";
 import incomeCategories from "../../data/incomeCategories.json";
 
 function IncomeForm({ onCloseModal, income }) {
+  // check if we are in an update session
   const isUpdateSession = Boolean(income);
 
   const { updateIncome, isUpdating } = useUpdateIncome();
@@ -22,6 +23,7 @@ function IncomeForm({ onCloseModal, income }) {
   });
   const { errors } = formState;
 
+  // get all income categories
   const categories = getCategories("customIncomeCategories", incomeCategories);
 
   function onSubmit(data) {

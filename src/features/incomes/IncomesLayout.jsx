@@ -13,7 +13,7 @@ import TableContainer from "../../components/ui/TableContainer";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 function IncomesLayout() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
   const { incomes, isLoading, error, count } = useIncomes();
@@ -28,6 +28,7 @@ function IncomesLayout() {
     return <NoData resource="incomes" />;
   }
 
+  // client site pagination because TransactionChart needs all incomes
   const pageStart = pageSize * page - pageSize;
   const pageEnd = pageSize * page;
   const incomesPaginated = incomes.slice(pageStart, pageEnd);

@@ -17,6 +17,8 @@ export function CategoryProvider({ children }) {
   const isLoading = isLoadingExpenses || isLoadingIncomes;
 
   const transactionType = searchParams.get("transactionType") || "expenses";
+
+  // get data based on what the transactionType is
   const categories =
     transactionType === "expenses"
       ? getCategories("customExpenseCategories", expenseCategoriesBase)

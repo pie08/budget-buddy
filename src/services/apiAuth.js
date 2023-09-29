@@ -34,6 +34,19 @@ export async function signup({ email, password, firstName, lastName }) {
   return data;
 }
 
+export async function loginWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return data;
+}
+
 export async function getUser() {
   // check if currently logged in user
   const { data: session } = await supabase.auth.getSession();

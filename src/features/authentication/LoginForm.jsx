@@ -4,6 +4,7 @@ import FormRowVertical from "../../components/form/FormRowVertical";
 import Input from "../../components/form/Input";
 import { Button } from "../../components/ui/Button";
 import { useLogin } from "./useLogin";
+import LoginWithGoogle from "./LoginWithGoogle";
 
 function LoginForm() {
   const { login, isLoading } = useLogin();
@@ -48,6 +49,10 @@ function LoginForm() {
 
       <FormRowVertical>
         <Button>Login</Button>
+      </FormRowVertical>
+
+      <FormRowVertical>
+        <LoginWithGoogle />
       </FormRowVertical>
     </Form>
   );

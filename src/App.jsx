@@ -11,8 +11,7 @@ import ProtectedRoute from "./features/authentication/ProtectedRoute";
 import RootLayout from "./components/ui/RootLayout";
 import { Analytics } from "@vercel/analytics/react";
 
-// todo: add google login
-// todo: add lots of comments
+// todo: custom categories do not work on home page pie chart
 
 // Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));

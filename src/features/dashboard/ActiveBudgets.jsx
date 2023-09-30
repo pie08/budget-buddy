@@ -33,8 +33,6 @@ const NoBudgets = styled.p`
 function ActiveBudgets() {
   const { budgets, isLoading } = useBudgets();
 
-  // if (isLoading) return <Spinner />;
-
   const activeBudgets = budgets?.filter((budget) => {
     const { startDate, endDate } = budget;
 

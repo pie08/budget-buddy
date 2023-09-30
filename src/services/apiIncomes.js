@@ -1,7 +1,7 @@
-import { addLocalStorage } from "../utils/addLocalStorage";
 import { supabase } from "./supabase";
 import incomeCategories from "../data/incomeCategories.json";
 import { getCategories } from "../features/categories/getCategories";
+import { createUnknownCategories } from "../features/categories/createUnknownCategories";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 export async function getIncomes({ page, filter, sortBy } = {}) {
@@ -34,26 +34,16 @@ export async function getIncomes({ page, filter, sortBy } = {}) {
   const categories = getCategories("customIncomeCategories", incomeCategories);
 
   // create a category for all incomes with an unknown category
-  const incomes = data
-    .filter((income) => {
-      const isNull = income.category === null;
-      const isInvalidName = income.category.split(" ").length < 1;
-      if (isNull || isInvalidName) deleteIncome(income.id);
-      return !isNull && !isInvalidName;
-    })
-    .map((income) => {
-      const isUnknown =
-        categories.filter((cur) => cur.name === income.category).length === 0;
-
-      if (isUnknown) {
-        addLocalStorage(
-          "customIncomeCategories",
-          [],
-          income.category.toLowerCase()
-        );
-      }
-      return income;
-    });
+  const dataFiltered = data.filter((income) => {
+    const isNull = income.category === null;
+    if (isNull) deleteIncome(income.id);
+    return !isNull;
+  });
+  const incomes = createUnknownCategories(
+    dataFiltered,
+    categories,
+    "customIncomeCategories"
+  );
 
   return { incomes, count };
 }
@@ -70,7 +60,21 @@ export async function getIncomesAfterDate(date) {
     throw error;
   }
 
-  return data;
+  const categories = getCategories("customIncomeCategories", incomeCategories);
+
+  // create a category for all incomes with an unknown category
+  const dataFiltered = data.filter((income) => {
+    const isNull = income.category === null;
+    if (isNull) deleteIncome(income.id);
+    return !isNull;
+  });
+  const incomes = createUnknownCategories(
+    dataFiltered,
+    categories,
+    "customIncomeCategories"
+  );
+
+  return incomes;
 }
 
 export async function getIncomesByCategory({ category, page, sortBy }) {

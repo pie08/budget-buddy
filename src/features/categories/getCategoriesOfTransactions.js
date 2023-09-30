@@ -4,6 +4,7 @@
  * @param {Array} data transaction data from server
  * @returns
  */
+// reduces transaction data into categories
 export function getCategoriesOfTransactions(categories, data) {
   const finalCategories = categories
     .map((category) => {

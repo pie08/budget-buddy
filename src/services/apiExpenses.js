@@ -1,7 +1,7 @@
-import { addLocalStorage } from "../utils/addLocalStorage";
 import { supabase } from "./supabase";
 import expenseCategories from "../data/expenseCategories.json";
 import { getCategories } from "../features/categories/getCategories";
+import { createUnknownCategories } from "../features/categories/createUnknownCategories";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 export async function getExpenses({ page, filter, sortBy } = {}) {
@@ -37,26 +37,16 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
   );
 
   // create a category for all expenses with an unknown category
-  const expenses = data
-    .filter((expense) => {
-      const isNull = expense.category === null;
-      const isInvalidName = expense.category.split(" ").length < 1;
-      if (isNull || isInvalidName) deleteExpense(expense.id);
-      return !isNull && !isInvalidName;
-    })
-    .map((expense) => {
-      const isUnknown =
-        categories.filter((cur) => cur.name === expense.category).length === 0;
-
-      if (isUnknown) {
-        addLocalStorage(
-          "customExpenseCategories",
-          [],
-          expense.category.toLowerCase()
-        );
-      }
-      return expense;
-    });
+  const dataFiltered = data.filter((expense) => {
+    const isNull = expense.category === null;
+    if (isNull) deleteExpense(expense.id);
+    return !isNull;
+  });
+  const expenses = createUnknownCategories(
+    dataFiltered,
+    categories,
+    "customExpenseCategories"
+  );
 
   return { expenses, count };
 }
@@ -73,7 +63,24 @@ export async function getExpensesAfterDate(date) {
     throw error;
   }
 
-  return data;
+  const categories = getCategories(
+    "customExpenseCategories",
+    expenseCategories
+  );
+
+  // create a category for all expenses with an unknown category
+  const dataFiltered = data.filter((expense) => {
+    const isNull = expense.category === null;
+    if (isNull) deleteExpense(expense.id);
+    return !isNull;
+  });
+  const expenses = createUnknownCategories(
+    dataFiltered,
+    categories,
+    "customExpenseCategories"
+  );
+
+  return expenses;
 }
 
 export async function getExpensesByCategory({ category, page, sortBy }) {

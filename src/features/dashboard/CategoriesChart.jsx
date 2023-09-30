@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import expenseCategories from "../../data/expenseCategories.json";
 import incomeCategories from "../../data/incomeCategories.json";
 import { formatCurrency } from "../../utils/helpers";
+import { getCategories } from "../categories/getCategories";
 
 const StyledCategoriesChart = styled.div`
   grid-column: 1 / span 2;
@@ -21,9 +22,13 @@ function CategoriesChart({ expenses, incomes }) {
   const [searchParams] = useSearchParams();
   const transactionType = searchParams.get("transactionType") || "expenses";
 
+  // get correct data from trancationType
   const transactionData = transactionType === "expenses" ? expenses : incomes;
   const transactionCategories =
-    transactionType === "expenses" ? expenseCategories : incomeCategories;
+    transactionType === "expenses"
+      ? getCategories("customExpenseCategories", expenseCategories)
+      : getCategories("customIncomeCategories", incomeCategories);
+
   const data = getCategoriesOfTransactions(
     transactionCategories,
     transactionData

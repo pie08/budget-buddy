@@ -3,8 +3,8 @@
  * @param {Array} categories array of category objects
  * @param {Array} data transaction data from server
  * @returns
+ * @description adds transaction data to categories
  */
-// reduces transaction data into categories
 export function getCategoriesOfTransactions(categories, data) {
   const finalCategories = categories
     .map((category) => {

@@ -54,7 +54,6 @@ export async function getUser() {
 
   // get user from server
   const { data: user, error } = await supabase.auth.getUser();
-  console.log(user);
 
   // user does not exist
   if (error && !user.user) logout();

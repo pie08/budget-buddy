@@ -5,7 +5,10 @@ import { createUnknownCategories } from "../features/categories/createUnknownCat
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 export async function getExpenses({ page, filter, sortBy } = {}) {
-  let query = supabase.from("expenses").select("*", { count: "exact" });
+  let query = supabase
+    .from("expenses")
+    .select("*", { count: "exact" })
+    .neq("category", null);
 
   // filter
   if (filter) {
@@ -37,22 +40,13 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
   );
 
   // create a category for all expenses with an unknown category
-  const dataFiltered = data.filter((expense) => {
-    const isNull = expense.category === null;
-    if (isNull) deleteExpense(expense.id);
-    return !isNull;
-  });
-  const expenses = createUnknownCategories(
-    dataFiltered,
-    categories,
-    "customExpenseCategories"
-  );
+  createUnknownCategories(data, categories, "customExpenseCategories");
 
-  return { expenses, count };
+  return { expenses: data, count };
 }
 
 export async function getExpensesAfterDate(date) {
-  let query = supabase.from("expenses").select();
+  let query = supabase.from("expenses").select().neq("category", null);
 
   if (date) query = query.gte("created_at", date);
 
@@ -69,18 +63,9 @@ export async function getExpensesAfterDate(date) {
   );
 
   // create a category for all expenses with an unknown category
-  const dataFiltered = data.filter((expense) => {
-    const isNull = expense.category === null;
-    if (isNull) deleteExpense(expense.id);
-    return !isNull;
-  });
-  const expenses = createUnknownCategories(
-    dataFiltered,
-    categories,
-    "customExpenseCategories"
-  );
+  createUnknownCategories(data, categories, "customExpenseCategories");
 
-  return expenses;
+  return data;
 }
 
 export async function getExpensesByCategory({ category, page, sortBy }) {

@@ -5,7 +5,10 @@ import { createUnknownCategories } from "../features/categories/createUnknownCat
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
 export async function getIncomes({ page, filter, sortBy } = {}) {
-  let query = supabase.from("incomes").select("*", { count: "exact" });
+  let query = supabase
+    .from("incomes")
+    .select("*", { count: "exact" })
+    .neq("category", null);
 
   // filter
   if (filter) {
@@ -34,22 +37,13 @@ export async function getIncomes({ page, filter, sortBy } = {}) {
   const categories = getCategories("customIncomeCategories", incomeCategories);
 
   // create a category for all incomes with an unknown category
-  const dataFiltered = data.filter((income) => {
-    const isNull = income.category === null;
-    if (isNull) deleteIncome(income.id);
-    return !isNull;
-  });
-  const incomes = createUnknownCategories(
-    dataFiltered,
-    categories,
-    "customIncomeCategories"
-  );
+  createUnknownCategories(data, categories, "customIncomeCategories");
 
-  return { incomes, count };
+  return { incomes: data, count };
 }
 
 export async function getIncomesAfterDate(date) {
-  let query = supabase.from("incomes").select();
+  let query = supabase.from("incomes").select().neq("category", null);
 
   if (date) query = query.gte("created_at", date);
 
@@ -63,18 +57,9 @@ export async function getIncomesAfterDate(date) {
   const categories = getCategories("customIncomeCategories", incomeCategories);
 
   // create a category for all incomes with an unknown category
-  const dataFiltered = data.filter((income) => {
-    const isNull = income.category === null;
-    if (isNull) deleteIncome(income.id);
-    return !isNull;
-  });
-  const incomes = createUnknownCategories(
-    dataFiltered,
-    categories,
-    "customIncomeCategories"
-  );
+  createUnknownCategories(data, categories, "customIncomeCategories");
 
-  return incomes;
+  return data;
 }
 
 export async function getIncomesByCategory({ category, page, sortBy }) {

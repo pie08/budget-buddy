@@ -6,50 +6,12 @@ import { Button } from "../../components/ui/Button";
 import expenseCategories from "../../data/expenseCategories.json";
 import { getCategories } from "../categories/getCategories";
 import { useEffect, useReducer, useState } from "react";
-import Select from "../../components/form/Select";
-import styled from "styled-components";
-import { HiXMark } from "react-icons/hi2";
 import { isAfter } from "date-fns";
 import { useCreateBudget } from "./useCreateBudget";
 import { useUpdateBudget } from "./useUpdateBudget";
+import BudgetAddCategories from "./BudgetAddCategories";
 
 // todo: refactor this file
-
-const AddCategories = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-`;
-
-const Category = styled.li`
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-
-  & input {
-    flex-grow: 1;
-  }
-`;
-
-const Amount = styled.p`
-  color: var(--color-gray-400);
-  font-weight: 500;
-`;
-
-const DeleteButton = styled.button`
-  padding: 0.4rem;
-  border-radius: var(--border-radius-sm);
-  transition: all 0.2s;
-
-  & svg {
-    width: 1.6rem;
-    height: 1.6rem;
-  }
-
-  &:hover {
-    background-color: var(--color-gray-100);
-  }
-`;
 
 function reducer(state, action) {
   switch (action.type) {
@@ -94,19 +56,6 @@ function BudgetForm({ onCloseModal, budget }) {
   const { createBudget, isCreating } = useCreateBudget();
   const isLoading = isCreating || isUpdating;
 
-  // Object state, stores categories as keys, amounts as values
-  const [categoryBudgets, dispatch] = useReducer(
-    reducer,
-    isUpdateSession ? budget.categories : {}
-  );
-  const [categoryBudgetsError, setCategoryBudgetsError] = useState("");
-
-  // calculate total budget for categories
-  const totalCategoryBudgetAmount = Object.entries(categoryBudgets).reduce(
-    (acc, [_, value]) => acc + Number(value),
-    0
-  );
-
   const { register, handleSubmit, formState, reset, getValues, watch } =
     useForm({
       defaultValues: isUpdateSession
@@ -124,6 +73,19 @@ function BudgetForm({ onCloseModal, budget }) {
     });
   const { errors } = formState;
   const spendingLimit = Number(watch("spendingLimit"));
+
+  // Object state, stores categories as keys, amounts as values
+  const [categoryBudgets, dispatch] = useReducer(
+    reducer,
+    isUpdateSession ? budget.categories : {}
+  );
+  const [categoryBudgetsError, setCategoryBudgetsError] = useState("");
+
+  // calculate total budget for categories
+  const totalCategoryBudgetAmount = Object.entries(categoryBudgets).reduce(
+    (acc, [_, value]) => acc + Number(value),
+    0
+  );
 
   // get all expense categories
   const categories = getCategories(
@@ -155,23 +117,6 @@ function BudgetForm({ onCloseModal, budget }) {
         },
       });
     }
-  }
-
-  // dispatcher functions
-  function handleUpdateBudgetCategory(key, newKey) {
-    dispatch({ type: "updateBudgetCategory", payload: { key, newKey } });
-  }
-
-  function handleAddCategoryBudget(payload) {
-    dispatch({ type: "addCategoryBudget", payload });
-  }
-
-  function handleUpdateBudgetAmount(key, value) {
-    dispatch({ type: "updateBudgetAmount", payload: { key, value } });
-  }
-
-  function handleDeleteCategoryBudget(key) {
-    dispatch({ type: "deleteCategoryBudget", payload: key });
   }
 
   // validation
@@ -267,62 +212,13 @@ function BudgetForm({ onCloseModal, budget }) {
 
       {/* NOT controlled by react hook form */}
       <FormRow label="Add categories" error={categoryBudgetsError}>
-        <AddCategories>
-          <Button
-            $size="small"
-            $variation="secondary"
-            onClick={(e) => {
-              e.preventDefault();
-              handleAddCategoryBudget({ Select: 0 });
-            }}
-          >
-            Add category
-          </Button>
-
-          {Object.entries(categoryBudgets).map(([category, amount], i) => (
-            <Category key={i}>
-              <DeleteButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleDeleteCategoryBudget(category);
-                }}
-              >
-                <HiXMark />
-              </DeleteButton>
-
-              <Select
-                value={category}
-                onChange={(e) => {
-                  e.preventDefault();
-                  handleUpdateBudgetCategory(category, e.target.value);
-                }}
-              >
-                <option value="">Select...</option>
-                {categories.map((category, i) => (
-                  <option key={i} value={category.name}>
-                    {category.name[0].toUpperCase() + category.name.slice(1)}
-                  </option>
-                ))}
-              </Select>
-
-              <Input
-                type="number"
-                placeholder="Enter amount"
-                value={amount}
-                onChange={(e) => {
-                  e.preventDefault();
-                  handleUpdateBudgetAmount(category, e.target.value);
-                }}
-              />
-            </Category>
-          ))}
-
-          {Object.keys(categoryBudgets).length > 0 && (
-            <Amount>
-              {totalCategoryBudgetAmount} / {spendingLimit}
-            </Amount>
-          )}
-        </AddCategories>
+        <BudgetAddCategories
+          dispatch={dispatch}
+          categories={categories}
+          categoryBudgets={categoryBudgets}
+          totalCategoryBudgetAmount={totalCategoryBudgetAmount}
+          spendingLimit={spendingLimit}
+        />
       </FormRow>
 
       <FormRow type="buttons">

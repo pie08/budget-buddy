@@ -9,13 +9,10 @@ import expenseCategories from "../../data/expenseCategories.json";
 import incomeCategories from "../../data/incomeCategories.json";
 import { formatCurrency } from "../../utils/helpers";
 import { getCategories } from "../categories/getCategories";
+import DashboardContainer from "./DashboardContainer";
 
-const StyledCategoriesChart = styled.div`
+const StyledCategoriesChart = styled(DashboardContainer)`
   grid-column: 1 / span 2;
-  background-color: var(--color-gray-0);
-  padding: 1.6rem;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--border-radius-sm);
 `;
 
 function CategoriesChart({ expenses, incomes }) {

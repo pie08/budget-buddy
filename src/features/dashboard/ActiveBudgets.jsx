@@ -5,17 +5,13 @@ import SpinnerCenter from "../../components/ui/SpinnerCenter";
 import { isAfter, isBefore, isToday } from "date-fns";
 import BudgetItem from "./BudgetItem";
 import Menus from "../../components/ui/Menus";
+import DashboardContainer from "./DashboardContainer";
 
-const StyledActiveBudgets = styled.div`
+const StyledActiveBudgets = styled(DashboardContainer)`
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
   grid-column: 3 / span 2;
-  background-color: var(--color-gray-0);
-  padding: 1.6rem;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--border-radius-sm);
-  overflow: auto;
 `;
 
 const Items = styled.ul`

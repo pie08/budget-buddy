@@ -1,18 +1,14 @@
 import styled from "styled-components";
 import ToolTip from "../../components/ui/ToolTip";
 import InfoIcon from "../../components/ui/InfoIcon";
+import DashboardContainer from "./DashboardContainer";
 
-const StyledStat = styled.div`
+const StyledStat = styled(DashboardContainer)`
   display: grid;
   grid-template-columns: 6.4rem 1fr;
   grid-template-rows: auto auto;
   column-gap: 1.6rem;
-  padding: 1.6rem;
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-gray-0);
-  border: 1px solid var(--color-gray-200);
   width: 100%;
-  overflow: auto;
 
   position: relative;
 `;

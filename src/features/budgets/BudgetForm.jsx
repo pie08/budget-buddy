@@ -11,8 +11,6 @@ import { useCreateBudget } from "./useCreateBudget";
 import { useUpdateBudget } from "./useUpdateBudget";
 import BudgetAddCategories from "./BudgetAddCategories";
 
-// todo: refactor this file
-
 function reducer(state, action) {
   switch (action.type) {
     case "addCategoryBudget": {

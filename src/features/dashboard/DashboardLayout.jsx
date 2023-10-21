@@ -10,7 +10,7 @@ import DashboardChart from "./DashboardChart";
 const StyledDashboardLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 3.6rem 2.4rem;
+  gap: 2.4rem;
 `;
 
 function DashboardLayout() {

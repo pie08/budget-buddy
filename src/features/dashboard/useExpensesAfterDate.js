@@ -8,6 +8,7 @@ export function useExpensesAfterDate() {
 
   let numDays = searchParams.get("last") ? Number(searchParams.get("last")) : 7;
 
+  // date can be false
   const date = numDays ? subDays(new Date(), numDays).toISOString() : false;
 
   const { data: expenses, isLoading } = useQuery({

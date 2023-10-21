@@ -31,7 +31,7 @@ function TransactionChart({
         <Area type="monotone" dataKey="amount" {...colors.area} name="Amount" />
         <CartesianGrid stroke="#ccc" strokeDasharray="4" />
         <XAxis
-          dataKey="date"
+          dataKey="dateFormatted"
           tick={{ fill: colors.text }}
           tickLine={{ stroke: colors.text }}
         />

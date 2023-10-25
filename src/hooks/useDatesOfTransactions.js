@@ -8,6 +8,12 @@ import {
 } from "date-fns";
 import { useSearchParams } from "react-router-dom";
 
+/**
+ * Retrive expense amounts per date
+ * @param {object[]} transactions - Transactions from supabase
+ * @param {string} transactions[].name - name
+ * @returns {object[]} Each object has a date, formatted date, and amount
+ */
 export function useDatesOfTransactions(transactions) {
   const [searchParams] = useSearchParams();
 

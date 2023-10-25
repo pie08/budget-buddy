@@ -1,5 +1,11 @@
 import { useEffect, useRef } from "react";
 
+/**
+ * Call handler when click detected outside of ref
+ * @param {Function} handler - Function to call
+ * @param {Boolean} listenCapturing - Weather or not to listen during the caputing phase
+ * @returns {Ref} Ref to element
+ */
 export function useOutsideClick(handler, listenCapturing = true) {
   const ref = useRef();
 

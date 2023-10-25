@@ -4,6 +4,11 @@ import { getCategories } from "../features/categories/getCategories";
 import { createUnknownCategories } from "../features/categories/createUnknownCategories";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
 
+/**
+ * Get expenses
+ * @param {{page: number, filter: {field: string, value: string}, sortBy: {field: string, isAscending: boolean}}} options
+ * @returns
+ */
 export async function getExpenses({ page, filter, sortBy } = {}) {
   let query = supabase
     .from("expenses")
@@ -45,9 +50,15 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
   return { expenses: data, count };
 }
 
+/**
+ * Get expenses after a date
+ * @param {date | boolean} date -
+ * @returns
+ */
 export async function getExpensesAfterDate(date) {
   let query = supabase.from("expenses").select().neq("category", null);
 
+  // if date provided else get all expenses
   if (date) query = query.gte("created_at", date);
 
   const { data, error } = await query;
@@ -68,6 +79,11 @@ export async function getExpensesAfterDate(date) {
   return data;
 }
 
+/**
+ * Get expenses by category
+ * @param {{category: string, page: number, sortBy: {field: string, isAscending: boolean}}} options
+ * @returns
+ */
 export async function getExpensesByCategory({ category, page, sortBy }) {
   let query = supabase
     .from("expenses")
@@ -83,7 +99,8 @@ export async function getExpensesByCategory({ category, page, sortBy }) {
   }
 
   // sort
-  query = query.order(sortBy.field, { ascending: sortBy.isAscending });
+  if (sortBy)
+    query = query.order(sortBy.field, { ascending: sortBy.isAscending });
 
   const { data, count, error } = await query;
 
@@ -95,6 +112,11 @@ export async function getExpensesByCategory({ category, page, sortBy }) {
   return { data, count };
 }
 
+/**
+ * Create a new expense
+ * @param {object} newExpense - New expense data
+ * @returns {Promise.object} Newly created expense
+ */
 export async function createExpense(newExpense) {
   const { data, error } = await supabase.from("expenses").insert(newExpense);
 
@@ -105,6 +127,11 @@ export async function createExpense(newExpense) {
   return data;
 }
 
+/**
+ * Delete an expense
+ * @param {number} id - ID for expense in database
+ * @returns
+ */
 export async function deleteExpense(id) {
   const { error } = await supabase.from("expenses").delete().eq("id", id);
 
@@ -115,6 +142,11 @@ export async function deleteExpense(id) {
   return;
 }
 
+/**
+ *
+ * @param {{data: object, id: number}} Parameter - The ID of the expense to updat along with the new data
+ * @returns {Promise.object} Expense
+ */
 export async function updateExpense({ data, id }) {
   const { data: expense, error } = await supabase
     .from("expenses")

@@ -22,8 +22,8 @@ function Budgets() {
               </ToolTip.Open>
               <ToolTip.Window id="income">
                 <p>
-                  A budget will track your spending in total, and also within
-                  each category. <br />
+                  A budget will track your spending in total, and also your
+                  spending within each category. <br />
                   Add one using the button below.
                 </p>
               </ToolTip.Window>

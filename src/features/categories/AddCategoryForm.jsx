@@ -1,86 +1,72 @@
-import styled from "styled-components";
-import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
+import Form from "../../components/form/Form";
+import FormRow from "../../components/form/FormRow";
+import Input from "../../components/form/Input";
+import Select from "../../components/form/Select";
+import { Button } from "../../components/ui/Button";
 import { addCustomCategory } from "./addCustomCategory";
-import { useCategory } from "../../context/CategoryContext";
+import toast from "react-hot-toast";
 
-const CardForm = styled.div`
-  display: inline-block;
-  background-color: var(--color-gray-0);
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--border-radius-sm);
-  padding: 1.2rem 1.6rem;
-
-  /* grid-column: span 2; */
-  display: flex;
-  align-items: center;
-  gap: 2.4rem;
-`;
-
-const Heading = styled.h3`
-  font-size: 1.4rem;
-  font-weight: 500;
-`;
-
-const Form = styled.form`
-  position: relative;
-  flex-grow: 1;
-`;
-
-const Input = styled.input`
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--border-radius-sm);
-  font-size: 1.4rem;
-  width: 100%;
-  padding: 0.4rem 0.6rem;
-`;
-
-const Error = styled.p`
-  position: absolute;
-  bottom: -2rem;
-  left: 0;
-  color: var(--color-red-700);
-  font-size: 1.2rem;
-`;
-
-function AddCategoryForm({ onClose }) {
-  const { localStorageKey } = useCategory();
-  const [categoryName, setCategoryName] = useState("");
-  const [error, setError] = useState("");
-
-  const ref = useOutsideClick(onClose, false);
-
-  // if categoryName too long set error
-  useEffect(
-    function () {
-      if (categoryName.length > 20) setError("Category name too long");
-      else setError("");
-    },
-    [categoryName]
-  );
+function AddCategoryForm({ onCloseModal }) {
+  const [type, setType] = useState("expense");
+  const [name, setName] = useState("");
+  const [errors, setErrors] = useState({});
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (error) return;
+    setErrors({});
 
-    addCustomCategory(localStorageKey, categoryName.toLowerCase());
+    if (name.length > 20) {
+      setErrors((err) => {
+        return { ...err, name: "Name is too long!" };
+      });
+    }
+
+    // return if any errors
+    if (Object.entries(errors).length !== 0) return;
+
+    const localStorageKeys = [];
+    if (type === "expense") localStorageKeys.push("customExpenseCategories");
+    if (type === "income") localStorageKeys.push("customIncomeCategories");
+    if (type === "both")
+      localStorageKeys.push(
+        "customIncomeCategories",
+        "customExpenseCategories"
+      );
+
+    localStorageKeys.forEach((key) => addCustomCategory(key, name));
     toast.success("Category successfully created");
-    onClose();
+    onCloseModal();
   }
 
   return (
-    <CardForm ref={ref}>
-      <Heading>Category name</Heading>
-      <Form onSubmit={handleSubmit}>
+    <Form $type="modal" onSubmit={handleSubmit}>
+      <FormRow label="Type" error={errors.type}>
+        <Select
+          id="type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="expense">For Expense</option>
+          <option value="income">For Income</option>
+          <option value="both">For Both</option>
+        </Select>
+      </FormRow>
+      <FormRow label="Category Name" error={errors.name}>
         <Input
           type="text"
-          value={categoryName}
-          onChange={(e) => setCategoryName(e.target.value)}
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-        {error && <Error>{error}</Error>}
-      </Form>
-    </CardForm>
+      </FormRow>
+      <FormRow type="buttons">
+        <Button $variation="secondary" type="reset" onClick={onCloseModal}>
+          Cancel
+        </Button>
+        <Button>Add category</Button>
+      </FormRow>
+    </Form>
   );
 }
 

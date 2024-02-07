@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import CategoryCard from "./CategoryCard";
 import Spinner from "../../components/ui/Spinner";
-import AddCategory from "./AddCategory";
 import { useCategory } from "../../context/CategoryContext";
 import { getCategoriesOfTransactions } from "./getCategoriesOfTransactions";
 
@@ -32,7 +31,6 @@ function CategoriesGrid() {
           transactionType={transactionType}
         />
       ))}
-      <AddCategory />
     </Grid>
   );
 }

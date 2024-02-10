@@ -8,6 +8,7 @@ import InfoIcon from "../components/ui/InfoIcon";
 import { Button } from "../components/ui/Button";
 import Modal from "../components/ui/Modal";
 import AddCategoryForm from "../features/categories/AddCategoryForm";
+import DeleteCategoryForm from "../features/categories/DeleteCategoryForm";
 
 function Categories() {
   return (
@@ -36,15 +37,25 @@ function Categories() {
 
         <CategoriesGrid />
 
-        <Modal.Open id="category">
-          <span>
-            <Button>Add custom category</Button>
-          </span>
-        </Modal.Open>
+        <Row $gap={2.4} $justifyStart>
+          <Modal.Open id="add-category">
+            <span>
+              <Button>Add custom category</Button>
+            </span>
+          </Modal.Open>
+          <Modal.Window id="add-category">
+            <AddCategoryForm />
+          </Modal.Window>
 
-        <Modal.Window id="category">
-          <AddCategoryForm />
-        </Modal.Window>
+          <Modal.Open id="delete-category">
+            <span>
+              <Button>Delete custom category</Button>
+            </span>
+          </Modal.Open>
+          <Modal.Window id="delete-category">
+            <DeleteCategoryForm />
+          </Modal.Window>
+        </Row>
       </CategoryProvider>
     </Modal>
   );

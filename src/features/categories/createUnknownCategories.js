@@ -1,4 +1,4 @@
-import { addLocalStorage } from "../../utils/addLocalStorage";
+import { addCustomCategory } from "./addCustomCategory";
 
 export function createUnknownCategories(data, categories, storageKey) {
   data.forEach((transaction) => {
@@ -7,9 +7,9 @@ export function createUnknownCategories(data, categories, storageKey) {
       categories.filter((cur) => cur.name === transaction.category).length ===
       0;
 
-    // is does not exists, create
+    // if does not exists, create
     if (isUnknown) {
-      addLocalStorage(storageKey, [], transaction.category.toLowerCase());
+      addCustomCategory(storageKey, transaction.category);
     }
   });
 }

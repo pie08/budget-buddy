@@ -22,4 +22,10 @@ export const Row = styled.div`
     css`
       align-items: start;
     `}
+
+  ${(props) =>
+    props.$justifyStart &&
+    css`
+      justify-content: start;
+    `}
 `;

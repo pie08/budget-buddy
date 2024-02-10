@@ -3,6 +3,9 @@ import { useSearchParams } from "react-router-dom";
 import { subDays } from "date-fns";
 import { getIncomesAfterDate } from "../../services/apiIncomes";
 
+/**
+ * Get all incomes after a date
+ */
 export function useIncomesAfterDate() {
   const [searchParams] = useSearchParams();
 

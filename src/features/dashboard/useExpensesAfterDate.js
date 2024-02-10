@@ -3,6 +3,9 @@ import { getExpensesAfterDate } from "../../services/apiExpenses";
 import { useSearchParams } from "react-router-dom";
 import { subDays } from "date-fns";
 
+/**
+ * Get all expenses after a date
+ */
 export function useExpensesAfterDate() {
   const [searchParams] = useSearchParams();
 

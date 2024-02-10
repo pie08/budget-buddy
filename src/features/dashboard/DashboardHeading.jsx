@@ -17,7 +17,7 @@ function DashboardHeading() {
           { value: "30", label: "Past 30 days" },
           { value: "90", label: "Past 90 days" },
           { value: "365", label: "Past year" },
-          { value: "ytd", label: "Year to date" },
+          { value: "all", label: "All time" },
         ]}
       />
     </Row>

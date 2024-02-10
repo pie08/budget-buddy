@@ -19,8 +19,8 @@ export function useDatesOfTransactions(transactions) {
 
   let numDays = searchParams.get("last") || 7;
 
-  if (numDays === "ytd" && transactions.length > 0) {
-    // get first date of transactions
+  if (numDays === "all" && transactions.length > 0) {
+    // get the date of the first transaction
     const startDate = transactions.toSorted((a, b) => {
       const date1 = new Date(a.created_at);
       const date2 = new Date(b.created_at);
@@ -28,7 +28,7 @@ export function useDatesOfTransactions(transactions) {
       return after ? 1 : -1;
     })[0]?.created_at;
 
-    // get days between now and date
+    // get days between now and startDate
     const numDaysStart = differenceInCalendarDays(
       new Date(),
       new Date(startDate)

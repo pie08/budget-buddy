@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Button } from "./Button";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
@@ -40,6 +39,11 @@ const StyledButton = styled.button`
   &:hover {
     background-color: var(--color-brand-500);
     color: var(--color-gray-0);
+
+    &:disabled {
+      color: var(--color-gray-400);
+      background-color: transparent;
+    }
   }
 `;
 

@@ -14,7 +14,7 @@ export function useExpenses({ paginate = false } = {}) {
     filterValue === "all" ? null : { field: "category", value: filterValue };
 
   // sorting
-  const sortByRaw = searchParams.get("sortBy") || "created_at-asc";
+  const sortByRaw = searchParams.get("sortBy") || "created_at-desc";
   const [sortByField, sortByDirection] = sortByRaw.split("-");
   const sortBy = { field: sortByField, isAscending: sortByDirection === "asc" };
 

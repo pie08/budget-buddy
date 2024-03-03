@@ -36,10 +36,10 @@ function ExpenseTableOperations() {
       <ParamSelect
         fieldName="sortBy"
         options={[
-          { value: "created_at-asc", label: "Sort by date (ascending)" },
           { value: "created_at-desc", label: "Sort by date (descending)" },
-          { value: "amount-asc", label: "Sort by amount (ascending)" },
+          { value: "created_at-asc", label: "Sort by date (ascending)" },
           { value: "amount-desc", label: "Sort by amount (descending)" },
+          { value: "amount-asc", label: "Sort by amount (ascending)" },
         ]}
       />
     </Operations>

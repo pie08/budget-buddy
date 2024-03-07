@@ -8,7 +8,6 @@ import { useUpdateExpense } from "./useUpdateExpense";
 import Select from "../../components/form/Select";
 import { useCreateExpense } from "./useCreateExpense";
 import { getCategories } from "../categories/getCategories";
-import expenseCategories from "../../data/expenseCategories.json";
 
 function ExpenseForm({ onCloseModal, expense }) {
   // if we are currently updating an expense

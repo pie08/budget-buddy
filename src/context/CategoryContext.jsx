@@ -4,8 +4,8 @@ import { useIncomes } from "../features/incomes/useIncomes";
 import { getCategories } from "../features/categories/getCategories";
 import { useSearchParams } from "react-router-dom";
 import {
-  customExpenseCategoriesKey,
-  customIncomeCategoriesKey,
+  CUSTOM_EXPENSE_CATEGORIES_KEY,
+  CUSTOM_INCOME_CATEGORIES_KEY,
 } from "../utils/constants";
 
 const CategoryContext = createContext();
@@ -28,8 +28,8 @@ export function CategoryProvider({ children }) {
   const data = transactionType === "expenses" ? expenses : incomes;
   const localStorageKey =
     transactionType === "expenses"
-      ? customExpenseCategoriesKey
-      : customIncomeCategoriesKey;
+      ? CUSTOM_EXPENSE_CATEGORIES_KEY
+      : CUSTOM_INCOME_CATEGORIES_KEY;
 
   return (
     <CategoryContext.Provider

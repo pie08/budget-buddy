@@ -1,4 +1,9 @@
-const customExpenseCategoriesKey = "customExpenseCategories";
-const customIncomeCategoriesKey = "customIncomeCategories";
+const CUSTOM_EXPENSE_CATEGORIES_KEY = "customExpenseCategories";
+const CUSTOM_INCOME_CATEGORIES_KEY = "customIncomeCategories";
+const PAGE_SIZE = 10;
 
-export { customExpenseCategoriesKey, customIncomeCategoriesKey };
+export {
+  CUSTOM_EXPENSE_CATEGORIES_KEY,
+  CUSTOM_INCOME_CATEGORIES_KEY,
+  PAGE_SIZE,
+};

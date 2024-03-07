@@ -2,8 +2,8 @@ import { getLocalStorage } from "../../utils/getLocalStorage";
 import expenseCategories from "../../data/expenseCategories.json";
 import incomeCategories from "../../data/incomeCategories.json";
 import {
-  customExpenseCategoriesKey,
-  customIncomeCategoriesKey,
+  CUSTOM_EXPENSE_CATEGORIES_KEY,
+  CUSTOM_INCOME_CATEGORIES_KEY,
 } from "../../utils/constants";
 
 /**
@@ -15,8 +15,8 @@ export function getCategories(type) {
   const isTypeExpense = type.toLowerCase() === "expense";
   // picking the correct local storage key for the category type
   const localStorageKey = isTypeExpense
-    ? customExpenseCategoriesKey
-    : customIncomeCategoriesKey;
+    ? CUSTOM_EXPENSE_CATEGORIES_KEY
+    : CUSTOM_INCOME_CATEGORIES_KEY;
 
   // getting custom categories from local storage using the local storage key and formatting the data within the local storage array
   const customCategories = getLocalStorage(localStorageKey).map((el) => {

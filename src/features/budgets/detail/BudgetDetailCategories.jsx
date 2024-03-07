@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import BudgetDetailCard from "./BudgetDetailCard";
 import { getCategories } from "../../categories/getCategories";
-import expenseCategoriesJson from "../../../data/expenseCategories.json";
 import Heading from "../../../components/ui/Heading";
 
 const Layout = styled.div`

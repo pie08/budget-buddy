@@ -1,6 +1,5 @@
 import { useMutation } from "react-query";
 import { loginWithGoogle as loginWithGoogleApi } from "../../services/apiAuth";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function useLoginWithGoogle() {

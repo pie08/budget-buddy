@@ -1,6 +1,5 @@
 import Heading from "../../../components/ui/Heading";
 import { useBudget } from "../useBudget";
-import Spinner from "../../../components/ui/Spinner";
 import { getStatus } from "../getStatus";
 import { Row } from "../../../components/ui/Row";
 import BackButton from "../../../components/ui/BackButton";

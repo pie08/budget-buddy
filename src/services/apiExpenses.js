@@ -1,8 +1,8 @@
 import { supabase } from "./supabase";
-import expenseCategories from "../data/expenseCategories.json";
 import { getCategories } from "../features/categories/getCategories";
 import { createUnknownCategories } from "../features/categories/createUnknownCategories";
-const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
+import { PAGE_SIZE } from "../utils/constants";
+const pageSize = PAGE_SIZE;
 
 /**
  * Get expenses

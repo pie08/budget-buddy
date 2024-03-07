@@ -10,7 +10,8 @@ import { useDeleteIncome } from "./useDeleteIncome";
 import { Row } from "../../components/ui/Row";
 import TransactionChartOperations from "../../components/transactionTable/TransactionChartOperations";
 import TableContainer from "../../components/ui/TableContainer";
-const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
+import { PAGE_SIZE } from "../../utils/constants";
+const pageSize = PAGE_SIZE;
 
 function IncomesLayout() {
   const [searchParams] = useSearchParams();

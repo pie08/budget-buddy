@@ -5,8 +5,6 @@ import ParamSelect from "../../components/ui/ParamSelect";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { getCategoriesOfTransactions } from "../categories/getCategoriesOfTransactions";
 import { useSearchParams } from "react-router-dom";
-import expenseCategories from "../../data/expenseCategories.json";
-import incomeCategories from "../../data/incomeCategories.json";
 import { formatCurrency } from "../../utils/helpers";
 import { getCategories } from "../categories/getCategories";
 import DashboardContainer from "./DashboardContainer";

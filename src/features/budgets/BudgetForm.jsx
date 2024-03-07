@@ -3,7 +3,6 @@ import Form from "../../components/form/Form";
 import FormRow from "../../components/form/FormRow";
 import Input from "../../components/form/Input";
 import { Button } from "../../components/ui/Button";
-import expenseCategories from "../../data/expenseCategories.json";
 import { getCategories } from "../categories/getCategories";
 import { useEffect, useReducer, useState } from "react";
 import { isAfter } from "date-fns";

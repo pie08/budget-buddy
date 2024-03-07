@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
-const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
+import { PAGE_SIZE } from "../../utils/constants";
+const pageSize = PAGE_SIZE;
 
 const StyledPagination = styled.div`
   width: 100%;

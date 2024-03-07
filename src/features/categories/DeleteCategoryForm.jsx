@@ -2,14 +2,13 @@ import { useState } from "react";
 import Form from "../../components/form/Form";
 import FormRow from "../../components/form/FormRow";
 import Select from "../../components/form/Select";
-import { getCategories } from "./getCategories";
 import { Button } from "../../components/ui/Button";
 import { deleteCustomCategory } from "./deleteCustomCategory";
 import toast from "react-hot-toast";
 import { getLocalStorage } from "../../utils/getLocalStorage";
 import {
-  customExpenseCategoriesKey,
-  customIncomeCategoriesKey,
+  CUSTOM_EXPENSE_CATEGORIES_KEY,
+  CUSTOM_INCOME_CATEGORIES_KEY,
 } from "../../utils/constants";
 
 function DeleteCategoryForm({ onCloseModal }) {
@@ -19,10 +18,10 @@ function DeleteCategoryForm({ onCloseModal }) {
   let categories = [];
 
   if (type === "expense")
-    categories = getLocalStorage(customExpenseCategoriesKey);
+    categories = getLocalStorage(CUSTOM_EXPENSE_CATEGORIES_KEY);
 
   if (type === "income")
-    categories = getLocalStorage(customIncomeCategoriesKey);
+    categories = getLocalStorage(CUSTOM_INCOME_CATEGORIES_KEY);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -39,8 +38,8 @@ function DeleteCategoryForm({ onCloseModal }) {
 
     // generate local storage key
     let localStorageKey = "";
-    if (type === "expense") localStorageKey = customExpenseCategoriesKey;
-    if (type === "income") localStorageKey = customIncomeCategoriesKey;
+    if (type === "expense") localStorageKey = CUSTOM_EXPENSE_CATEGORIES_KEY;
+    if (type === "income") localStorageKey = CUSTOM_INCOME_CATEGORIES_KEY;
 
     // delete category, it's ok to delete a category that has transactions in it because when the data is refetched the category will be created again
     deleteCustomCategory(localStorageKey, category);

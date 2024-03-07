@@ -10,7 +10,8 @@ import TransactionChart from "../../components/transactionTable/TransactionChart
 import TransactionChartOperations from "../../components/transactionTable/TransactionChartOperations";
 import { Row } from "../../components/ui/Row";
 import TableContainer from "../../components/ui/TableContainer";
-const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
+import { PAGE_SIZE } from "../../utils/constants";
+const pageSize = PAGE_SIZE;
 
 function ExpensesLayout() {
   const [searchParams] = useSearchParams();

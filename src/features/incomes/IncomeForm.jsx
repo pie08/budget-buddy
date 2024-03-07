@@ -8,7 +8,6 @@ import { useUpdateIncome } from "./useUpdateIncome";
 import Select from "../../components/form/Select";
 import { useCreateIncome } from "./useCreateIncome";
 import { getCategories } from "../categories/getCategories";
-import incomeCategories from "../../data/incomeCategories.json";
 
 function IncomeForm({ onCloseModal, income }) {
   // check if we are in an update session

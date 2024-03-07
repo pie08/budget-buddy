@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import ParamSelect from "../../components/ui/ParamSelect";
 import { getCategories } from "../categories/getCategories";
-import incomeCategories from "../../data/incomeCategories.json";
 
 const Operations = styled.div`
   display: flex;

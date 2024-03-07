@@ -1,5 +1,6 @@
+import { PAGE_SIZE } from "../utils/constants";
 import { supabase } from "./supabase";
-const pageSize = import.meta.env.VITE_NUM_PER_PAGE;
+const pageSize = PAGE_SIZE;
 
 export async function getBudgets({ page, filter, sortBy } = {}) {
   let query = supabase.from("budgets").select("*", { count: "exact" });

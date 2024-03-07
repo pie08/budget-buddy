@@ -24,10 +24,7 @@ function ExpenseForm({ onCloseModal, expense }) {
   const { errors } = formState;
 
   // get all categories for expenses
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategories
-  );
+  const categories = getCategories("expense");
 
   function onSubmit(data) {
     if (isUpdateSession) {

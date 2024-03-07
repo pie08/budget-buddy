@@ -34,7 +34,7 @@ export async function getIncomes({ page, filter, sortBy } = {}) {
     throw error;
   }
 
-  const categories = getCategories("customIncomeCategories", incomeCategories);
+  const categories = getCategories("income");
 
   // create a category for all incomes with an unknown category
   createUnknownCategories(data, categories, "customIncomeCategories");
@@ -54,7 +54,7 @@ export async function getIncomesAfterDate(date) {
     throw error;
   }
 
-  const categories = getCategories("customIncomeCategories", incomeCategories);
+  const categories = getCategories("income");
 
   // create a category for all incomes with an unknown category
   createUnknownCategories(data, categories, "customIncomeCategories");

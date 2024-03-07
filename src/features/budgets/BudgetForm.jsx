@@ -86,10 +86,7 @@ function BudgetForm({ onCloseModal, budget }) {
   );
 
   // get all expense categories
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategories
-  );
+  const categories = getCategories("expense");
 
   function onSubmit(data) {
     if (categoryBudgetsError) return;

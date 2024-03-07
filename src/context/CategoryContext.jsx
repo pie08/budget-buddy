@@ -1,10 +1,12 @@
 import { createContext, useContext } from "react";
 import { useExpenses } from "../features/expenses/useExpenses";
 import { useIncomes } from "../features/incomes/useIncomes";
-import expenseCategoriesBase from "../data/expenseCategories.json";
-import incomeCategoriesBase from "../data/incomeCategories.json";
 import { getCategories } from "../features/categories/getCategories";
 import { useSearchParams } from "react-router-dom";
+import {
+  customExpenseCategoriesKey,
+  customIncomeCategoriesKey,
+} from "../utils/constants";
 
 const CategoryContext = createContext();
 
@@ -21,13 +23,13 @@ export function CategoryProvider({ children }) {
   // get data based on what the transactionType is
   const categories =
     transactionType === "expenses"
-      ? getCategories("customExpenseCategories", expenseCategoriesBase)
-      : getCategories("customIncomeCategories", incomeCategoriesBase);
+      ? getCategories("expense")
+      : getCategories("income");
   const data = transactionType === "expenses" ? expenses : incomes;
   const localStorageKey =
     transactionType === "expenses"
-      ? "customExpenseCategories"
-      : "customIncomeCategories";
+      ? customExpenseCategoriesKey
+      : customIncomeCategoriesKey;
 
   return (
     <CategoryContext.Provider

@@ -39,10 +39,7 @@ export async function getExpenses({ page, filter, sortBy } = {}) {
     throw error;
   }
 
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategories
-  );
+  const categories = getCategories("expense");
 
   // create a category for all expenses with an unknown category
   createUnknownCategories(data, categories, "customExpenseCategories");
@@ -68,10 +65,7 @@ export async function getExpensesAfterDate(date) {
     throw error;
   }
 
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategories
-  );
+  const categories = getCategories("expense");
 
   // create a category for all expenses with an unknown category
   createUnknownCategories(data, categories, "customExpenseCategories");

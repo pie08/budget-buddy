@@ -10,10 +10,7 @@ const Operations = styled.div`
 
 function ExpenseTableOperations() {
   // get all expense categories
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategories
-  );
+  const categories = getCategories("expense");
 
   // format category names
   const optionCategories = categories.map((category) => {

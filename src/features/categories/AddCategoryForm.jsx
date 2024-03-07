@@ -6,6 +6,10 @@ import Select from "../../components/form/Select";
 import { Button } from "../../components/ui/Button";
 import { addCustomCategory } from "./addCustomCategory";
 import toast from "react-hot-toast";
+import {
+  customExpenseCategoriesKey,
+  customIncomeCategoriesKey,
+} from "../../utils/constants";
 
 function AddCategoryForm({ onCloseModal }) {
   const [type, setType] = useState("expense");
@@ -26,12 +30,12 @@ function AddCategoryForm({ onCloseModal }) {
     if (Object.entries(errors).length !== 0) return;
 
     const localStorageKeys = [];
-    if (type === "expense") localStorageKeys.push("customExpenseCategories");
-    if (type === "income") localStorageKeys.push("customIncomeCategories");
+    if (type === "expense") localStorageKeys.push(customExpenseCategoriesKey);
+    if (type === "income") localStorageKeys.push(customIncomeCategoriesKey);
     if (type === "both")
       localStorageKeys.push(
-        "customIncomeCategories",
-        "customExpenseCategories"
+        customIncomeCategoriesKey,
+        customExpenseCategoriesKey
       );
 
     localStorageKeys.forEach((key) => addCustomCategory(key, name));

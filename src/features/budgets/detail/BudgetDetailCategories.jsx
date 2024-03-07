@@ -25,10 +25,7 @@ const Grid = styled.div`
 
 function BudgetDetailCategories({ categoryBudgets, expenses }) {
   // get all expense categories
-  const categories = getCategories(
-    "customExpenseCategories",
-    expenseCategoriesJson
-  );
+  const categories = getCategories("expense");
 
   // format category data to include budget data
   const budgetData = categories

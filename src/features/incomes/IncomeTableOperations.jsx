@@ -10,7 +10,7 @@ const Operations = styled.div`
 
 function IncomeTableOperations() {
   // get all income categories
-  const categories = getCategories("customIncomeCategories", incomeCategories);
+  const categories = getCategories("income");
 
   // format category names
   const optionCategories = categories.map((category) => {

@@ -6,6 +6,11 @@ import { getCategories } from "./getCategories";
 import { Button } from "../../components/ui/Button";
 import { deleteCustomCategory } from "./deleteCustomCategory";
 import toast from "react-hot-toast";
+import { getLocalStorage } from "../../utils/getLocalStorage";
+import {
+  customExpenseCategoriesKey,
+  customIncomeCategoriesKey,
+} from "../../utils/constants";
 
 function DeleteCategoryForm({ onCloseModal }) {
   const [type, setType] = useState("expense");
@@ -14,10 +19,10 @@ function DeleteCategoryForm({ onCloseModal }) {
   let categories = [];
 
   if (type === "expense")
-    categories = getCategories("customExpenseCategories", []);
+    categories = getLocalStorage(customExpenseCategoriesKey);
 
   if (type === "income")
-    categories = getCategories("customIncomeCategories", []);
+    categories = getLocalStorage(customIncomeCategoriesKey);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,8 +39,8 @@ function DeleteCategoryForm({ onCloseModal }) {
 
     // generate local storage key
     let localStorageKey = "";
-    if (type === "expense") localStorageKey = "customExpenseCategories";
-    if (type === "income") localStorageKey = "customIncomeCategories";
+    if (type === "expense") localStorageKey = customExpenseCategoriesKey;
+    if (type === "income") localStorageKey = customIncomeCategoriesKey;
 
     // delete category, it's ok to delete a category that has transactions in it because when the data is refetched the category will be created again
     deleteCustomCategory(localStorageKey, category);
@@ -63,9 +68,9 @@ function DeleteCategoryForm({ onCloseModal }) {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Select...</option>
-          {categories.map(({ name }) => (
-            <option key={name} value={name}>
-              {name}
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
             </option>
           ))}
         </Select>

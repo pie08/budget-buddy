@@ -24,7 +24,7 @@ function IncomeForm({ onCloseModal, income }) {
   const { errors } = formState;
 
   // get all income categories
-  const categories = getCategories("customIncomeCategories", incomeCategories);
+  const categories = getCategories("income");
 
   function onSubmit(data) {
     if (isUpdateSession) {

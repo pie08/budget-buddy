@@ -23,8 +23,8 @@ function CategoriesChart({ expenses, incomes }) {
   const transactionData = transactionType === "expenses" ? expenses : incomes;
   const transactionCategories =
     transactionType === "expenses"
-      ? getCategories("customExpenseCategories", expenseCategories)
-      : getCategories("customIncomeCategories", incomeCategories);
+      ? getCategories("expense")
+      : getCategories("income");
 
   const data = getCategoriesOfTransactions(
     transactionCategories,

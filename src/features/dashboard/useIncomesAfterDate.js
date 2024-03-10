@@ -6,10 +6,12 @@ import { getIncomesAfterDate } from "../../services/apiIncomes";
 /**
  * Get all incomes after a date
  */
-export function useIncomesAfterDate() {
+export function useIncomesAfterDate(defaultNumDays = 7) {
   const [searchParams] = useSearchParams();
 
-  let numDays = searchParams.get("last") ? Number(searchParams.get("last")) : 7;
+  let numDays = searchParams.get("last")
+    ? Number(searchParams.get("last"))
+    : Number(defaultNumDays);
 
   const date = numDays ? subDays(new Date(), numDays).toISOString() : false;
 

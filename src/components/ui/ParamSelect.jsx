@@ -20,9 +20,9 @@ function ParamSelect({ options, fieldName }) {
 
   return (
     <Select value={query} onChange={handleChange}>
-      {options.map((opt, i) => (
-        <option value={opt.value} key={i}>
-          {opt.label}
+      {options.map((option, i) => (
+        <option value={option.value} key={i}>
+          {option.label}
         </option>
       ))}
     </Select>

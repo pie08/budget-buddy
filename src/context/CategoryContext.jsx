@@ -1,24 +1,26 @@
 import { createContext, useContext } from "react";
-import { useExpenses } from "../features/expenses/useExpenses";
-import { useIncomes } from "../features/incomes/useIncomes";
+// import { useExpenses } from "../features/expenses/useExpenses";
+// import { useIncomes } from "../features/incomes/useIncomes";
 import { getCategories } from "../features/categories/getCategories";
 import { useSearchParams } from "react-router-dom";
 import {
   CUSTOM_EXPENSE_CATEGORIES_KEY,
   CUSTOM_INCOME_CATEGORIES_KEY,
 } from "../utils/constants";
+import { useExpensesAfterDate } from "../features/dashboard/useExpensesAfterDate";
+import { useIncomesAfterDate } from "../features/dashboard/useIncomesAfterDate";
 
 const CategoryContext = createContext();
 
 export function CategoryProvider({ children }) {
   const [searchParams] = useSearchParams();
+  const transactionType = searchParams.get("transactionType") || "expenses";
 
-  const { expenses, isLoading: isLoadingExpenses } = useExpenses();
-  const { incomes, isLoading: isLoadingIncomes } = useIncomes();
+  const { expenses, isLoading: isLoadingExpenses } =
+    useExpensesAfterDate("all");
+  const { incomes, isLoading: isLoadingIncomes } = useIncomesAfterDate("all");
 
   const isLoading = isLoadingExpenses || isLoadingIncomes;
-
-  const transactionType = searchParams.get("transactionType") || "expenses";
 
   // get data based on what the transactionType is
   const categories =

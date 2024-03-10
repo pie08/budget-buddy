@@ -9,7 +9,7 @@ import {
 /**
  *
  * @param {string} category type
- * @returns Array of category objects
+ * @returns Array of category objects including custom categories
  */
 export function getCategories(type) {
   const isTypeExpense = type.toLowerCase() === "expense";
